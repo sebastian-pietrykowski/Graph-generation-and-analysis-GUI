@@ -28,8 +28,8 @@ int PP_get( PriorityQueue pp ) {
 		// change size of arrays in struct
 		int element = pp->(vertexes[index]);
 		pp->no_elements--;
-		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp->no_vertexes );
-		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_vertexes );
+		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp->no_elements );
+		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_elements );
 
 		return element;
 	}
@@ -40,7 +40,7 @@ void PP_put( PriorityQueue pp, int vertex, double distance ) {
 	// initialize PriorityQueue pp if necessary and add elements
 	if( pp == NULL ) {
 		pp = malloc( sizeof( PriorityQueue ) );
-		pp->no_vertexes = 1;
+		pp->no_elements = 1;
 		
 		pp->vertexes = malloc( sizeof(int) * 1 );
 		pp->(vertexes[0]) = vertex;
@@ -52,10 +52,35 @@ void PP_put( PriorityQueue pp, int vertex, double distance ) {
 	else {
 		pp->no_elements++;
 		
-		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp-> no_vertexes );
+		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp-> no_elements );
 		pp->(vertexes[0]) = vertex;
 
-		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_vertexes );
+		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_elements );
 		pp->(distances[0]) = distance;
 	}
 }
+
+
+void Set_add( Set set, int vertex ) {
+
+	// initialize Set set if necessary and add element
+	if( set == NULL ) {
+		set = malloc( sizeof( Set ) );
+		set->no_elements = 1;
+		
+		set->vertexes = malloc( sizeof(int) * 1 );
+		set->(vertexes[0]) = vertex;
+	}
+	// increase size of array and add another element
+	else {
+		set->no_elements++;
+		
+		set->vertexes = realloc( set->vertexes, sizeof(int) * set-> no_elements );
+		set->(vertexes[0]) = vertex;
+
+		set->distances = realloc( set->distances, sizeof(double) * set->no_elements );
+		set->(distances[0]) = distance;
+	}
+}
+
+
