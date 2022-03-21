@@ -60,7 +60,6 @@ void PP_put( PriorityQueue pp, int vertex, double distance ) {
 	}
 }
 
-
 void Set_add( Set set, int vertex ) {
 
 	// initialize Set set if necessary and add element
@@ -81,6 +80,21 @@ void Set_add( Set set, int vertex ) {
 		set->distances = realloc( set->distances, sizeof(double) * set->no_elements );
 		set->(distances[0]) = distance;
 	}
+}
+
+int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** predecessors, double ** distances ) {
+	
+	// initiate arrays
+	*predecessors = malloc( sizeof(int) * graph->no_vertexes );
+	*distances = malloc( sizeof(double) * graph->no_vertexes );
+	
+	// set all values in arrays to default
+	for( int i = 0; i < graph->no_vertexes; i++ ) {
+		*(predecessors([i]) = -1;
+		*(distances[i]) = DBL_MAX;
+	}
+	// start condition
+	*(distances[ start_vertex_number ]) = 0;
 }
 
 

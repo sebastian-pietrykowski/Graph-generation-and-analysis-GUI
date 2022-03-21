@@ -34,11 +34,11 @@ void Set_add( Set set, int vertex );
 
 
 //Initializes arrays predecessors[] and distances[], following the Dijkstra's algorithm.
-int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** predecessors, int ** distances );
+int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** predecessors, double ** distances );
 
 /* If specific conditions are true, then add vertex2 to arrays
  * predecessors[] and distances[], following the Dijkstra's algorithm. */
-void relax( graph_t graph, int start_vertex_number, int vertex1, int vertex2, int ** predecessors, int ** distances );
+void relax( graph_t graph, int start_vertex_number, int vertex1, int vertex2, int ** predecessors, double ** distances );
 
 /* Function responsible for performing Dijkstra's algorithm.
  * Returns array where element with given index representing number of praticular vertex
