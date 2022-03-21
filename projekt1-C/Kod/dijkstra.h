@@ -12,7 +12,7 @@ typedef struct {
 
 } * PriorityQueue;
 
-// Contains array storing vertexes which changes its size when necessary.
+// Contains array storing vertexes which increases its size when necessary.
 typedef struct {
 
 	int * vertexes;   // array of vertexes

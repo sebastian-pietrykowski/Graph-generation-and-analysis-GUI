@@ -28,9 +28,34 @@ int PP_get( PriorityQueue pp ) {
 		// change size of arrays in struct
 		int element = pp->(vertexes[index]);
 		pp->no_elements--;
-		pp->vertexes = realloc( pp->vertexes, sizeof(int) * no_vertexes );
-		pp->distances = realloc( pp->distances, sizeof(double) * no_vertexes );
+		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp->no_vertexes );
+		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_vertexes );
 
 		return element;
+	}
+}
+
+void PP_put( PriorityQueue pp, int vertex, double distance ) {
+
+	// initialize PriorityQueue pp if necessary and add elements
+	if( pp == NULL ) {
+		pp = malloc( sizeof( PriorityQueue ) );
+		pp->no_vertexes = 1;
+		
+		pp->vertexes = malloc( sizeof(int) * 1 );
+		pp->(vertexes[0]) = vertex;
+		
+		pp->distances = malloc( sizeof(double) * 1 );
+		pp->(distances[0]) = distance;
+	}
+	// increase size of arrays and add another elements
+	else {
+		pp->no_elements++;
+		
+		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp-> no_vertexes );
+		pp->(vertexes[0]) = vertex;
+
+		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_vertexes );
+		pp->(distances[0]) = distance;
 	}
 }
