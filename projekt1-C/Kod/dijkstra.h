@@ -36,8 +36,11 @@ void Set_add( Set set, int vertex );
 //Initializes arrays predecessors[] and distances[], following the Dijkstra's algorithm.
 int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** predecessors, double ** distances );
 
-/* If specific conditions are true, then add vertex2 to arrays
- * predecessors[] and distances[], following the Dijkstra's algorithm. */
+/* If specific conditions are true, then add vertex1 to arrays
+ * predecessors[] and distances[], following the Dijkstra's algorithm. 
+ *
+ * vertex1 - next vertex being checked
+ * vertex2 - potential predecessor of vertex1 */
 void relax( graph_t graph, int start_vertex_number, int vertex1, int vertex2, int ** predecessors, double ** distances );
 
 /* Function responsible for performing Dijkstra's algorithm.
