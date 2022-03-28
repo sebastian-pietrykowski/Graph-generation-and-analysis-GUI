@@ -81,3 +81,34 @@ void Set_add( Set set, int vertex ) {
 }
 
 
+void Set_add( Set set, int vertex ) {
+
+	// initialize Set set if necessary and add element
+	if( set == NULL ) {
+		set = malloc( sizeof( Set ) );
+		set->no_elements = 1;
+		
+		set->vertexes = malloc( sizeof(int) * 1 );
+		set->(vertexes[0]) = vertex;
+	}
+	// increase size of array and add another element
+	else {
+		set->no_elements++;
+		
+		set->vertexes = realloc( set->vertexes, sizeof(int) * set-> no_elements );
+		set->(vertexes[0]) = vertex;
+
+		set->distances = realloc( set->distances, sizeof(double) * set->no_elements );
+		set->(distances[0]) = distance;
+	}
+}
+
+int Set_is_element_in( Set set, int vertex ) {
+	
+	int no_elements = pp->no_elements;
+	while( no_elements-- > 0 )
+		if( set->(vertexes[no_elements]) == vertex )
+			return 1;
+	return 0;
+
+}
