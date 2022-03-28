@@ -1,4 +1,3 @@
-#include "data_structures.h"
 
 int PP_get( PriorityQueue pp ) {
 	
@@ -49,4 +48,3 @@ void PP_put( PriorityQueue pp, int vertex, double distance ) {
 	// increase size of arrays and add another elements
 	else {
 		pp->no_elements++;
-		
