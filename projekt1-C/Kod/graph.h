@@ -17,8 +17,6 @@ int is_connected(graph_t graph);
 
 int write_graph(graph_t graph, FILE *out); /* Writes the graph structure to the out file */
 
-void set_vertex(graph_t graph, int from_vertex, int to_vertex, double weight); /* Function responsible for filling in the adjacency matrix with weights */
-
 graph_t make_graph(int columns, int rows); /* Function responsible for initialization graph structure and memory allocation for adj_mat */
 
 int *neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there is an edge connecting them to the selected vertex */
