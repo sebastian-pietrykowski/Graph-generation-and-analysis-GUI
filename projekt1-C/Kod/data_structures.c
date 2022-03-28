@@ -1,21 +1,25 @@
+#include <float.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "data_structures.h"
 
-int PP_get( PriorityQueue pp ) {
+int PQ_get( PriorityQueue pq ) {
 	
-	if( pp->no_elements < 1 )
+	if( pq->no_elements < 1 )
 		return -1;
-	else if( pp->no_elements == 1 )
-		return pp->(vertexes[0]);
+	else if( pq->no_elements == 1 )
+		return pq->vertexes[0];
 	else {   
 	// find vertex from many
 		int index = -1;
 		double min_distance = DBL_MAX;
 		
 		// find vertex
-		for( int i = 0; i < pp->no_elements; i++ )
-			if( pp->(vertexes[i]) < min_distance ) {
+		for( int i = 0; i < pq->no_elements; i++ )
+			if( pq->vertexes[i] < min_distance ) {
 				index = i;
-				min_distance = pp->(distances[i]);
+				min_distance = pq->distances[i];
 			}
 		// if chosen element has distance negative or equal 0, then return -1 and print error message
 		if( min_distance <= 0 ) {
@@ -24,60 +28,38 @@ int PP_get( PriorityQueue pp ) {
 		}
 		
 		// change size of arrays in struct
-		int element = pp->(vertexes[index]);
-		pp->no_elements--;
-		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp->no_elements );
-		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_elements );
+		int element = pq->vertexes[index];
+		pq->no_elements--;
+		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
+		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
 
 		return element;
 	}
 }
 
 
-void PP_put( PriorityQueue pp, int vertex, double distance ) {
+void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 
-	// initialize PriorityQueue pp if necessary and add elements
-	if( pp == NULL ) {
-		pp = malloc( sizeof( PriorityQueue ) );
-		pp->no_elements = 1;
+	// initialize PriorityQueue pq if necessary and add elements
+	if( pq == NULL ) {
+		pq = malloc( sizeof( PriorityQueue ) );
+		pq->no_elements = 1;
 		
-		pp->vertexes = malloc( sizeof(int) * 1 );
-		pp->(vertexes[0]) = vertex;
+		pq->vertexes = malloc( sizeof(int) * 1 );
+		pq->vertexes[0] = vertex;
 		
-		pp->distances = malloc( sizeof(double) * 1 );
-		pp->(distances[0]) = distance;
+		pq->distances = malloc( sizeof(double) * 1 );
+		pq->distances[0] = distance;
 	}
 	// increase size of arrays and add another elements
 	else {
-		pp->no_elements++;
+		pq->no_elements++;
 		
-		pp->vertexes = realloc( pp->vertexes, sizeof(int) * pp-> no_elements );
-		pp->(vertexes[0]) = vertex;
+		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq-> no_elements );
+		pq->vertexes[0] = vertex;
 
-		pp->distances = realloc( pp->distances, sizeof(double) * pp->no_elements );
-		pp->(distances[0]) = distance;
-	}
-}
-
-void Set_add( Set set, int vertex ) {
-
-	// initialize Set set if necessary and add element
-	if( set == NULL ) {
-		set = malloc( sizeof( Set ) );
-		set->no_elements = 1;
-		
-		set->vertexes = malloc( sizeof(int) * 1 );
-		set->(vertexes[0]) = vertex;
-	}
-	// increase size of array and add another element
-	else {
-		set->no_elements++;
-		
-		set->vertexes = realloc( set->vertexes, sizeof(int) * set-> no_elements );
-		set->(vertexes[0]) = vertex;
-
-		set->distances = realloc( set->distances, sizeof(double) * set->no_elements );
-		set->(distances[0]) = distance;
+		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
+		pq->distances[0] = distance;
 	}
 }
 
@@ -85,9 +67,9 @@ void Set_add( Set set, int vertex ) {
 
 int Set_is_element_in( Set set, int element ) {
 	
-	int no_elements = pp->no_elements;
-	while( no_elements-- > 0 )
-		if( set->(element[no_elements]) == element )
+	int n = set->no_elements;
+	while( n-- > 0 )
+		if( set->elements[n] == element )
 			return 1;
 	return 0;
 }
@@ -104,7 +86,7 @@ void Set_add( Set set, int element ) {
 		set->no_elements = 1;
 		
 		set->elements = malloc( sizeof(int) * 1 );
-		set->(elements[0]) = vertex;
+		set->elements[0] = element;
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {
@@ -115,7 +97,7 @@ void Set_add( Set set, int element ) {
 		set->no_elements++;
 		
 		set->elements = realloc( set->elements, sizeof(int) * set-> no_elements );
-		set->(elements[0]) = element;
+		set->elements[0] = element;
 	}
 }
 
@@ -125,16 +107,16 @@ void Set_remove( Set set, int element ) {
 	int did_find = 0;
 	for( int i = 0; i < set->no_elements; i++ ) {
 		if( did_find )
-			set->(elements[i-1]) = set->(elements[i]);
-		else if( set->(elements[i]) == element )
+			set->elements[i-1] = set->elements[i];
+		else if( set->elements[i] == element )
 			did_find = 1;
 	}
 	if( did_find ) {
 		set->no_elements--;
-		set->elements = realloc( set->elements, sizeof set->(elements[0]) * set->no_elements );
+		set->elements = realloc( set->elements, sizeof set->elements[0] * set->no_elements );
 	}
 	else
-		printf(stderr, "data_structures.c: Element being tried to removed isn't in set."
+		fprintf(stderr, "data_structures.c: Element being tried to removed isn't in set.");
 }
 
 
