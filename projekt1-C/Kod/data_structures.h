@@ -19,11 +19,11 @@ typedef struct {
 } * Set;
 
 // Removes from PriorityQueue pp vertex with the shortest distance, returns it.
-int PP_get( PriorityQueue pp );
+int PQ_get( PriorityQueue pq );
 
 /* Adds to PriorityQueue pp vertex with given number (vertex) and distance.
  * If PriorityQueue pp is NULL, then initialize it. */
-void PP_put( PriorityQueue pp, int vertex, double distance );
+void PQ_put( PriorityQueue pq, int vertex, double distance );
 
 
 /* Adds to Set set vertex with given number (vertex).
