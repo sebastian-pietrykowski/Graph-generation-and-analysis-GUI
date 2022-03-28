@@ -1,3 +1,4 @@
+#include "data_structures.h"
 
 int PP_get( PriorityQueue pp ) {
 	
@@ -81,34 +82,59 @@ void Set_add( Set set, int vertex ) {
 }
 
 
-void Set_add( Set set, int vertex ) {
+
+int Set_is_element_in( Set set, int element ) {
+	
+	int no_elements = pp->no_elements;
+	while( no_elements-- > 0 )
+		if( set->(element[no_elements]) == element )
+			return 1;
+	return 0;
+}
+
+int Set_is_empty( Set set ) {
+	return set->no_elements == 0 ? 1 : 0;
+}
+
+void Set_add( Set set, int element ) {
 
 	// initialize Set set if necessary and add element
 	if( set == NULL ) {
 		set = malloc( sizeof( Set ) );
 		set->no_elements = 1;
 		
-		set->vertexes = malloc( sizeof(int) * 1 );
-		set->(vertexes[0]) = vertex;
+		set->elements = malloc( sizeof(int) * 1 );
+		set->(elements[0]) = vertex;
+	}
+	// check if element is already in set
+	else if ( Set_is_element_in( set, element) ) {
+		fprintf( stderr, "data_structures.c: Element being tried to add to set is already in it." );
 	}
 	// increase size of array and add another element
 	else {
 		set->no_elements++;
 		
-		set->vertexes = realloc( set->vertexes, sizeof(int) * set-> no_elements );
-		set->(vertexes[0]) = vertex;
-
-		set->distances = realloc( set->distances, sizeof(double) * set->no_elements );
-		set->(distances[0]) = distance;
+		set->elements = realloc( set->elements, sizeof(int) * set-> no_elements );
+		set->(elements[0]) = element;
 	}
 }
 
-int Set_is_element_in( Set set, int vertex ) {
-	
-	int no_elements = pp->no_elements;
-	while( no_elements-- > 0 )
-		if( set->(vertexes[no_elements]) == vertex )
-			return 1;
-	return 0;
+void Set_remove( Set set, int element ) {
 
+	// try to find element to remove, if found shift elements by 1 index and reduce size of array
+	int did_find = 0;
+	for( int i = 0; i < set->no_elements; i++ ) {
+		if( did_find )
+			set->(elements[i-1]) = set->(elements[i]);
+		else if( set->(elements[i]) == element )
+			did_find = 1;
+	}
+	if( did_find ) {
+		set->no_elements--;
+		set->elements = realloc( set->elements, sizeof set->(elements[0]) * set->no_elements );
+	}
+	else
+		printf(stderr, "data_structures.c: Element being tried to removed isn't in set."
 }
+
+
