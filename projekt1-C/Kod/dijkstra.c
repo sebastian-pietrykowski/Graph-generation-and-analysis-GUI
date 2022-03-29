@@ -48,10 +48,10 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 	 *
 	 * There are two arrays predecessors[] - the one in this function and the one in PriorityQueue - that's because
 	 * elements of array in PriorityQueue are being removed, while elements in array in this function always exist. */
-	PP_put( queue, start_vertex_number, 0 );
+	PQ_put( queue, start_vertex_number, 0 );
 	for( int i = 0; i < graph->no_vertexes; i++ )
 		if( i != start_vertex_number )
-			PP_put( queue, i, DBL_MAX );
+			PQ_put( queue, i, DBL_MAX );
 	
 	while( queue->no_elements != 0 ) {
 		int removed_element = PP_get( queue );   // index of vertex removed from queue
