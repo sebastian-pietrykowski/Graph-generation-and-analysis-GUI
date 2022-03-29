@@ -63,6 +63,12 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 	}
 }
 
+void free_PQ( PriorityQueue pq ) {
+	feee( pq->vertexes );
+	free( pq->distances );
+	free( pq );
+}
+
 
 
 int Set_is_element_in( Set set, int element ) {
@@ -119,4 +125,8 @@ void Set_remove( Set set, int element ) {
 		fprintf(stderr, "data_structures.c: Element being tried to removed isn't in set.");
 }
 
+void free_Set( Set set ) {
+	free( set->elements );
+	free( set );
+}
 

@@ -25,6 +25,8 @@ int PQ_get( PriorityQueue pq );
  * If PriorityQueue pp is NULL, then initialize it. */
 void PQ_put( PriorityQueue pq, int vertex, double distance );
 
+// Removes priority queue from memory.
+void free_PQ( PriorityQueue pq );
 
 // Returns 1 if element is present in set, 0 if not.
 int Set_is_element_in( Set set, int element );
@@ -40,5 +42,7 @@ void Set_add( Set set, int element );
 // Removes from set element with given number.
 void Set_remove( Set set, int element );
 
+// Removes set from memory.
+void free_set( Set set );
 
 #endif
