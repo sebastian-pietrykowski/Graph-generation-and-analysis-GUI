@@ -53,7 +53,7 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 
 	// initialize PriorityQueue pq if necessary and add elements
 	if( pq == NULL ) {
-		printf(stderr, "To use PriorityQueue you first need to reassign function make_PQ() to it.\n");
+		fprintf(stderr, "To use PriorityQueue you first need to reassign function make_PQ() to it.\n");
 	}
 	// increase size of arrays and add another elements
 	else {
@@ -102,7 +102,7 @@ void Set_add( Set set, int element ) {
 
 	// initialize Set set if necessary and add element
 	if( set == NULL ) {
-		printf(stderr, "To use Set you first need to reassign function make_Set() to it.\n");
+		fprintf(stderr, "To use Set you first need to reassign function make_Set() to it.\n");
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {

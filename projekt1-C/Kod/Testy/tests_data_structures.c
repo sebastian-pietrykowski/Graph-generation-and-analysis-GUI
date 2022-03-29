@@ -7,7 +7,7 @@ int test_PQ() {
 	int no_tests = 10;
 	int no_tests_passed = 0;
 
-	printf("Testing PriorityQueue in data_structures.c:\n");
+	printf("\nTesting PriorityQueue in data_structures.c:\n");
 
 	// Test 1
 	PriorityQueue pq1 = make_PQ();
