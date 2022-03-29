@@ -18,17 +18,22 @@ typedef struct {
 
 } * Set;
 
+// Initializes new PriorityQueue
 PriorityQueue make_PQ();
 
 // Removes from PriorityQueue pp vertex with the shortest distance, returns it.
 int PQ_get( PriorityQueue pq );
 
 /* Adds to PriorityQueue pp vertex with given number (vertex) and distance.
- * If PriorityQueue pp is NULL, then initialize it. */
+ * If pq doesn't contain any element returns -1. */
 void PQ_put( PriorityQueue pq, int vertex, double distance );
 
 // Removes priority queue from memory.
 void free_PQ( PriorityQueue pq );
+
+
+// Initializes new Set
+Set make_set();
 
 // Returns 1 if element is present in set, 0 if not.
 int Set_is_element_in( Set set, int element );
@@ -37,8 +42,7 @@ int Set_is_element_in( Set set, int element );
 int Set_is_empty( Set set );
 
 /* Adds to Set set element with given number.
- * Added elements must be unique integers.
- * If Set set is NULL, then initialize it. */
+ * Added elements must be unique integers. */
 void Set_add( Set set, int element );
 
 // Removes from set element with given number.

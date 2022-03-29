@@ -53,7 +53,7 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 
 	// initialize PriorityQueue pq if necessary and add elements
 	if( pq == NULL ) {
-		printf("error\n");
+		printf(stderr, "To use PriorityQueue you first need to reassign function make_PQ() to it.\n");
 	}
 	// increase size of arrays and add another elements
 	else {
@@ -75,6 +75,16 @@ void free_PQ( PriorityQueue pq ) {
 
 
 
+
+Set make_set() {	
+	Set set = malloc( sizeof( Set ) );
+	set->no_elements = 0;
+		
+	set->elements = malloc( 0 );
+	
+	return set;
+}
+
 int Set_is_element_in( Set set, int element ) {
 	
 	int n = set->no_elements;
@@ -92,11 +102,7 @@ void Set_add( Set set, int element ) {
 
 	// initialize Set set if necessary and add element
 	if( set == NULL ) {
-		set = malloc( sizeof( Set ) );
-		set->no_elements = 1;
-		
-		set->elements = malloc( sizeof(int) * 1 );
-		set->elements[0] = element;
+		printf(stderr, "To use Set you first need to reassign function make_Set() to it.\n");
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {
@@ -113,7 +119,7 @@ void Set_add( Set set, int element ) {
 
 void Set_remove( Set set, int element ) {
 
-	// try to find element to remove, if found shift elements by 1 index and reduce size of array
+	// try to find element to remove, if found then shift elements by 1 index and reduce size of array
 	int did_find = 0;
 	for( int i = 0; i < set->no_elements; i++ ) {
 		if( did_find )
