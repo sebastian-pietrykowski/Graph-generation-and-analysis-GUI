@@ -135,6 +135,42 @@ int * neighbors( graph_t graph, int vertex ) {
 return neighbors;
 }
 
+int *potential_neighbors( graph_t graph, int vertex ) {
+	
+	int * potential_neighbors = malloc( sizeof(int) * 4 ); /* array of vertices to
+								  whom edges may be created */
+	int iter = 0;
+	int tmp = -1;
+
+	// neighbor to north
+	if( (tmp = vertex - graph->columns) > 0 )
+		potential_neighbors[iter++] = tmp;
+	
+	// neighbor to south
+	if( (tmp = vertex + graph->columns) < graph->no_vertexes )
+		potential_neighbors[iter++] = tmp;
+	
+	// neighbors to west and east
+	// find number of row containing vertex
+	int row_number = vertex / graph->columns +1;
+	
+	// find first and last elements of row
+	int start_row_number = (row_number-1) * graph->columns;
+	int end_row_number = ( (row_number) * graph->columns ) - 1;
+
+	// check if negihbor to east can exist
+	if( start_row_number < vertex )
+		potential_neighbors[iter++] = vertex - 1;
+	// check if neighbor to west can exist
+	if( vertex < end_row_number )
+		potential_neighbors[iter++] = vertex + 1;
+
+	// fulfill the rest of array with -1
+	while( iter < 4 ) {
+		potential_neighbors[iter++] = -1;
+	}
+}
+
 void free_graph( graph_t graph ) {
  for(int i = 0 ; i < graph->no_vertexes; i++)
   free(graph->adj_mat[i]);

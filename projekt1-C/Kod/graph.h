@@ -13,13 +13,14 @@ graph_t read_graph(FILE *in); /* Function responsible for reading the graph from
 
 int does_have_all_edges(graph_t graph); /* Function responsible for checking if all the possible edges in the graph exist */
 
-int is_connected(graph_t graph);
-
 int write_graph(graph_t graph, FILE *out); /* Writes the graph structure to the out file */
 
 graph_t make_graph(int columns, int rows); /* Function responsible for initialization graph structure and memory allocation for adj_mat */
 
 int *neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there is an edge connecting them to the selected vertex */
+
+int *potential_neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there may
+							be created edge connecting them to the selected vertex */
 
 void free_graph(graph_t graph); /* Function responsible for freeing the allocated graph structure */
 
