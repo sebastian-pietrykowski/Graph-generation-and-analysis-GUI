@@ -4,6 +4,17 @@
 
 #include "data_structures.h"
 
+PriorityQueue make_PQ() {
+
+	PriorityQueue pq = malloc( sizeof(PriorityQueue) );
+	
+	pq->no_elements = 0;	
+	pq->vertexes = malloc( 0 );
+	pq->distances = malloc( 0 );
+
+	return pq;
+}
+
 int PQ_get( PriorityQueue pq ) {
 	
 	if( pq->no_elements < 1 )
@@ -42,14 +53,7 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 
 	// initialize PriorityQueue pq if necessary and add elements
 	if( pq == NULL ) {
-		pq = malloc( sizeof( PriorityQueue ) );
-		pq->no_elements = 1;
-		
-		pq->vertexes = malloc( sizeof(int) * 1 );
-		pq->vertexes[0] = vertex;
-		
-		pq->distances = malloc( sizeof(double) * 1 );
-		pq->distances[0] = distance;
+		printf("error\n");
 	}
 	// increase size of arrays and add another elements
 	else {
@@ -64,7 +68,7 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 }
 
 void free_PQ( PriorityQueue pq ) {
-	feee( pq->vertexes );
+	free( pq->vertexes );
 	free( pq->distances );
 	free( pq );
 }

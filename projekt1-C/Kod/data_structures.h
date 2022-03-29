@@ -18,6 +18,8 @@ typedef struct {
 
 } * Set;
 
+PriorityQueue make_PQ();
+
 // Removes from PriorityQueue pp vertex with the shortest distance, returns it.
 int PQ_get( PriorityQueue pq );
 
