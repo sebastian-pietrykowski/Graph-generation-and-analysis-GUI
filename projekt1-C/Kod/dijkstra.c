@@ -41,8 +41,8 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 	double * distances;
 	initiate_values_dijkstra( graph, start_vertex_number, &predecessors, &distances );
 
-	Set checked_vertexes;
-	PriorityQueue queue;
+	Set checked_vertexes = make_Set();
+	PriorityQueue queue = make_PQ();
 
 	/* Fulfill queue with vertexes.
 	 *
@@ -102,28 +102,19 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 
 void print_path( int * path, int no_elements, int does_print_weights ) {
 	
-	// do untill it reaches the last element of path, received path is reversed
-	while( no_elements-- > 0 ) {
+	/* Do untill it reaches the last element of path,
+	 * path received from argument is reversed
+	 * so it need to revert it. */
+	while( --no_elements > 0 ) {
 
 		// this is the last element
 		if( no_elements == 0 )
 			printf("%d\n", path[ no_elements ] );
-		// not last element, print weights
+		// not the last element, print weights
 		else if( does_print_weights )
 			printf("%d (%lf) -> ", path[ no_elements ] );
-		// not last element, don't print weights
+		// not the last element, don't print weights
 		else
 			printf("%d -> ", path[ no_elements ] );
 	}
-}
-
-void free_PP( PriorityQueue pp ) {
-	free( pp->vertexes );
-	free( pp->distances );
-	free( pp );
-}
-
-void free_Set( Set set ) {
-	free( set->vertexes );
-	free( set );
 }

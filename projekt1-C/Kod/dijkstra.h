@@ -32,11 +32,5 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 void print_path( int * reversed_path, int no_elements, int does_print_weights );
 
 
-// Remove PriorityQueue pp from memory.
-void free_PP( PriorityQueue pp );
-
-// Remove Set set from memory.
-void free_Set( Set set );
-
 #endif
 
