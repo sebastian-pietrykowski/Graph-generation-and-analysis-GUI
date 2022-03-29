@@ -67,7 +67,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 		}
 		free( neighbors );
 	}
-	return pedecessors;
+	return predecessors;
 }
 
 int * determine_path( int * no_path_elements, int * predecessors, int start_vertex_number, int end_vertex_number ) {
