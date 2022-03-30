@@ -43,4 +43,5 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 		
 		free( potential_neighbors );
 	}
+	return graph;
 }
