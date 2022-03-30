@@ -11,3 +11,5 @@ void print_test_message( int no_current_test, int condition, int * no_tests_pass
 	}
 	else printf("failed\n");
 }
+
+#endif
