@@ -89,7 +89,9 @@ int main(int argc, char **argv) {
       } else
         fprintf(stdout, "Graph is inconsistent\n");
     }
-    /* Tutaj juz dijkstra */
+    
+    int * dijkstra = dijkstra( graph, start_vertex_number );
+
   
  fclose(in);
  exit(EXIT_SUCCESS);
