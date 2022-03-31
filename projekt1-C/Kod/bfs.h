@@ -23,3 +23,4 @@ int is_FIFO_empty(FIFO_t fifo); /* Function checks if there are vertexes in the 
 
 #endif
 
+

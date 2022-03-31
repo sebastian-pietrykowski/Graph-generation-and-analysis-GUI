@@ -71,3 +71,4 @@ void free_bfs ( FIFO_t fifo, int * vertexes ) {
     free(vertexes);
 }
 
+
