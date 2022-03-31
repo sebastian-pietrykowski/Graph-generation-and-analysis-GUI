@@ -3,7 +3,7 @@
 
 void print_test_message( int number_of_current_test, char * name, int condition, int * no_tests_passed ) {
 	
-	printf("\tTest %d - %s: ", name, number_of_current_test );
+	printf("\tTest %d - %s: ", number_of_current_test, name );
 
 	if( condition ) {
 		printf("passed\n");
