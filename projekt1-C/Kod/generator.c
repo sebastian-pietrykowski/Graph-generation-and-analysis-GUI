@@ -4,7 +4,8 @@
 #include "data_structures.h"
 
 graph_t generate_complete_graph( int columns, int rows, double from_weight, double to_wieght ) {
-
+	
+	graph_t graph = make_graph(); 
 }
 
 graph_t generate_connected_graph( int columns, int rows, double from_weight, double to_weight ) {
@@ -72,7 +73,7 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 		for( int i = 0; i < number_of_potential_neighbors; i++ )
 			Set_add( remaining_neighbors, potential_neighbors[i] );
 
-		// try to create edge untill there are remeining_neighbors
+		// try to create edge untill there are no remaining_neighbors
 		try_to_create_edge( vertex_from, remaining_neighbors, graph );
 
 		free( remaining_neighbors );
