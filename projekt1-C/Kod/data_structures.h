@@ -10,7 +10,8 @@ typedef struct {
 
 } * PriorityQueue;
 
-// Contains array storing vertexes which increases its size when necessary.
+/* Contains array storing integer numbers which increases its size when necessary.
+ * One number can be stored only once till removal. */
 typedef struct {
 
 	int * elements;   // array of vertexes
@@ -47,6 +48,9 @@ void Set_add( Set set, int element );
 
 // Removes from set element with given number.
 void Set_remove( Set set, int element );
+
+// Removes from set random number and returns its value.
+int Set_pop( Set set );
 
 // Removes set from memory.
 void free_set( Set set );
