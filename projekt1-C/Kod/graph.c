@@ -7,8 +7,8 @@
 
 #define MAXLINE 256
 
-graph_t make_graph(int columns, int rows) {
-  graph_t graph = malloc(sizeof *graph); /* initialization of graph structure */
+graph_t make_graph(int columns, int rows, graph_t graph) {
+  graph = malloc(sizeof *graph); /* initialization of graph structure */
 
   graph->columns = columns;
 
@@ -27,15 +27,13 @@ graph_t make_graph(int columns, int rows) {
   return graph;
 }
 
-
-graph_t read_graph(FILE* in) {
+graph_t read_graph(FILE* in, graph_t graph) {
   int columns, rows;
-  if( (fscanf(in, "%d %d", &(rows), &(columns) ) != 2) ) {
-        return EXIT_FAILURE;
-   }
+  if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
+    return EXIT_FAILURE;
+  }
 
-  graph_t graph = NULL;
-  graph = make_graph(columns, rows);
+  graph = make_graph(columns, rows, graph);
 
   char line[MAXLINE];
   char delim[3] = " :"; /* delimiter */
@@ -46,7 +44,6 @@ graph_t read_graph(FILE* in) {
   /*We start the iteration from -1 because the vertex and weight data start on the second line of the file */
   for (from_vertex = -1; from_vertex < graph->no_vertexes; from_vertex++) {
     while (fgets(line, MAXLINE, in) != NULL) {
-
       char* token = strtok(line, delim); /* breaking line into a series of tokens */
       int temp = 1;
 
@@ -56,8 +53,8 @@ graph_t read_graph(FILE* in) {
 
           if (temp % 2 == 0) { /* Thanks to the condition if we can alternately enter vertexes and weights into the array of subsequent tokens */
             to_vertex = atoi(token);
-            if( to_vertex < 0 ) {
-                fprintf(stderr,"Error, invalid vertex number, line number : %d\n",from_vertex+2);
+            if (to_vertex < 0) {
+              fprintf(stderr, "Error, invalid vertex number, line number : %d\n", from_vertex + 2);
             }
           } else {
             weight = atof(token);
@@ -71,7 +68,7 @@ graph_t read_graph(FILE* in) {
     }
   }
 
-return graph;
+  return graph;
 }
 
 int does_have_all_edges(graph_t graph) {
@@ -84,55 +81,54 @@ int does_have_all_edges(graph_t graph) {
     }
   }
   /* We multiply by 4 because there are only four vertices that are "corners" of the graph that have a maximum of 2 connections to other vertices,
- *
- *  then we add a number that is the product of "(graph->columns -2 )" ( becuase this is the number of vertices in the first columns that are not corner vertices ) ,
- *  and "2" ( because we also consult the last column ) ,
- *  and "3" ( because this vertices can be connected to up to three other vertices )
- *
- *  then we add a number that is the product of "(graph->rows -2 )" (because this is the number of vertives in the first row that are not corner vertices ),
- *  and "2" ( because we also consult the last row ),
- *  and "3" (beacuse this vertices can be connected to up to three other vertices )
- *
- *  then we add a number that is the product of "(graph->rows - 2 ) * ( graph->columns - 2 )" because this is the number of vertices that are not the most distant vertices from the center of the graph - lying on its outer sides
- *  and "4" ( because this vertices can be connected to up to four other vertices
- */
-  if (temp != (4 * 2 + (graph->columns - 2) * 2 * 3 + (graph->rows - 2) * 2 * 3 + ( (graph->rows - 2) * (graph->columns - 2) ) * 4 ) )
-   return 0; /* Graph does not have all possible edges */
-   else
-     return 1;
-
+   *
+   *  then we add a number that is the product of "(graph->columns -2 )" ( becuase this is the number of vertices in the first columns that are not corner vertices ) ,
+   *  and "2" ( because we also consult the last column ) ,
+   *  and "3" ( because this vertices can be connected to up to three other vertices )
+   *
+   *  then we add a number that is the product of "(graph->rows -2 )" (because this is the number of vertives in the first row that are not corner vertices ),
+   *  and "2" ( because we also consult the last row ),
+   *  and "3" (beacuse this vertices can be connected to up to three other vertices )
+   *
+   *  then we add a number that is the product of "(graph->rows - 2 ) * ( graph->columns - 2 )" because this is the number of vertices that are not the most distant vertices from the center of the graph - lying on its outer sides
+   *  and "4" ( because this vertices can be connected to up to four other vertices
+   */
+  if (temp != (4 * 2 + (graph->columns - 2) * 2 * 3 + (graph->rows - 2) * 2 * 3 + ((graph->rows - 2) * (graph->columns - 2)) * 4))
+    return 0; /* Graph does not have all possible edges */
+  else
+    return 1;
 }
 
-int write_graph( graph_t graph, FILE * out ) {
- if( out == NULL ) {
-   fprintf(stderr, "Error, can't write to file\n");
-   return 1;
+int write_graph(graph_t graph, FILE* out) {
+  if (out == NULL) {
+    fprintf(stderr, "Error, can't write to file\n");
+    return 1;
   }
- fprintf(out,"%d %d",graph->rows, graph->columns);
- fprintf(out,"\n");
- for(int i = 0 ; i < graph->no_vertexes; i++) {
-  fprintf(out,"\t ");
-  for(int j = 0 ; j < graph->no_vertexes; j++) {
-    if(graph->adj_mat[i][j] != -1 ) {
-    fprintf(out," %d :%lf ",j,graph->adj_mat[i][j]);
+  fprintf(out, "%d %d", graph->rows, graph->columns);
+  fprintf(out, "\n");
+  for (int i = 0; i < graph->no_vertexes; i++) {
+    fprintf(out, "\t ");
+    for (int j = 0; j < graph->no_vertexes; j++) {
+      if (graph->adj_mat[i][j] != -1) {
+        fprintf(out, " %d :%lf ", j, graph->adj_mat[i][j]);
+      }
+    }
+    fprintf(out, "\n");
+  }
+  return 0;
+}
+
+int* neighbors(graph_t graph, int vertex) {
+  int iter = 0;
+  int* neighbors = malloc(4 * sizeof(*neighbors)); /*  One vertex can be connected to up to four other vertices */
+  for (int j = 0; j < graph->no_vertexes; j++) {
+    if (graph->adj_mat[vertex][j] != -1) {
+      neighbors[iter] = j;
+      iter++;
     }
   }
-  fprintf(out,"\n");
-}
-return 0;
-}
 
-int * neighbors( graph_t graph, int vertex ) {
- int iter = 0;
- int * neighbors = malloc ( 4 * sizeof (*neighbors ) ); /*  One vertex can be connected to up to four other vertices */
- for(int j = 0 ; j < graph->no_vertexes; j++) {
-  if(graph->adj_mat[vertex][j] != -1 ) {
-          neighbors[iter] = j;
-          iter++;
-  }
-}
-
-return neighbors;
+  return neighbors;
 }
 
 int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) {
@@ -168,12 +164,16 @@ int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) 
 	// trim the size of array
 	if( *number_of_neighbors != 4 )
 		potential_neighbors = realloc( potential_neighbors, sizeof(int) * *number_of_vertices );
+	
+	return potential_neighbors;
 }
 
-void free_graph( graph_t graph ) {
- for(int i = 0 ; i < graph->no_vertexes; i++)
-  free(graph->adj_mat[i]);
+void free_graph(graph_t graph) {
+  for (int i = 0; i < graph->no_vertexes; i++) {
+    free(graph->adj_mat[i]);
+  }
   free(graph->adj_mat);
   free(graph);
 }
+
 
