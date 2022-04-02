@@ -19,8 +19,10 @@ graph_t make_graph(int columns, int rows); /* Function responsible for initializ
 
 int *neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there is an edge connecting them to the selected vertex */
 
-int *potential_neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there may
-							be created edge connecting them to the selected vertex */
+int *potential_neighbors( graph_t graph, int vertex,
+		int * number_of_vertices ); /* Function returns an array of vertices for which there
+					       may be created edge connecting them to the selected vertex,
+					       number of vertices is handed via number_of_vertices */
 
 void free_graph(graph_t graph); /* Function responsible for freeing the allocated graph structure */
 
