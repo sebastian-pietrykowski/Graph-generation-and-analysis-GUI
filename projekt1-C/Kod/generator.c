@@ -12,36 +12,36 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 	graph_t = make_graph();
 	int number_of_vertices = columns * rows;
 	
+	// create array to mark visited vertices
 	int *visited = malloc( sizeof(int) * number_of_vertices );
 	for(int i = 0; i < number_of_vertices; i++ )
 		visited[i] = 0;
 	
-
+	// select first vertex and create edge to any neighboring vertex
 	int vertex_from = 0;
 	visited[vertex_from] = 1;
-
 	add_edge_to_neighbor( vertex_from, graph, visited );
 	
 
-
-	Set potential_start_vertices = make_Set();
-	for( int i = 0; i < number_of_vertices; i++ )
-		if( visited[i] == 1 )
-			Set_add( potential_start_vertices, i );
-
-	int did_add = 0;
-
-	while( !did_add || !Set_is_empty( potential_start_vertices ) ) {
-		vertex_from = Set_pop( potential_start_vertices );
-		did_add = add_edge_to_neighbor( vertex_from, graph, visited );
+	/* Until all vertices are marked as visited add next edges.
+	 * Chose random vertex from visited vertices and add edge to one
+	 * of its unvisited neighbors, if there are no unvisited neighbor
+	 * vertices, try to do it with the next from already visited vertex. */
+	while( are_all_vertices_visited( int * visited, graph->no_vertexes ) != 0) {
+		
+		Set potential_start_vertices = make_Set();
+		for( int index = 0; index < number_of_vertices; index++ )
+			if( visited[index] == 1 )
+				Set_add( potential_start_vertices, index );
+		int did_add = 0;
+		while( !did_add || !Set_is_empty( potential_start_vertices ) ) {
+			vertex_from = Set_pop( potential_start_vertices );
+			did_add = add_edge_to_neighbor( vertex_from, graph, visited );
+		}
+		free( potential_start_vertices );
 	}
-	free( potential_start_vertices );
-
-
-
 	free( potential_neighbors );
 	
-
 	return graph;
 }
 
@@ -97,6 +97,14 @@ int add_edge_to_neighbor( int vertex_from, graph_t graph, int * visited ) {
 	}
 	free( potential_neighbors );
 	return 0;
+}
+
+int are_all_vertices_visited( int * visited, int number_of_vertices ) {
+	
+	for( int i = 0; i < graph->no_vertexes; i++ )
+		if( visited[i] == 0 )
+			return 0;
+	return 1;
 }
 
 void try_to_create_random_edge( int vertex_from, Set remaining_neighbors, Graph graph ) {
