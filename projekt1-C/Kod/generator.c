@@ -5,12 +5,49 @@
 
 graph_t generate_complete_graph( int columns, int rows, double from_weight, double to_wieght ) {
 	
-	graph_t graph = make_graph(); 
+	graph_t graph = make_graph( columns, rows ); 
+	int number_of_vertices = columns * rows;
+
+	// add edges horizontally
+	for( int vertical_counter = 0; vertical_counter < number_of_vertices; vertical_counter++ )
+		for( int horizontal_counter = 1; horizontal_counter < number_of_vertices; horizontal_counter++ ) {
+			
+			srand(time(NULL));
+			int direction = rand() % 2; /* direction of edge:
+						       0 - from lesser to greater,
+						       1 - from greater to lesser */
+			int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
+			int vertex2 = vertex1 + 1;
+			double wage = ( rand() % (to_weight-from_weight+1) ) + from_weight;
+			
+			if( direction == 0 )
+				graph->adj_mat[vertex1][vertex2] = wage;
+			else
+				graph->adj_mat[vertex2][vertex2] = wage;
+
+		}
+	// add edges vertically
+	for( int horizontal_counter = 0; horizontal_counter < number_of_vertices; horizontal_counter++ )
+		for( int vertical_counter = 1; vertical_counter < number_of_vertices; vertical_counter++ ) {
+			
+			srand(time(NULL));
+			int direction = rand() % 2; /* direction of edge:
+						       0 - from lesser to greater,
+						       1 - from greater to lesser */
+			int vertex1 = (vertical_counter-1) * graph->columns + horizontal_counter;
+			int vertex2 = vertical_counter * graph->columns + horizontal_counter;
+			double wage = ( rand() % (to_weight-from_weight+1) ) + from_weight;
+			
+			if( direction == 0 )
+				graph->adj_mat[vertex1][vertex2] = wage;
+			else
+				graph->adj_mat[vertex2][vertex2] = wage;
+		}
 }
 
 graph_t generate_connected_graph( int columns, int rows, double from_weight, double to_weight ) {
 
-	graph_t = make_graph();
+	graph_t = make_graph(columns, rows);
 	int number_of_vertices = columns * rows;
 	
 	// create array to mark visited vertices
@@ -49,7 +86,7 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 
 graph_t generate_random_graph( int columns, int rows, double from_weight, double to_weight ) {
 	
-	graph_t graph = make_graph();
+	graph_t graph = make_graph( columns, rows );
 
 	int number_of_vertices = columns * rows;
 
