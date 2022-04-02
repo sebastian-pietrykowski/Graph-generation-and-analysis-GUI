@@ -140,9 +140,9 @@ int Set_pop( Set set ) {
 
 	// There is no element to be taken from set
 	if( set->no_elements < 1 ) {
-		printf( stderr, "Set.c: Set_pop(...) - There is no element to be taken from Set\n" );
-		System.exit(1);
-		return;
+		fprintf( stderr, "Set.c: Set_pop(...) - There is no element to be taken from Set\n" );
+		exit(1);
+		return 0;
 	}
 	// There is only one element in set
 	else if( set->no_elements == 1 ) {
@@ -163,10 +163,10 @@ int Set_pop( Set set ) {
 			set->elements[ index-1 ] = set->elements[ index ];
 		}
 		set->no_elements--;
-		set->elements = realloc( set->elements, sizeof set->element[0] * set->no_elements );
+		set->elements = realloc( set->elements, sizeof set->elements[0] * set->no_elements );
 		return taken_element_value;
 	}
-	return;
+	return 0;
 }
 
 void free_Set( Set set ) {
