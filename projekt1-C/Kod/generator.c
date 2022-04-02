@@ -9,6 +9,11 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 
 graph_t generate_connected_graph( int columns, int rows, double from_weight, double to_weight ) {
 
+	int start_graph_vertex = 0;
+
+	int *potential_neighbors = potential_neighbors( graph, start_graph_vertex );
+
+
 }
 
 
