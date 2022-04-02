@@ -19,4 +19,8 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
  * and with random edges' weights from of range (from_weight, to_weight). */
 graph_t generate_random_graph( int columns, int rows, double from_weight, double to_weight );
 
+/* Possibly creates edge from vertex with number vertex_from
+ * to one of vertices in Set remaining_neighbors */
+void try_to_create_random_edge( int vertex_from, Set remaining_neighbors, Graph graph );
+
 #endif
