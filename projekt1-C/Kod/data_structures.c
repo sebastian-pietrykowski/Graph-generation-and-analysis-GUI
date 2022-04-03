@@ -87,7 +87,7 @@ void free_PQ( PriorityQueue pq ) {
 
 
 
-Set make_set() {	
+Set make_Set() {	
 	Set set = malloc( sizeof( Set ) );
 	set->no_elements = 0;
 		

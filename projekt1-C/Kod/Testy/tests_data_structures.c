@@ -117,6 +117,8 @@ int test_PQ() {
 	test_PQ_put( 28, pq1, 1, 0, 4, 1.2, &no_tests_passed );
 	
 	
+	free_PQ( pq1);
+
 	if( no_tests_passed == no_tests )
 		printf("Passed\n");
 	else printf("Failed\n");
@@ -127,31 +129,56 @@ int test_PQ() {
 }
 
 int test_Set() {
+
+	int no_tests = 30;
+	int no_tests_passed = 0;
+
+	int taken_element = INT_MAX;
+
+	printf("\nTesting Set in data_structures.c:\n");
+	
+	Set set1 = make_Set();
+	
+	// Test 1
+	print_test_message( 1, "make_Set (initializing object Set)", set1 != NULL, &no_tests_passed );
+
+	// Test 2
+	
 	
 }
-void test_PQ_get_number_of_elements( int number_of_current_test, PriorityQueue pq, int predicted_number_of_elements, int *no_tests_passed ) {
+void test_PQ_get_number_of_elements( int number_of_current_test, PriorityQueue pq,
+		int predicted_number_of_elements, int *no_tests_passed ) {
+
 	print_test_message( number_of_current_test, "PQ_get (number of elements in PQ)",
 			pq->no_elements == predicted_number_of_elements, no_tests_passed );
 }
 
-void test_PQ_get_value_of_taken_element( int number_of_current_test, int actual_value, int predicted_value, int *no_tests_passed ) {
+void test_PQ_get_value_of_taken_element( int number_of_current_test, int actual_value,
+		int predicted_value, int *no_tests_passed ) {
+
 	print_test_message( number_of_current_test, "PQ_get (value of taken element)",
 			actual_value == predicted_value, no_tests_passed );
 }
 
 
-void test_PQ_put_number_of_elements( int number_of_current_test, PriorityQueue pq, int predicted_number_of_elements, int *no_tests_passed ) {
+
+void test_PQ_put_number_of_elements( int number_of_current_test, PriorityQueue pq,
+		int predicted_number_of_elements, int *no_tests_passed ) {
+
 	print_test_message( number_of_current_test, "PQ_put (number of elements in PQ)",
 			pq->no_elements == predicted_number_of_elements, no_tests_passed );
 }
 
+void test_PQ_put_value_of_element( int number_of_current_test, PriorityQueue pq, int index,
+		int predicted_value, int *no_tests_passed ) {
 
-void test_PQ_put_value_of_element( int number_of_current_test, PriorityQueue pq, int index, int predicted_value, int *no_tests_passed ) {
 	print_test_message( number_of_current_test, "PQ_put (value of element with given index)",
 			pq->vertexes[index] == predicted_value, no_tests_passed );
 }
 
-void test_PQ_put_value_of_distance( int number_of_current_test, PriorityQueue pq, int index, double predicted_value, int *no_tests_passed ) {
+void test_PQ_put_value_of_distance( int number_of_current_test, PriorityQueue pq, int index,
+		double predicted_value, int *no_tests_passed ) {
+
 	print_test_message( number_of_current_test, "PQ_put (value of element's distance)",
 			pq->distances[index] == predicted_value, no_tests_passed );
 }
@@ -164,4 +191,54 @@ void test_PQ_put( int number_of_current_test, PriorityQueue pq, int predicted_nu
 	test_PQ_put_value_of_element( number_of_current_test++, pq, index, predicted_vertex_value, no_tests_passed );
 	
 	test_PQ_put_value_of_distance( number_of_current_test++, pq, index, predicted_distance_value, no_tests_passed );
+}
+
+
+
+void test_Set_is_element_in_true( int number_of_current_test, Set set, int element, int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_is_element_in",
+			Set_is_element_in( set, element ), no_tests_passed );
+}
+
+void test_Set_is_element_in_false( int number_of_current_test, Set set, int element, int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_is_element_in",
+			!Set_is_element_in( set, element ), no_tests_passed );
+}
+
+
+void test_Set_is_empty_true( int number_of_current_test, Set set, int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_is_empty",
+			Set_is_empty( set ), no_tests_passed );
+}
+
+void test_Set_is_empty_false( int number_of_current_test, Set set, int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_is_empty",
+			!Set_is_empty( set ), no_tests_passed );
+}
+
+
+void test_Set_add_number_of_elements( int number_of_current_test, Set set, int number_of_elements,
+		int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_add (number of elements)",
+			set->no_elements == number_of_elements, no_tests_passed );
+}
+
+void test_Set_add_value_of_element( int number_of_current_test, Set set, int index,
+		int element, int * no_tests_passed ) {
+
+	print_test_message( number_of_current_test, "Set_add (value in array elements)",
+			set->elements[index] == element, no_tests_passed );
+}
+
+
+void test_Set_remove_number_of_elements( int number_of_current_test, Set set, int number_of_elements,
+		int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_remove (number of elements)",
+			set->no_elements == number_of_elements, no_tests_passed );
+}
+
+void test_Set_pop_number_of_elements( int number_of_current_test, Set set, int number_of_elements,
+		int * no_tests_passed ) {
+	print_test_message( number_of_current_test, "Set_pop (number of elements)",
+			set->no_elements == number_of_elements, no_tests_passed );
 }

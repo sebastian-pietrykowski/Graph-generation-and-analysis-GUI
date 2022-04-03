@@ -34,7 +34,7 @@ void free_PQ( PriorityQueue pq );
 
 
 // Initializes new Set
-Set make_set();
+Set make_Set();
 
 // Returns 1 if element is present in set, 0 if not.
 int Set_is_element_in( Set set, int element );
