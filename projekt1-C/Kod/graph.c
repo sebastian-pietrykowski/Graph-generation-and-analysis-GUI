@@ -155,18 +155,18 @@ int* neighbors(graph_t graph, int vertex) {
 
 int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) {
 	
-	int * potential_neighbors = malloc( sizeof(int) * 4 ); /* array of vertices to
+	int * potential_neighbors_array = malloc( sizeof(int) * 4 ); /* array of vertices to
 								  whom edges may be created */
 	*number_of_vertices = 0;
 	int tmp = -1;
 
 	// neighbor to north
 	if( (tmp = vertex - graph->columns) > 0 )
-		potential_neighbors[*number_of_vertices++] = tmp;
+		potential_neighbors_array[(*number_of_vertices)++] = tmp;
 	
 	// neighbor to south
 	if( (tmp = vertex + graph->columns) < graph->no_vertexes )
-		potential_neighbors[*number_of_vertices++] = tmp;
+		potential_neighbors_array[(*number_of_vertices)++] = tmp;
 	
 	// neighbors to west and east
 	// find number of row containing vertex
@@ -178,16 +178,17 @@ int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) 
 
 	// check if negihbor to east can exist
 	if( start_row_number < vertex )
-		potential_neighbors[*number_of_vertices++] = vertex - 1;
+		potential_neighbors_array[(*number_of_vertices)++] = vertex - 1;
 	// check if neighbor to west can exist
 	if( vertex < end_row_number )
-		potential_neighbors[*number_of_vertices++] = vertex + 1;
+		potential_neighbors_array[(*number_of_vertices)++] = vertex + 1;
 
 	// trim the size of array
 	if( *number_of_vertices != 4 )
-		potential_neighbors = realloc( potential_neighbors, sizeof(int) * *number_of_vertices );
+		potential_neighbors_array = realloc( potential_neighbors_array,
+				sizeof(int) * (*number_of_vertices) );
 	
-	return potential_neighbors;
+	return potential_neighbors_array;
 }
 
 void print_graph( graph_t graph ) {
