@@ -136,7 +136,7 @@ int test_PQ() {
 
 int test_Set() {
 
-	int no_tests = 49;
+	int no_tests = 50;
 	int no_tests_passed = 0;
 
 	int taken_element = INT_MAX;
@@ -273,8 +273,8 @@ int test_Set() {
 	test_Set_is_element_in_false( 34, set1, 11, &no_tests_passed );
 
 	// Test 35
-	test_Set_is_element_in_true( 35, set1, 7, &no_tests_passed );
-
+	test_Set_is_element_in_false( 35, set1, 7, &no_tests_passed );
+	
 	// Test 36
 	test_Set_is_element_in_false( 36, set1, 3, &no_tests_passed );
 
@@ -298,36 +298,36 @@ int test_Set() {
 	Set_add( set1, 16 );
 	// set1 = { 15, 16 }
 	
-	// Test 42
+	// Tests 42, 43
 	test_Set_add( 42, set1, 2, 1, 16, &no_tests_passed );
 	
 		
 	taken_element = Set_pop( set1 );
 	// set1 - contains 1 element: 15 or 16
 	
-	// Test 43
-	print_test_message( 43, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
-
 	// Test 44
-	test_Set_pop_number_of_elements( 44, set1, 1, &no_tests_passed );
+	print_test_message( 44, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
+
+	// Test 45
+	test_Set_pop_number_of_elements( 45, set1, 1, &no_tests_passed );
 
 	taken_element = Set_pop( set1 );
 	// set = { }
 	
-	// Test 45
-	print_test_message( 45, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
-
 	// Test 46
-	test_Set_pop_number_of_elements( 46, set1, 0, &no_tests_passed );
+	print_test_message( 46, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
 
 	// Test 47
-	test_Set_is_element_in_false( 47, set1, 15, &no_tests_passed );
+	test_Set_pop_number_of_elements( 47, set1, 0, &no_tests_passed );
 
 	// Test 48
-	test_Set_is_element_in_false( 48, set1, 16, &no_tests_passed );
+	test_Set_is_element_in_false( 48, set1, 15, &no_tests_passed );
 
 	// Test 49
-	test_Set_is_empty_true( 49, set1, &no_tests_passed );
+	test_Set_is_element_in_false( 49, set1, 16, &no_tests_passed );
+
+	// Test 50
+	test_Set_is_empty_true( 50, set1, &no_tests_passed );
 	
 
 
@@ -392,12 +392,12 @@ void test_PQ_put( int number_of_current_test, PriorityQueue pq, int predicted_nu
 
 void test_Set_is_element_in_true( int number_of_current_test, Set set, int element, int * no_tests_passed ) {
 	print_test_message( number_of_current_test, "Set_is_element_in",
-			Set_is_element_in( set, element ), no_tests_passed );
+			Set_is_element_in( set, element ) == 1, no_tests_passed );
 }
 
 void test_Set_is_element_in_false( int number_of_current_test, Set set, int element, int * no_tests_passed ) {
 	print_test_message( number_of_current_test, "Set_is_element_in",
-			!Set_is_element_in( set, element ), no_tests_passed );
+			Set_is_element_in( set, element ) == 0, no_tests_passed );
 }
 
 
