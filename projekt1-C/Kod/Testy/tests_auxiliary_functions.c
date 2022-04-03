@@ -12,4 +12,3 @@ void print_test_message( int number_of_current_test, char * name, int condition,
 	else printf("failed\n");
 }
 
-#endif

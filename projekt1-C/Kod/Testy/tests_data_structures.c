@@ -11,18 +11,17 @@ int test_PQ() {
 
 	// Test 1
 	PriorityQueue pq1 = make_PQ();
-	print_test_message( 1, pq1 != NULL, &no_tests_passed );
+	print_test_message( 1, "Initializing object PQ", pq1 != NULL, &no_tests_passed );
 
 	// Test 2
 	PQ_put( pq1, 1, 0.5 );	
-	print_test_message( 2, pq1->no_elements == 1, &no_tests_passed );
+	print_test_message( 2, "Adding element to PQ (number of elements)", pq1->no_elements == 1, &no_tests_passed );
 
 	// Test 3
-	print_test_message( 3, pq1->vertexes[0] == 1, &no_tests_passed );
+	print_test_message( 3, "Adding element to PQ (value of added element)", pq1->vertexes[0] == 1, &no_tests_passed );
 	
 	// Test 4
-	print_test_message( 4, pq1->distances[0] != 0.5, &no_tests_passed );
-	printf("Test 4 is designed to check if failed test works\n");
+	print_test_message( 4, "Adding element to PQ (value of added element's distance", pq1->distances[0] == 0.5, &no_tests_passed );
 
 	printf("\n");
 	if( no_tests_passed == no_tests )
