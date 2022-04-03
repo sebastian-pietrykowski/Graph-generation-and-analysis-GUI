@@ -30,8 +30,7 @@ graph_t make_graph(int columns, int rows, graph_t graph) {
 graph_t read_graph(FILE* in, graph_t graph) {
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
-    exit(EXIT_FAILURE);
-    return NULL;
+    exit(EXIT_FAILURE);  
   }
 
   graph = make_graph(columns, rows, graph);
