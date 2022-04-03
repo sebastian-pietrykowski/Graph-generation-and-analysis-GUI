@@ -7,7 +7,7 @@
 
 PriorityQueue make_PQ() {
 
-	PriorityQueue pq = malloc( sizeof(PriorityQueue) );
+	PriorityQueue pq = malloc( sizeof *pq );
 	
 	pq->no_elements = 0;	
 	pq->vertexes = malloc( 0 );
@@ -29,7 +29,7 @@ int PQ_get( PriorityQueue pq ) {
 		
 		// find vertex
 		for( int i = 0; i < pq->no_elements; i++ )
-			if( pq->vertexes[i] < min_distance ) {
+			if( pq->distances[i] < min_distance ) {
 				index = i;
 				min_distance = pq->distances[i];
 			}
@@ -39,8 +39,15 @@ int PQ_get( PriorityQueue pq ) {
 			return -1;
 		}
 		
-		// change size of arrays in struct
 		int element = pq->vertexes[index];
+
+		// shift elements by 1 index
+		for( int i = index + 1; i < pq->no_elements; i++ ) {
+			pq->vertexes[i-1] = pq->vertexes[i];
+			pq->distances[i-1] = pq->distances[i];
+		}
+		
+		// change size of arrays in struct
 		pq->no_elements--;
 		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
 		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
@@ -58,13 +65,14 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 	}
 	// increase size of arrays and add another elements
 	else {
+		int index = pq->no_elements;
 		pq->no_elements++;
 		
-		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq-> no_elements );
-		pq->vertexes[0] = vertex;
+		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
+		pq->vertexes[index] = vertex;
 
 		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
-		pq->distances[0] = distance;
+		pq->distances[index] = distance;
 	}
 }
 
