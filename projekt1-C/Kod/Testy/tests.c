@@ -6,9 +6,12 @@
 
 int main() {
 	
+	// Testing data_structures.c
 	if( test_PQ() == 0 )
 		exit(1);
-	test_Set();
+	if( test_Set() == 0 )
+		exit(1);
 
+	
 	return 0;
 }

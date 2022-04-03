@@ -88,7 +88,7 @@ void free_PQ( PriorityQueue pq ) {
 
 
 Set make_Set() {	
-	Set set = malloc( sizeof( Set ) );
+	Set set = malloc( sizeof *set );
 	set->no_elements = 0;
 		
 	set->elements = malloc( 0 );
@@ -117,14 +117,14 @@ void Set_add( Set set, int element ) {
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {
-		fprintf( stderr, "data_structures.c: Element being tried to add to set is already in it." );
+		fprintf( stderr, "data_structures.c: Element being tried to add to set is already in it.\n" );
 	}
 	// increase size of array and add another element
 	else {
 		set->no_elements++;
 		
 		set->elements = realloc( set->elements, sizeof(int) * set-> no_elements );
-		set->elements[0] = element;
+		set->elements[ set->no_elements - 1 ] = element;
 	}
 }
 

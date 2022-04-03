@@ -5,7 +5,7 @@
 
 int test_PQ() {
 	
-	int no_tests = 30;
+	int no_tests = 31;
 	int no_tests_passed = 0;
 
 	int taken_element = INT_MAX;
@@ -110,11 +110,17 @@ int test_PQ() {
 	test_PQ_get_number_of_elements( 27, pq1, 0, &no_tests_passed );
 
 
+	taken_element = PQ_get( pq1 );
+	
+	// Test 28
+	test_PQ_get_value_of_taken_element( 28, taken_element, -1, &no_tests_passed );
+
+
 	PQ_put( pq1, 4, 1.2 );
 	// pq1 = { (4,1.2) }
 
-	// Tests 28, 29, 30
-	test_PQ_put( 28, pq1, 1, 0, 4, 1.2, &no_tests_passed );
+	// Tests 29, 30, 31
+	test_PQ_put( 29, pq1, 1, 0, 4, 1.2, &no_tests_passed );
 	
 	
 	free_PQ( pq1);
@@ -130,7 +136,7 @@ int test_PQ() {
 
 int test_Set() {
 
-	int no_tests = 30;
+	int no_tests = 49;
 	int no_tests_passed = 0;
 
 	int taken_element = INT_MAX;
@@ -147,9 +153,181 @@ int test_Set() {
 	test_Set_is_empty_true( 2, set1, &no_tests_passed );
 
 	// Test 3
-	test_Set_is_element_in_true( 3, set1, 0, &no_tests_passed );
+	test_Set_is_element_in_false( 3, set1, 0, &no_tests_passed );
 
 	// Test 4
+	test_Set_is_element_in_false( 4, set1, 10, &no_tests_passed );
+
+
+	Set_add( set1, 3 );
+	// set1 = { 3 }
+
+	// Tests 5, 6
+	test_Set_add( 5, set1, 1, 0, 3, &no_tests_passed );
+
+	// Test 7
+	test_Set_is_element_in_true( 7, set1, 3, &no_tests_passed );
+
+	// Test 8
+	test_Set_is_empty_false( 8, set1, &no_tests_passed );
+
+
+	Set_add( set1, 8 );
+	// set1 = { 3, 8 }
+
+	// Tests 9, 10
+	test_Set_add( 9, set1, 2, 1, 8, &no_tests_passed );
+
+
+	Set_add( set1, 11 );
+	// set1 = { 3, 8, 11 }
+
+	// Tests 11, 12
+	test_Set_add( 11, set1, 3, 2, 11, &no_tests_passed );
+
+
+	Set_add( set1, 7 );
+	// set1 = { 3, 8, 11, 7 }
+
+	// Tests 13, 14
+	test_Set_add( 13, set1, 4, 3, 7, &no_tests_passed );
+	
+	// Test 15
+	test_Set_is_element_in_true( 15, set1, 11, &no_tests_passed );
+
+	// Test 16
+	test_Set_is_empty_false( 16, set1, &no_tests_passed );
+
+
+	Set_add( set1, 11 ); // set already contains it
+	// set = { 3, 8, 11, 7 }
+
+	// Test 17
+	test_Set_add_number_of_elements( 17, set1, 4, &no_tests_passed );
+	
+	
+	Set_remove( set1, 8 );
+	// set1 = { 3, 11, 7 }
+	
+	// Test 18
+	test_Set_remove_number_of_elements( 18, set1, 3, &no_tests_passed );
+
+	// Test 19
+	test_Set_is_element_in_true( 19, set1, 3, &no_tests_passed );
+
+	// Test 20
+	test_Set_is_element_in_true( 20, set1, 11, &no_tests_passed );
+
+	// Test 21
+	test_Set_is_element_in_true( 21, set1, 7, &no_tests_passed );
+
+	// Test 22
+	test_Set_is_element_in_false( 22, set1, 8, &no_tests_passed );
+
+	
+	Set_remove( set1, 3 );
+	// set1 = { 11, 7 }
+	
+	// Test 23
+	test_Set_remove_number_of_elements( 23, set1, 2, &no_tests_passed );
+
+	// Test 24
+	test_Set_is_element_in_true( 24, set1, 11, &no_tests_passed );
+
+	// Test 25
+	test_Set_is_element_in_true( 25, set1, 7, &no_tests_passed );
+
+	// Test 26
+	test_Set_is_element_in_false( 26, set1, 3, &no_tests_passed );
+
+	// Test 27
+	test_Set_is_element_in_false( 27, set1, 8, &no_tests_passed );
+
+
+	Set_remove( set1, 7 );
+	// set1 = { 11 }
+	
+	// Test 28
+	test_Set_remove_number_of_elements( 28, set1, 1, &no_tests_passed );
+
+	// Test 29
+	test_Set_is_element_in_true( 29, set1, 11, &no_tests_passed );
+
+	// Test 30
+	test_Set_is_element_in_false( 30, set1, 7, &no_tests_passed );
+
+	// Test 31
+	test_Set_is_element_in_false( 31, set1, 3, &no_tests_passed );
+
+	// Test 32
+	test_Set_is_element_in_false( 32, set1, 8, &no_tests_passed );
+
+
+	Set_remove( set1, 11 );
+	// set1 = {  }
+	
+	// Test 33
+	test_Set_remove_number_of_elements( 33, set1, 0, &no_tests_passed );
+
+	// Test 34
+	test_Set_is_element_in_false( 34, set1, 11, &no_tests_passed );
+
+	// Test 35
+	test_Set_is_element_in_true( 35, set1, 7, &no_tests_passed );
+
+	// Test 36
+	test_Set_is_element_in_false( 36, set1, 3, &no_tests_passed );
+
+	// Test 37
+	test_Set_is_element_in_false( 37, set1, 8, &no_tests_passed );
+	
+	// Test 38
+	test_Set_is_empty_true( 38, set1, &no_tests_passed );	
+
+	
+	Set_add( set1, 15 );
+	// set1 = { 15 }
+	
+	// Tests 39, 40
+	test_Set_add( 39, set1, 1, 0, 15, &no_tests_passed );
+
+	// Test 41
+	test_Set_is_empty_false( 41, set1, &no_tests_passed );
+
+	
+	Set_add( set1, 16 );
+	// set1 = { 15, 16 }
+	
+	// Test 42
+	test_Set_add( 42, set1, 2, 1, 16, &no_tests_passed );
+	
+		
+	taken_element = Set_pop( set1 );
+	// set1 - contains 1 element: 15 or 16
+	
+	// Test 43
+	print_test_message( 43, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
+
+	// Test 44
+	test_Set_pop_number_of_elements( 44, set1, 1, &no_tests_passed );
+
+	taken_element = Set_pop( set1 );
+	// set = { }
+	
+	// Test 45
+	print_test_message( 45, "Set_pop", taken_element == 15 || taken_element == 16, &no_tests_passed );
+
+	// Test 46
+	test_Set_pop_number_of_elements( 46, set1, 0, &no_tests_passed );
+
+	// Test 47
+	test_Set_is_element_in_false( 47, set1, 15, &no_tests_passed );
+
+	// Test 48
+	test_Set_is_element_in_false( 48, set1, 16, &no_tests_passed );
+
+	// Test 49
+	test_Set_is_empty_true( 49, set1, &no_tests_passed );
 	
 
 
