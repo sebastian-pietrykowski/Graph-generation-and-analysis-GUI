@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "tests_auxiliary_functions.h"
 
-void print_test_message( int no_current_test, int condition, int * no_tests_passed ) {
+void print_test_message( int number_of_current_test, char * name, int condition, int * no_tests_passed ) {
 	
-	printf("\tTest %d: ", no_current_test );
+	printf("\tTest %d - %s: ", number_of_current_test, name );
 
 	if( condition ) {
 		printf("passed\n");
@@ -11,3 +11,5 @@ void print_test_message( int no_current_test, int condition, int * no_tests_pass
 	}
 	else printf("failed\n");
 }
+
+#endif
