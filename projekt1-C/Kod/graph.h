@@ -24,6 +24,8 @@ int *potential_neighbors( graph_t graph, int vertex,
 					       may be created edge connecting them to the selected vertex,
 					       number of vertices is handed via number_of_vertices */
 
+void print_graph( graph_t graph ); /* Function prints graph to screen. */
+
 void free_graph(graph_t graph); /* Function responsible for freeing the allocated graph structure */
 
 #endif

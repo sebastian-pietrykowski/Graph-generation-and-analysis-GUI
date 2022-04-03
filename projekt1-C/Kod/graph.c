@@ -30,7 +30,8 @@ graph_t make_graph(int columns, int rows, graph_t graph) {
 graph_t read_graph(FILE* in, graph_t graph) {
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
-    return EXIT_FAILURE;
+    exit(EXIT_FAILURE);
+    return NULL;
   }
 
   graph = make_graph(columns, rows, graph);
@@ -162,10 +163,46 @@ int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) 
 		potential_neighbors[*number_of_vertices++] = vertex + 1;
 
 	// trim the size of array
-	if( *number_of_neighbors != 4 )
+	if( *number_of_vertices != 4 )
 		potential_neighbors = realloc( potential_neighbors, sizeof(int) * *number_of_vertices );
 	
 	return potential_neighbors;
+}
+
+void print_graph( graph_t graph ) {
+	for(int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
+
+		if( vertical_counter != 0 ) {
+			for(int horizonatl_counter = 0; horizonatl_counter < graph->columns; horizonatl_counter++ ) {
+				int vertex1 = (vertical_counter-1) * graph->columns + vertical_counter;
+				int vertex2 = vertical_counter * graph->columns + vertical_counter;
+				
+				if( graph->adj_mat[vertex1][vertex2] != -1 )
+					printf(" \\/     ");
+				else if( graph->adj_mat[vertex2][vertex1] != -1 )
+					printf(" /\\     ");
+				else printf("        ");
+			}
+			printf("\n\n");
+		}
+
+		for(int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ ) {
+			
+			if( horizontal_counter != 0 ) {
+				int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
+				int vertex2 = vertex1 + 1;
+				
+				if( graph->adj_mat[vertex1][vertex2] != -1 )
+					printf(" -> ");
+				else if( graph->adj_mat[vertex2][vertex1] != -1 )
+					printf(" <- ");
+				else printf("    ");
+			}
+			
+			printf("%4d", vertical_counter*graph->columns + horizontal_counter );
+		}
+		printf("\n\n");
+	}
 }
 
 void free_graph(graph_t graph) {
