@@ -7,8 +7,8 @@
 
 #define MAXLINE 256
 
-graph_t make_graph(int columns, int rows, graph_t graph) {
-  graph = malloc(sizeof *graph); /* initialization of graph structure */
+graph_t make_graph(int columns, int rows) {
+  graph_t graph = malloc(sizeof *graph); /* initialization of graph structure */
 
   graph->columns = columns;
 

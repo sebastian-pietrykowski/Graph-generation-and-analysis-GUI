@@ -15,7 +15,7 @@ int does_have_all_edges(graph_t graph); /* Function responsible for checking if 
 
 int write_graph(graph_t graph, FILE *out); /* Writes the graph structure to the out file */
 
-graph_t make_graph(int columns, int rows, graph_t graph); /* Function responsible for initialization graph structure and memory allocation for adj_mat */
+graph_t make_graph(int columns, int rows); /* Function responsible for initialization graph structure and memory allocation for adj_mat */
 
 int *neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there is an edge connecting them to the selected vertex */
 
