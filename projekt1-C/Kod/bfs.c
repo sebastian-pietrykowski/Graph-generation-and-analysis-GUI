@@ -8,10 +8,18 @@ int* visited;
 
 FIFO_t make_fifo(graph_t graph) {
   fifo = malloc(sizeof *fifo);
+  if(fifo == NULL) {
+   fprintf(stderr,"Can not allocate memory for fifo queue");
+   exit(EXIT_FAILURE);
+  }
   fifo->head = -1;
   fifo->back = -1;
   fifo->vertexes = malloc(graph->no_vertexes * sizeof *(fifo->vertexes));
-
+  if(fifo->vertexes == NULL) {
+   free(fifo);
+   fprintf(stderr,"Can not allocate memory for vertexes in queue");
+   exit(EXIT_FAILURE);
+  }
   return fifo;
 }
 
@@ -41,7 +49,12 @@ int bfs(graph_t graph, int start_vertex_number) {
   FIFO_t fifo = NULL;
   fifo = make_fifo(graph);
   visited = malloc(graph->no_vertexes * sizeof(*visited)); /* Memory allocation for vertexes that have already been visited */
-
+  if(visited == NULL) {
+   free(fifo->vertexes);
+   free(fifo);
+   fprintf(stderr,"Can not allocate memory for visited array");
+   exit(EXIT_FAILURE);
+  }
   for (int i = 0; i < graph->no_vertexes; i++) {
     visited[i] = -1; /* Assignment of the value -1 means that no vertex has been visited yet */
   }
@@ -70,5 +83,6 @@ void free_bfs() {
   free(fifo);
   free(visited);
 }
+
 
 
