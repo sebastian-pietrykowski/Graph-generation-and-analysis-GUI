@@ -27,6 +27,7 @@ graph_t make_graph(int columns, int rows) {
   }
   for (int i = 0; i < graph->no_vertexes; i++) {
     graph->adj_mat[i] = malloc(graph->no_vertexes * sizeof **graph->adj_mat); /* memory allocation for the array the pointer points to */
+    }
   for(int i = 0 ; i < graph->no_vertexes; i++) {
     if(graph->adj_mat[i] == NULL) {
      free(graph->adj_mat);
@@ -34,7 +35,8 @@ graph_t make_graph(int columns, int rows) {
      fprintf(stderr,"Can not allocate memory record for adjacency matrix");
      exit(EXIT_FAILURE);
    } 
-  } 
+  }
+ for(int i = 0 ; i < graph->no_vertexes; i++) { 
   for (int j = 0; j < graph->no_vertexes; j++) {
       graph->adj_mat[i][j] = -1; /* Filling the matrix with -1, so that by default a vertex is not connected to any another */
     }
