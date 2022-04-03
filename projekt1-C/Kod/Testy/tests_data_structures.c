@@ -5,7 +5,7 @@
 
 int test_PQ() {
 	
-	int no_tests = 10;
+	int no_tests = 30;
 	int no_tests_passed = 0;
 
 	int taken_element = INT_MAX;
@@ -18,54 +18,34 @@ int test_PQ() {
 	// Test 1
 	print_test_message( 1, "make_PQ (initializing object PQ)", pq1 != NULL, &no_tests_passed );
 
+
 	PQ_put( pq1, 1, 0.5 );
 	// pq1 = { (1,0.5) }
 	
-	// Test 2
-	test_PQ_put_number_of_elements( 2, pq1, 1, &no_tests_passed );
+	// Tests 2, 3, 4
+	test_PQ_put( 2, pq1, 1, 0, 1, 0.5, &no_tests_passed );
 
-	// Test 3
-	test_PQ_put_value_of_element( 3, pq1, 0, 1, &no_tests_passed );
-	
-	// Test 4
-	test_PQ_put_value_of_distance( 4, pq1, 0, 0.5, &no_tests_passed );
 
 	PQ_put( pq1, 3, 1 );
 	// pq1 = { (1,0.5), (3,1) }
-	
-	// Test 5
-	test_PQ_put_number_of_elements( 5, pq1, 2, &no_tests_passed );
 
-	// Test 6
-	test_PQ_put_value_of_element( 6, pq1, 1, 3, &no_tests_passed );
+	// Tests 5, 6, 7	
+	test_PQ_put( 5, pq1, 2, 1, 3, 1, &no_tests_passed );
 	
-	// Test 7
-	test_PQ_put_value_of_distance( 7, pq1, 1, 1, &no_tests_passed );
-	
+
 	PQ_put( pq1, 5, 1.5 );
 	// pq1 = { (1,0.5), (3,1), (5,1.5) }
 	
-	// Test 8
-	test_PQ_put_number_of_elements( 8, pq1, 3, &no_tests_passed );
-
-	// Test 9
-	test_PQ_put_value_of_element( 9, pq1, 2, 5, &no_tests_passed );
-	
-	// Test 10
-	test_PQ_put_value_of_distance( 10, pq1, 2, 1.5, &no_tests_passed );
+	// Tests 8, 9, 10
+	test_PQ_put( 8, pq1, 3, 2, 5, 1.5, &no_tests_passed );
 
 
 	PQ_put( pq1, 7, 2 );
 	// pq1 = { (1,0.5), (3,1), (5,1.5), (7,2) }
 
-	// Test 11
-	test_PQ_put_number_of_elements( 11, pq1, 4, &no_tests_passed );
+	// Tests 11, 12, 13
+	test_PQ_put( 11, pq1, 4, 3, 7, 2, &no_tests_passed );
 
-	// Test 12
-	test_PQ_put_value_of_element( 12, pq1, 3, 7, &no_tests_passed );
-	
-	// Test 13
-	test_PQ_put_value_of_distance( 13, pq1, 3, 2, &no_tests_passed );
 
 	taken_element = PQ_get( pq1 ); // (1,0.5)
 	// pq1 = { (3,1), (5,1.5), (7,2) }
@@ -84,15 +64,64 @@ int test_PQ() {
 	print_test_message( 17, "Pq_get (remaining distances in PQ)",
 			pq1->distances[0] == 1 && pq1->distances[1] == 1.5 && pq1->distances[2] == 2,
 			&no_tests_passed );
+	
+
+	taken_element = PQ_get( pq1 ); // (3,1)
+	// pq1 = { (5,1.5), (7,2) }
+	
+	// Test 18
+	test_PQ_get_value_of_taken_element( 18, taken_element, 3, &no_tests_passed );
+
+	// Test 19
+	test_PQ_get_number_of_elements( 19, pq1, 2, &no_tests_passed );
+
+	// Test 20
+	print_test_message( 20, "PQ_get (remaining values in PQ)",
+			pq1->vertexes[0] == 5 && pq1->vertexes[1] == 7, &no_tests_passed );
+	// Test 21
+	print_test_message( 21, "Pq_get (remaining distances in PQ)",
+			pq1->distances[0] == 1.5 && pq1->distances[1] == 2, &no_tests_passed );
+	
+	
+	taken_element = PQ_get( pq1 ); // (5,1.5)
+	// pq1 = { (7,2) }
+	
+	// Test 22
+	test_PQ_get_value_of_taken_element( 22, taken_element, 5, &no_tests_passed );
+
+	// Test 23
+	test_PQ_get_number_of_elements( 23, pq1, 1, &no_tests_passed );
+
+	// Test 24
+	print_test_message( 24, "PQ_get (remaining values in PQ)",
+			pq1->vertexes[0] == 7, &no_tests_passed );
+	// Test 25
+	print_test_message( 25, "Pq_get (remaining distances in PQ)",
+			pq1->distances[0] == 2, &no_tests_passed );
 
 
+	taken_element = PQ_get( pq1 ); // (7,2)
+	// pq1 = {  }
+	
+	// Test 26
+	test_PQ_get_value_of_taken_element( 26, taken_element, 7, &no_tests_passed );
 
-	printf("\n");
+	// Test 27
+	test_PQ_get_number_of_elements( 27, pq1, 0, &no_tests_passed );
+
+
+	PQ_put( pq1, 4, 1.2 );
+	// pq1 = { (4,1.2) }
+
+	// Tests 28, 29, 30
+	test_PQ_put( 28, pq1, 1, 0, 4, 1.2, &no_tests_passed );
+	
+	
 	if( no_tests_passed == no_tests )
-		printf("All passed\n");
-	else printf("Not passed\n");
+		printf("Passed\n");
+	else printf("Failed\n");
 
-	printf("\n--------------------------------------\n\n");
+	printf("--------------------------------------\n\n");
 
 	return no_tests_passed == no_tests ? 1 : 0;
 }
@@ -127,3 +156,12 @@ void test_PQ_put_value_of_distance( int number_of_current_test, PriorityQueue pq
 			pq->distances[index] == predicted_value, no_tests_passed );
 }
 
+void test_PQ_put( int number_of_current_test, PriorityQueue pq, int predicted_number_of_elements,
+	       int index, int predicted_vertex_value, double predicted_distance_value, int * no_tests_passed ) {
+
+	test_PQ_put_number_of_elements( number_of_current_test++, pq, predicted_number_of_elements, no_tests_passed );
+
+	test_PQ_put_value_of_element( number_of_current_test++, pq, index, predicted_vertex_value, no_tests_passed );
+	
+	test_PQ_put_value_of_distance( number_of_current_test++, pq, index, predicted_distance_value, no_tests_passed );
+}

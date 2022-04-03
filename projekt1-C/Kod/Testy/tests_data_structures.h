@@ -19,6 +19,10 @@ void test_PQ_get_number_of_elements( int number_of_current_test, PriorityQueue p
 void test_PQ_get_value_of_taken_element( int number_of_current_test, int actual_value, int predicted_value, int *no_tests_passed );
 
 
+// Tests number of elements, value of element with given index and its distance after using PQ_put function.
+void test_PQ_put( int number_of_current_test, PriorityQueue pq, int predicted_number_of_elements,
+	       int index, int predicted_vertex_value, double predicted_distance_value, int * no_tests_passed );
+
 // Tests number of elements in PQ after using PQ_put function.
 void test_PQ_put_number_of_elements( int number_of_current_test, PriorityQueue pq, int predicted_number_of_elements, int *no_tests_passed );
 

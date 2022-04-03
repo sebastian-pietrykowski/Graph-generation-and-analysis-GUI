@@ -20,8 +20,10 @@ int PQ_get( PriorityQueue pq ) {
 	
 	if( pq->no_elements < 1 )
 		return -1;
-	else if( pq->no_elements == 1 )
+	else if( pq->no_elements == 1 ) {
+		pq->no_elements = 0;
 		return pq->vertexes[0];
+	}
 	else {   
 	// find vertex from many
 		int index = -1;

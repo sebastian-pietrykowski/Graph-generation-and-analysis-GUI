@@ -7,7 +7,7 @@ void print_test_message( int number_of_current_test, char * name, int condition,
 
 	if( condition ) {
 		printf("passed\n");
-		*no_tests_passed++;
+		(*no_tests_passed)++;
 	}
 	else printf("failed\n");
 }
