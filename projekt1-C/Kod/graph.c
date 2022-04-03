@@ -184,6 +184,54 @@ int* potential_neighbors(graph_t graph, int vertex) {
   }
 }
 
+void print_graph( graph_t graph ) {
+	for(int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
+
+		if( vertical_counter != 0 ) {
+			for(int horizonatl_counter = 0; horizonatl_counter < graph->columns; horizonatl_counter++ ) {
+				int vertex1 = (vertical_counter-1) * graph->columns + vertical_counter;
+				int vertex2 = vertical_counter * graph->columns + vertical_counter;
+				
+				int did_find = 0;
+				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
+					did_find = 1;
+					printf(" \\/     ");
+				}
+				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
+					did_find = 1;
+					printf(" /\\     ");
+				}
+				if( !did_find )
+				       	printf("        ");
+			}
+			printf("\n\n");
+		}
+
+		for(int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ ) {
+			
+			if( horizontal_counter != 0 ) {
+				int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
+				int vertex2 = vertex1 + 1;
+				
+				int did_find = 0;
+				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
+					did_find = 1;
+					printf(" -> ");
+				}
+				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
+					did_find = 1;
+					printf(" <- ");
+				}
+				if( !did_find )
+				       	printf("    ");
+			}
+			
+			printf("%4d", vertical_counter*graph->columns + horizontal_counter );
+		}
+		printf("\n\n");
+	}
+}
+
 void free_graph(graph_t graph) {
   for (int i = 0; i < graph->no_vertexes; i++) {
     free(graph->adj_mat[i]);
