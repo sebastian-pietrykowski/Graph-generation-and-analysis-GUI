@@ -11,7 +11,7 @@ graph_t make_graph(int columns, int rows) {
  graph_t graph = malloc(sizeof *graph); /* initialization of graph structure */
  if( graph == NULL ) {
   fprintf(stderr,"Can not allocate memory for graph");
-  exit(EXIT_FAILURE);
+  return NULL;
  }
   graph->columns = columns;
 
@@ -23,7 +23,7 @@ graph_t make_graph(int columns, int rows) {
   if( graph->adj_mat == NULL ) {
     free(graph);
     fprintf(stderr,"Can not allocate memory for adjacency matrix");
-    exit(EXIT_FAILURE);
+    return NULL;
   }
   for (int i = 0; i < graph->no_vertexes; i++) {
     graph->adj_mat[i] = malloc(graph->no_vertexes * sizeof **graph->adj_mat); /* memory allocation for the array the pointer points to */
@@ -33,7 +33,7 @@ graph_t make_graph(int columns, int rows) {
      free(graph->adj_mat);
      free(graph);
      fprintf(stderr,"Can not allocate memory record for adjacency matrix");
-     exit(EXIT_FAILURE);
+     return NULL;
    } 
   }
  for(int i = 0 ; i < graph->no_vertexes; i++) { 
@@ -49,11 +49,13 @@ graph_t read_graph(FILE* in, graph_t graph) {
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
     fprintf(stderr,"Error, can not read the dimensions of the graph");
-    exit(EXIT_FAILURE);
+    return NULL;
   }
 
   graph = make_graph(columns, rows);
-
+  if(graph == NULL) {
+    exit(EXIT_FAILURE);
+  }
   char line[MAXLINE];
   char delim[3] = " :"; /* delimiter */
   double weight;
@@ -74,6 +76,7 @@ graph_t read_graph(FILE* in, graph_t graph) {
             to_vertex = atoi(token);
             if (to_vertex < 0) {
               fprintf(stderr, "Error, invalid vertex number, line number : %d\n", from_vertex + 2);
+ 	      return NULL;
             }
           } else {
             weight = atof(token);
