@@ -53,6 +53,6 @@ void Set_remove( Set set, int element );
 int Set_pop( Set set );
 
 // Removes set from memory.
-void free_set( Set set );
+void free_Set( Set set );
 
 #endif

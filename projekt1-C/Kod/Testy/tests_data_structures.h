@@ -56,9 +56,15 @@ void test_Set_is_empty_false( int number_of_current_test, Set set, int * no_test
 void test_Set_add_number_of_elements( int number_of_current_test, Set set, int number_of_elements,
 		int *no_tests_passed );
 
-// Tests value of element in array set->elements with given number.
+// Tests if in array set->elements element with given index is equal to element.
 void test_Set_add_value_of_element( int number_of_current_test, Set set, int index,
 		int element, int * no_tests_passed );
+
+/* Performs 2 tests: tests number of elements in set and checks if in array
+ * set->elements element with given index is equal to element.
+ * It is used to test after using Set_add function. */
+void test_Set_add( int number_of_current_test, Set set, int number_of_elements,
+		int index, int element, int * no_tests_passed );
 
 // Tests number of elements in Set after using function Set_remove.
 void test_Set_remove_number_of_elements( int number_of_current_test, Set set, int number_of_elements,

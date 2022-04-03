@@ -10,7 +10,7 @@ int test_PQ() {
 
 	int taken_element = INT_MAX;
 
-	printf("\nTesting PriorityQueue in data_structures.c:\n");
+	printf("Testing PriorityQueue in data_structures.c:\n");
 	
 	
 	PriorityQueue pq1 = make_PQ();
@@ -135,16 +135,33 @@ int test_Set() {
 
 	int taken_element = INT_MAX;
 
-	printf("\nTesting Set in data_structures.c:\n");
+	printf("Testing Set in data_structures.c:\n");
 	
 	Set set1 = make_Set();
+	// set1 = {}
 	
 	// Test 1
 	print_test_message( 1, "make_Set (initializing object Set)", set1 != NULL, &no_tests_passed );
 
 	// Test 2
+	test_Set_is_empty_true( 2, set1, &no_tests_passed );
+
+	// Test 3
+	test_Set_is_element_in_true( 3, set1, 0, &no_tests_passed );
+
+	// Test 4
 	
-	
+
+
+	free_Set( set1);
+
+	if( no_tests_passed == no_tests )
+		printf("Passed\n");
+	else printf("Failed\n");
+
+	printf("--------------------------------------\n\n");
+
+	return no_tests_passed == no_tests ? 1 : 0;
 }
 void test_PQ_get_number_of_elements( int number_of_current_test, PriorityQueue pq,
 		int predicted_number_of_elements, int *no_tests_passed ) {
@@ -228,6 +245,13 @@ void test_Set_add_value_of_element( int number_of_current_test, Set set, int ind
 
 	print_test_message( number_of_current_test, "Set_add (value in array elements)",
 			set->elements[index] == element, no_tests_passed );
+}
+
+void test_Set_add( int number_of_current_test, Set set, int number_of_elements,
+		int index, int element, int * no_tests_passed ) {
+	
+	test_Set_add_number_of_elements( number_of_current_test, set, number_of_elements, no_tests_passed );
+	test_Set_add_value_of_element( number_of_current_test, set, index, element, no_tests_passed );
 }
 
 
