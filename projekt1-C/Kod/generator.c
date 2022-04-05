@@ -82,18 +82,23 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 }
 
 graph_t generate_random_graph( int columns, int rows, double from_weight, double to_weight ) {
-	
+
+	if( ( columns < 1 || rows < 1 ) ||
+			( from_weight < 0 || to_weight <= 0 || from_weight >= to_weight ) )
+		return NULL;	
+
 	graph_t graph = make_graph( columns, rows );
 
 	int number_of_vertices = columns * rows;
 
 	// generate random number of generated edges in range <1, number_of_vertices>
-	int number_of_edges = (rand() % number_of_vertices) + 1;
-	printf("Number of edges: %d\n", number_of_edges);
-
+	int number_of_edges = 0;
+	if( columns == 1 || rows == 1 )
+		number_of_edges = rand() % number_of_vertices;
+	else
+		number_of_edges = (rand() % number_of_vertices) + 1;
 
 	for( int vertex_from_counter = 0; vertex_from_counter < number_of_edges; vertex_from_counter++ ) {
-		printf("+\n");
 		// choose random vertex
 		int vertex_from = rand() % number_of_vertices;
 
@@ -107,10 +112,8 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 			Set_add( remaining_neighbors, potential_neighbors_array[i] );
 
 		// try to create edge untill there are no remaining_neighbors
-		if( !try_to_create_random_edge( vertex_from, remaining_neighbors, graph, from_weight, to_weight ) ) {
+		if( !try_to_create_random_edge( vertex_from, remaining_neighbors, graph, from_weight, to_weight ) )
 			vertex_from_counter--;
-			printf("-\n");
-		}
 
 		free_Set( remaining_neighbors );
 		free( potential_neighbors_array );
@@ -147,7 +150,6 @@ int are_all_vertices_visited( int * visited, int number_of_vertices ) {
 
 int try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 		graph_t graph, double from_weight, double to_weight ) {
-	printf("|\n");	
 	int did_create_edge = 0;
 	while( !did_create_edge && !Set_is_empty( remaining_neighbors ) ) {
 
@@ -160,7 +162,6 @@ int try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 
 			graph->adj_mat[ vertex_from ][ vertex_to ] = from_weight + ( ((double)rand()/RAND_MAX) * (to_weight-from_weight) );
 			did_create_edge = 1;
-			printf("%d -> %d\n", vertex_from, vertex_to);
 			return 1;
 		}
 	}

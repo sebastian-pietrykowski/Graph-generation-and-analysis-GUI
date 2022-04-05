@@ -15,7 +15,10 @@ int main() {
 	if( test_Set() == 0 )
 		exit(1);
 
-	test_generate_random_graph();
+	if( test_generate_random_graph() )
+		exit(1);
+
+
 	
 	return 0;
 }
