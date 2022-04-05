@@ -33,7 +33,7 @@ int are_all_vertices_visited( int * visited, int number_of_vertices );
 
 /* Possibly creates edge from vertex with number vertex_from
  * to one of vertices in Set remaining_neighbors */
-void try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
+int try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 		graph_t graph, double from_weight, double to_weight );
 
 #endif

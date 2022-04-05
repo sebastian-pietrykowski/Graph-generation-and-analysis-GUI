@@ -18,7 +18,7 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 						       1 - from greater to lesser */
 			int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
 			int vertex2 = vertex1 + 1;
-			double wage = ( (rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
+			double wage = ( (double)(rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 			
 			if( direction == 0 )
 				graph->adj_mat[vertex1][vertex2] = wage;
@@ -35,7 +35,7 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 						       1 - from greater to lesser */
 			int vertex1 = (vertical_counter-1) * graph->columns + horizontal_counter;
 			int vertex2 = vertical_counter * graph->columns + horizontal_counter;
-			double wage = ( (rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
+			double wage = ( (double)(rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 			
 			if( direction == 0 )
 				graph->adj_mat[vertex1][vertex2] = wage;
@@ -88,12 +88,12 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 	int number_of_vertices = columns * rows;
 
 	// generate random number of generated edges in range <1, number_of_vertices>
-	int max_number_of_edges = (rand() % number_of_vertices) + 1;
-	printf("Number of edges: %d\n", max_number_of_edges);
+	int number_of_edges = (rand() % number_of_vertices) + 1;
+	printf("Number of edges: %d\n", number_of_edges);
 
 
-	for( int vertex_from_counter = 0; vertex_from_counter < max_number_of_edges; vertex_from_counter++ ) {
-		
+	for( int vertex_from_counter = 0; vertex_from_counter < number_of_edges; vertex_from_counter++ ) {
+		printf("+\n");
 		// choose random vertex
 		int vertex_from = rand() % number_of_vertices;
 
@@ -101,20 +101,18 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 		int number_of_potential_neighbors = 0;
 		int *potential_neighbors_array = potential_neighbors( graph, vertex_from, &number_of_potential_neighbors );
 		
-		printf("Edge from vertex %d\n", vertex_from);
-		for( int i = 0; i < number_of_potential_neighbors; i++ )
-			printf(" %d", potential_neighbors_array[i] );
-		printf("\n");
-
 		// add potenital neighbors to set
 		Set remaining_neighbors = make_Set();
 		for( int i = 0; i < number_of_potential_neighbors; i++ )
 			Set_add( remaining_neighbors, potential_neighbors_array[i] );
 
 		// try to create edge untill there are no remaining_neighbors
-		try_to_create_random_edge( vertex_from, remaining_neighbors, graph, from_weight, to_weight );
+		if( !try_to_create_random_edge( vertex_from, remaining_neighbors, graph, from_weight, to_weight ) ) {
+			vertex_from_counter--;
+			printf("-\n");
+		}
 
-		free( remaining_neighbors );
+		free_Set( remaining_neighbors );
 		free( potential_neighbors_array );
 	}
 	return graph;
@@ -131,7 +129,7 @@ int add_edge_to_neighbor( int vertex_from, graph_t graph, int * visited,
 	if( number_of_potential_neighbors > 0 ) {
 		int next_vertex_number = rand() % number_of_potential_neighbors;
 
-		graph->adj_mat[vertex_from][next_vertex_number] = (rand()/RAND_MAX) * (to_weight-from_weight) + from_weight;
+		graph->adj_mat[vertex_from][next_vertex_number] = ((double)rand()/RAND_MAX) * (to_weight-from_weight) + from_weight;
 		visited[next_vertex_number] = 1;
 		return 1;
 	}
@@ -147,13 +145,12 @@ int are_all_vertices_visited( int * visited, int number_of_vertices ) {
 	return 1;
 }
 
-void try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
+int try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 		graph_t graph, double from_weight, double to_weight ) {
-	printf("trying to create edge\n");		
+	printf("|\n");	
 	int did_create_edge = 0;
 	while( !did_create_edge && !Set_is_empty( remaining_neighbors ) ) {
 
-		printf("Set_is_empty: %d\n", Set_is_empty( remaining_neighbors ) );
 		// get random vertex from remaining_neighbors
 		int vertex_to = Set_pop( remaining_neighbors );
 
@@ -161,11 +158,11 @@ void try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 		if( graph->adj_mat[ vertex_from ][ vertex_to ] == -1 
 				&& graph->adj_mat[ vertex_to ][ vertex_from ] == -1 ) {
 
-			graph->adj_mat[ vertex_from ][ vertex_to ] = from_weight + ( (rand()/RAND_MAX) * (to_weight-from_weight) );
+			graph->adj_mat[ vertex_from ][ vertex_to ] = from_weight + ( ((double)rand()/RAND_MAX) * (to_weight-from_weight) );
 			did_create_edge = 1;
-			printf("created edge: %d -> %d\n", vertex_from, vertex_to);
+			printf("%d -> %d\n", vertex_from, vertex_to);
+			return 1;
 		}
-		printf("+\n");
 	}
-	printf("\n");	
+	return 0;
 }

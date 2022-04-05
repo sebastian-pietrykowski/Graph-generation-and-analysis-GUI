@@ -193,27 +193,32 @@ int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) 
 
 void print_graph( graph_t graph ) {
 	for(int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
-
+		// print arrows up and down
 		if( vertical_counter != 0 ) {
-			for(int horizonatl_counter = 0; horizonatl_counter < graph->columns; horizonatl_counter++ ) {
-				int vertex1 = (vertical_counter-1) * graph->columns + vertical_counter;
-				int vertex2 = vertical_counter * graph->columns + vertical_counter;
-				
-				int did_find = 0;
-				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
-					did_find = 1;
-					printf(" \\/     ");
-				}
-				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
-					did_find = 1;
-					printf(" /\\     ");
-				}
-				if( !did_find )
+			printf(" ");
+			for(int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ ) {
+				int vertex1 = (vertical_counter-1) * graph->columns + horizontal_counter;
+				int vertex2 = vertical_counter * graph->columns + horizontal_counter;
+
+				int did_find_up = 0;
+				int did_find_down = 0;
+				if( graph->adj_mat[vertex1][vertex2] != -1 )
+					did_find_down = 1;
+				if( graph->adj_mat[vertex2][vertex1] != -1 )
+					did_find_up = 1;
+
+				if( !did_find_up && !did_find_down )
 				       	printf("        ");
+				else if( did_find_up && did_find_down )
+					printf("/\\\\/    ");
+				else if( did_find_up )
+					printf(" /\\     ");
+				else if( did_find_down )
+					printf(" \\/     ");
 			}
 			printf("\n\n");
 		}
-
+		//print arraws to left and right
 		for(int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ ) {
 			
 			if( horizontal_counter != 0 ) {
@@ -223,11 +228,11 @@ void print_graph( graph_t graph ) {
 				int did_find = 0;
 				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
 					did_find = 1;
-					printf(" -> ");
+					printf("  ->");
 				}
 				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
 					did_find = 1;
-					printf(" <- ");
+					printf("  <-");
 				}
 				if( !did_find )
 				       	printf("    ");
