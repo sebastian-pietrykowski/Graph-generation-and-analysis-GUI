@@ -137,7 +137,7 @@ int test_generate_random_graph_edges_weights( int number_of_current_test, graph_
 int check_edges( graph_t graph ) {
 	
 	for( int vertex_from = 0; vertex_from < graph->no_vertexes; vertex_from++ )
-		for( int vertex_to; vertex_to < graph->no_vertexes; vertex_to++ )
+		for( int vertex_to = 0; vertex_to < graph->no_vertexes; vertex_to++ )
 			if( graph->adj_mat[ vertex_from ][ vertex_to ] != -1 ) {
 				int is_neighbor_proper = 0;
 
