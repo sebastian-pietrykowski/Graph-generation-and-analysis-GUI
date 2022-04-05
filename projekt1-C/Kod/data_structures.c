@@ -163,7 +163,6 @@ int Set_pop( Set set ) {
 	}
 	// There is many elements in set
 	else {
-		srand( time( NULL ) );
 		// random number from range <0,set-<no_elements>
 		int taken_element_index = ( rand() % (set->no_elements ) );
 		int taken_element_value = set->elements[ taken_element_index ];

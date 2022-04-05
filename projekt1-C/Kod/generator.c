@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "generator.h"
 
@@ -12,7 +13,6 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 	for( int vertical_counter = 0; vertical_counter < number_of_vertices; vertical_counter++ )
 		for( int horizontal_counter = 1; horizontal_counter < number_of_vertices; horizontal_counter++ ) {
 			
-			srand(time(NULL));
 			int direction = rand() % 2; /* direction of edge:
 						       0 - from lesser to greater,
 						       1 - from greater to lesser */
@@ -30,7 +30,6 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 	for( int horizontal_counter = 0; horizontal_counter < number_of_vertices; horizontal_counter++ )
 		for( int vertical_counter = 1; vertical_counter < number_of_vertices; vertical_counter++ ) {
 			
-			srand(time(NULL));
 			int direction = rand() % 2; /* direction of edge:
 						       0 - from lesser to greater,
 						       1 - from greater to lesser */
@@ -88,10 +87,9 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 
 	int number_of_vertices = columns * rows;
 
-	srand( time( NULL ) );
-
 	// generate random number of generated edges in range <1, number_of_vertices>
 	int max_number_of_edges = (rand() % number_of_vertices) + 1;
+	printf("Number of edges: %d\n", max_number_of_edges);
 
 
 	for( int vertex_from_counter = 0; vertex_from_counter < max_number_of_edges; vertex_from_counter++ ) {
@@ -101,8 +99,13 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 
 		// download array of vertices where edges can lead
 		int number_of_potential_neighbors = 0;
-		int *potential_neighbors_array = potential_neighbors( graph, vertex_from_counter, &number_of_potential_neighbors );
+		int *potential_neighbors_array = potential_neighbors( graph, vertex_from, &number_of_potential_neighbors );
 		
+		printf("Edge from vertex %d\n", vertex_from);
+		for( int i = 0; i < number_of_potential_neighbors; i++ )
+			printf(" %d", potential_neighbors_array[i] );
+		printf("\n");
+
 		// add potenital neighbors to set
 		Set remaining_neighbors = make_Set();
 		for( int i = 0; i < number_of_potential_neighbors; i++ )
@@ -126,7 +129,6 @@ int add_edge_to_neighbor( int vertex_from, graph_t graph, int * visited,
 	int *potential_neighbors_array = potential_neighbors( graph, vertex_from, &number_of_potential_neighbors );
 
 	if( number_of_potential_neighbors > 0 ) {
-		srand(time(NULL));
 		int next_vertex_number = rand() % number_of_potential_neighbors;
 
 		graph->adj_mat[vertex_from][next_vertex_number] = (rand()/RAND_MAX) * (to_weight-from_weight) + from_weight;
@@ -147,17 +149,23 @@ int are_all_vertices_visited( int * visited, int number_of_vertices ) {
 
 void try_to_create_random_edge( int vertex_from, Set remaining_neighbors,
 		graph_t graph, double from_weight, double to_weight ) {
-		
+	printf("trying to create edge\n");		
 	int did_create_edge = 0;
-	while( !did_create_edge || Set_is_empty( remaining_neighbors ) ) {
+	while( !did_create_edge && !Set_is_empty( remaining_neighbors ) ) {
 
+		printf("Set_is_empty: %d\n", Set_is_empty( remaining_neighbors ) );
 		// get random vertex from remaining_neighbors
 		int vertex_to = Set_pop( remaining_neighbors );
 
 		// create edge only if it doesn't exit and reversed edge doesn't exist
-		if( graph->adj_mat[ vertex_from ][ vertex_to ] == -1 && graph->adj_mat[ vertex_to ][ vertex_from ] == -1 ) {
+		if( graph->adj_mat[ vertex_from ][ vertex_to ] == -1 
+				&& graph->adj_mat[ vertex_to ][ vertex_from ] == -1 ) {
+
 			graph->adj_mat[ vertex_from ][ vertex_to ] = from_weight + ( (rand()/RAND_MAX) * (to_weight-from_weight) );
 			did_create_edge = 1;
+			printf("created edge: %d -> %d\n", vertex_from, vertex_to);
 		}
-	}	
+		printf("+\n");
+	}
+	printf("\n");	
 }
