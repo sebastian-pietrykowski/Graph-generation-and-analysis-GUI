@@ -50,34 +50,34 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 	int number_of_vertices = columns * rows;
 	
 	// create array to mark visited vertices
-	int *visited = malloc( sizeof(int) * number_of_vertices );
+	int *visited = malloc( sizeof *visited * number_of_vertices );
 	for(int i = 0; i < number_of_vertices; i++ )
 		visited[i] = 0;
 	
 	// select first vertex and create edge to any neighboring vertex
 	int vertex_from = 0;
 	visited[vertex_from] = 1;
-	add_edge_to_neighbor( vertex_from, graph, visited, from_weight, to_weight );
+	add_edge_to_neighbor( vertex_from, graph, &visited, from_weight, to_weight );
 	
 
 	/* Until all vertices are marked as visited add next edges.
 	 * Chose random vertex from visited vertices and add edge to one
 	 * of its unvisited neighbors, if there are no unvisited neighbor
 	 * vertices, try to do it with the next from already visited vertex. */
-	while( are_all_vertices_visited( visited, graph->no_vertexes ) != 0) {
+	while( !are_all_vertices_visited( visited, graph->no_vertexes ) ) {
 		
 		Set potential_start_vertices = make_Set();
 		for( int index = 0; index < number_of_vertices; index++ )
 			if( visited[index] == 1 )
 				Set_add( potential_start_vertices, index );
 		int did_add = 0;
-		while( !did_add || !Set_is_empty( potential_start_vertices ) ) {
+		while( !Set_is_empty( potential_start_vertices ) && !did_add ) {
 			vertex_from = Set_pop( potential_start_vertices );
-			did_add = add_edge_to_neighbor( vertex_from, graph, visited, from_weight, to_weight );
+			did_add = add_edge_to_neighbor( vertex_from, graph, &visited, from_weight, to_weight );
 		}
-		free( potential_start_vertices );
+		free_Set( potential_start_vertices );
 	}
-	
+	free( visited );	
 	return graph;
 }
 
@@ -122,21 +122,31 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 }
 
 
-int add_edge_to_neighbor( int vertex_from, graph_t graph, int * visited,
+int add_edge_to_neighbor( int vertex_from, graph_t graph, int ** visited,
 		double from_weight, double to_weight ) {
 
 	int number_of_potential_neighbors = 0;
 
 	int *potential_neighbors_array = potential_neighbors( graph, vertex_from, &number_of_potential_neighbors );
 
-	if( number_of_potential_neighbors > 0 ) {
-		int next_vertex_number = rand() % number_of_potential_neighbors;
+	Set unvisited_neighbors = make_Set();
+	for( int i = 0; i < number_of_potential_neighbors; i++ )
+		if( (*visited)[ potential_neighbors_array[i] ] == 0 )
+			Set_add( unvisited_neighbors, potential_neighbors_array[i] );
+
+	if( unvisited_neighbors->no_elements > 0 ) {
+
+		int next_vertex_number = Set_pop( unvisited_neighbors );
 
 		graph->adj_mat[vertex_from][next_vertex_number] = ((double)rand()/RAND_MAX) * (to_weight-from_weight) + from_weight;
-		visited[next_vertex_number] = 1;
+		(*visited)[next_vertex_number] = 1;
+
+		free( potential_neighbors_array );
+		free_Set( unvisited_neighbors );
 		return 1;
 	}
 	free( potential_neighbors_array );
+	free_Set( unvisited_neighbors );
 	return 0;
 }
 

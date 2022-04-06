@@ -98,6 +98,33 @@ int test_generate_complete_graph() {
 }
 
 int test_generate_connected_graph() {
+
+	int number_of_tests = 15;
+	int no_tests_passed = 0;
+
+	printf("Testing generate_connected_graph() in generator.c\n");
+
+	// Graph 1
+
+	graph_t graph1 = generate_connected_graph( 5, 5, 0, 1 );
+
+	print_graph( graph1 );
+
+	free_graph( graph1 );
+
+
+
+
+
+
+	if( number_of_tests == no_tests_passed )
+		printf("Passed\n");
+	else
+		printf("Failed\n");
+
+	printf("--------------------------------------\n\n");
+
+	return number_of_tests == no_tests_passed;
 }
 
 int test_generate_random_graph() {

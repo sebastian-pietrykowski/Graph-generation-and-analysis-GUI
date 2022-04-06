@@ -24,7 +24,7 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 /* If random neighbor vertex of vertex with number "vertex_from" is unvisited
  * (marked in array visited as 0), then add edge leading from vertex "vertex_from" to it.
  * Function returns 1 if one edge is succesfully created, 0 if no edge is created. */
-int add_edge_to_neighbor( int vertex_from, graph_t graph, int * visited,
+int add_edge_to_neighbor( int vertex_from, graph_t graph, int ** visited,
 		double from_weight, double to_weight );
 
 /* Returns 1 if all vertices are marked as visited in array "visited" (marked as 1),
