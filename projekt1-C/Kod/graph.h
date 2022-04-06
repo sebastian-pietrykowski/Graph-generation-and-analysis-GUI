@@ -17,7 +17,8 @@ int write_graph(graph_t graph, FILE *out); /* Writes the graph structure to the 
 
 graph_t make_graph(int columns, int rows); /* Function responsible for initialization graph structure and memory allocation for adj_mat */
 
-int *neighbors(graph_t graph, int vertex); /* Function returns an array of vertices for which there is an edge connecting them to the selected vertex */
+int *neighbors(graph_t graph, int vertex, int * number_of_neighbors ); /* Function returns an array of vertices for which
+									  there is an edge connecting them to the selected vertex */
 
 int *potential_neighbors( graph_t graph, int vertex,
 		int * number_of_vertices ); /* Function returns an array of vertices for which there

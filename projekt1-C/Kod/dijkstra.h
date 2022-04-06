@@ -29,7 +29,7 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
  * 
  * If does_print_wages is set to 1, then print weights of edges the path passes,
  * if it is set to 0, then doesn't print these weights. */
-void print_path( int * reversed_path, int no_elements, int does_print_weights );
+void print_path( int * reversed_path, graph_t graph, int no_elements, int does_print_weights );
 
 
 #endif

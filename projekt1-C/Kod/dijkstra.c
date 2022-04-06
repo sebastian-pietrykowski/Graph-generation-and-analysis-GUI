@@ -45,19 +45,23 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 			PQ_put( queue, i, DBL_MAX );
 	
 	while( queue->no_elements != 0 ) {
-		int removed_element = PP_get( queue );   // index of vertex removed from queue
-		int * neighbors = neighbors( graph, removed_element ); // array of indices of removed_element's neighbors
-		Set_add( removed_element ); // add element removed from queue to array of removed elements
+		int removed_element = PQ_get( queue );   // index of vertex removed from queue
+		int number_of_neighbors = 0;
+		int * neighbors_array = neighbors( graph, removed_element, &number_of_neighbors ); // array of indices of removed_element's neighbors
+		Set_add( checked_vertexes, removed_element ); // add element removed from queue to array of removed elements
 		
 		// check if removed_element's neighbors were removed from queue, if not try to determine path to them
-		for( int i = 0; i < sizeof(neighbors)/sizeof(neighbors[0]); i++ ) {
-			int potential_neighbor = neighbors[i];
-			if( !Set_is_element_in( Set set, potential_neighbor )
-				relax( graph, start_vertex_number, potential_neighbor, removed_element, predecessors, distances );	
+		for( int i = 0; i < number_of_neighbors; i++ ) {
+			int potential_neighbor = neighbors_array[i];
+			if( !Set_is_element_in( checked_vertexes, potential_neighbor ) )
+				relax( graph, queue, start_vertex_number, potential_neighbor, removed_element, &predecessors, &distances );	
 
 		}
-		free( neighbors );
+		free( neighbors_array );
 	}
+	free_PQ( queue );
+	free_Set( checked_vertexes );
+
 	return predecessors;
 }
 
@@ -70,7 +74,7 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 
 	// determine path
 	int element = end_vertex_number;
-	while( (element = predecessors[element]) =! start_vertex_number || element == -1 ) {
+	while( (element = predecessors[element]) != start_vertex_number || element == -1 ) {
 		(*no_path_elements)++;
 		path = realloc( path, sizeof(int) * (*no_path_elements) );
 		path[(*no_path_elements)-1] = element;
@@ -79,7 +83,7 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 	// it didn't find path
 	if( element == -1 ) {
 		*no_path_elements = 0;
-		return null;
+		return NULL;
 	}
 	// the last element to add - start_vertex_number
 	else if( element == start_vertex_number ) {
@@ -88,10 +92,10 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 		return path;
 	}
 
-	return null;
+	return NULL;
 }
 
-void print_path( int * path, int no_elements, int does_print_weights ) {
+void print_path( int * path, graph_t graph, int no_elements, int does_print_weights ) {
 	
 	/* Do untill it reaches the last element of path,
 	 * path received from argument is reversed
@@ -103,7 +107,7 @@ void print_path( int * path, int no_elements, int does_print_weights ) {
 			printf("%d\n", path[ no_elements ] );
 		// not the last element, print weights
 		else if( does_print_weights )
-			printf("%d (%lf) -> ", path[ no_elements ] );
+			printf("%d (%lf) -> ", path[ no_elements ], graph->adj_mat[ path[no_elements]-1 ][ path[no_elements] ] );
 		// not the last element, don't print weights
 		else
 			printf("%d -> ", path[ no_elements ] );

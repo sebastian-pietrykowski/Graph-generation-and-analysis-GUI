@@ -140,16 +140,15 @@ int write_graph(graph_t graph, FILE* out) {
   return 0;
 }
 
-int* neighbors(graph_t graph, int vertex) {
-  int iter = 0;
+int* neighbors(graph_t graph, int vertex, int * number_of_neighbors) {
+  *number_of_neighbors = 0;
   int* neighbors = malloc(4 * sizeof(*neighbors)); /*  One vertex can be connected to up to four other vertices */
   for (int j = 0; j < graph->no_vertexes; j++) {
     if (graph->adj_mat[vertex][j] != -1) {
-      neighbors[iter] = j;
-      iter++;
+      neighbors[ (*number_of_neighbors)++] = j;
     }
   }
-
+  neighbors = realloc( neighbors, *number_of_neighbors );
   return neighbors;
 }
 
