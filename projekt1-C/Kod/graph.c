@@ -224,20 +224,23 @@ void print_graph( graph_t graph ) {
 			if( horizontal_counter != 0 ) {
 				int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
 				int vertex2 = vertex1 + 1;
-				
-				int did_find = 0;
-				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
-					did_find = 1;
-					printf("  ->");
-				}
-				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
-					did_find = 1;
-					printf("  <-");
-				}
-				if( !did_find )
+					
+				int did_find_right = 0;
+				int did_find_left = 0;
+				if( graph->adj_mat[vertex1][vertex2] != -1 )
+					did_find_right = 1;
+				if( graph->adj_mat[vertex2][vertex1] != -1 )
+					did_find_left = 1;
+
+				if( !did_find_left && !did_find_right )
 				       	printf("    ");
-			}
-			
+				else if( did_find_left && did_find_right )
+					printf("<-->");
+				else if( did_find_right )
+					printf("  ->");
+				else if( did_find_left )
+					printf("  <-");
+			}	
 			printf("%4d", vertical_counter*graph->columns + horizontal_counter );
 		}
 		printf("\n\n");

@@ -6,45 +6,45 @@
 
 graph_t generate_complete_graph( int columns, int rows, double from_weight, double to_weight ) {
 	
+	if( ( columns < 1 || rows < 1 ) ||
+			( from_weight < 0 || to_weight <= 0 || from_weight >= to_weight ) )
+		return NULL;
+
 	graph_t graph = make_graph( columns, rows ); 
 	int number_of_vertices = columns * rows;
 
 	// add edges horizontally
-	for( int vertical_counter = 0; vertical_counter < number_of_vertices; vertical_counter++ )
-		for( int horizontal_counter = 1; horizontal_counter < number_of_vertices; horizontal_counter++ ) {
+	for( int vertical_counter = 0; vertical_counter < graph->columns; vertical_counter++ )
+		for( int horizontal_counter = 1; horizontal_counter < graph->rows; horizontal_counter++ ) {
 			
-			int direction = rand() % 2; /* direction of edge:
-						       0 - from lesser to greater,
-						       1 - from greater to lesser */
 			int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
 			int vertex2 = vertex1 + 1;
-			double wage = ( (double)(rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 			
-			if( direction == 0 )
-				graph->adj_mat[vertex1][vertex2] = wage;
-			else
-				graph->adj_mat[vertex2][vertex2] = wage;
+			graph->adj_mat[vertex1][vertex2] = ( ((double)rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
+			
+			graph->adj_mat[vertex2][vertex1] = ( ((double)rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 
-		}
+	}
 	// add edges vertically
-	for( int horizontal_counter = 0; horizontal_counter < number_of_vertices; horizontal_counter++ )
-		for( int vertical_counter = 1; vertical_counter < number_of_vertices; vertical_counter++ ) {
+	
+	for( int horizontal_counter = 1; horizontal_counter < graph->columns; horizontal_counter++ )
+		for( int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
 			
-			int direction = rand() % 2; /* direction of edge:
-						       0 - from lesser to greater,
-						       1 - from greater to lesser */
-			int vertex1 = (vertical_counter-1) * graph->columns + horizontal_counter;
-			int vertex2 = vertical_counter * graph->columns + horizontal_counter;
-			double wage = ( (double)(rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
+			int vertex1 = (horizontal_counter-1) *graph->columns + vertical_counter;
+			int vertex2 = horizontal_counter * graph->columns + vertical_counter;
 			
-			if( direction == 0 )
-				graph->adj_mat[vertex1][vertex2] = wage;
-			else
-				graph->adj_mat[vertex2][vertex2] = wage;
+			graph->adj_mat[vertex1][vertex2] =( ((double)rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
+
+			graph->adj_mat[vertex2][vertex1] =( ((double)rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 		}
+	return graph;
 }
 
 graph_t generate_connected_graph( int columns, int rows, double from_weight, double to_weight ) {
+
+	if( ( columns < 1 || rows < 1 ) ||
+			( from_weight < 0 || to_weight <= 0 || from_weight >= to_weight ) )
+		return NULL;
 
 	graph_t graph = make_graph(columns, rows);
 	int number_of_vertices = columns * rows;

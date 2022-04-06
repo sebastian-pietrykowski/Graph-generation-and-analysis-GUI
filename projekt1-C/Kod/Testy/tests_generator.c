@@ -3,6 +3,98 @@
 
 
 int test_generate_complete_graph() {
+
+	int number_of_tests = 15;
+	int no_tests_passed = 0;
+
+	printf("Testing generate_complete_graph() in generator.c\n");
+
+	// Graph 1
+	graph_t graph1 = generate_complete_graph( 5, 5, 0, 1 );
+
+	// Test 1
+	test_generate_complete_graph_is_complete( 1, graph1, &no_tests_passed );
+
+	// Test 2
+	test_generate_complete_graph_number_of_vertices( 2, graph1, &no_tests_passed );
+
+	// Test 3
+	test_generate_complete_graph_edges( 3, graph1, &no_tests_passed );
+
+	// Test 4
+	test_generate_complete_graph_edges_weights( 4, graph1, 0, 1, &no_tests_passed );
+
+	free_graph( graph1 );
+
+
+	// Graph 2
+	graph_t graph2 = generate_complete_graph( 50, 50, 3, 8 );
+
+	// Test 5
+	test_generate_complete_graph_is_complete( 5, graph2, &no_tests_passed );
+
+	// Test 6
+	test_generate_complete_graph_number_of_vertices( 6, graph2, &no_tests_passed );
+
+	// Test 7
+	test_generate_complete_graph_edges( 7, graph2, &no_tests_passed );
+
+	// Test 8
+	test_generate_complete_graph_edges_weights( 8, graph2, 3, 8, &no_tests_passed );
+
+	free_graph( graph2 );
+
+
+	// Graph 3
+	graph_t graph3 = generate_complete_graph( 1, 10, 2, 3 );
+
+	// Test 9
+	test_generate_complete_graph_is_complete( 9, graph3, &no_tests_passed );
+
+	// Test 10
+	test_generate_complete_graph_number_of_vertices( 10, graph3, &no_tests_passed );
+
+	// Test 11
+	test_generate_complete_graph_edges( 11, graph3, &no_tests_passed );
+
+	// Test 12
+	test_generate_complete_graph_edges_weights( 12, graph3, 2, 3, &no_tests_passed );
+
+	free_graph( graph3 );
+
+
+	// Graph 4
+	graph_t graph4 = generate_random_graph( -1, 5, 0, 1 );
+
+	// Test 13
+	print_test_message( 13, "generate_complete_graph (negative number of vertices)",
+			graph4 == NULL, &no_tests_passed );
+
+
+	// Graph 5
+	graph_t graph5 = generate_random_graph( 5, 5, 10, 5 );
+	
+	// Test 14
+	print_test_message( 14, "generate_complete_graph (minimal weight greater than maximum weight)",
+			graph5 == NULL, &no_tests_passed );
+
+
+	// Graph 6
+	graph_t graph6 = generate_random_graph( 5, 5, -1, 1 );
+	
+	// Test 15
+	print_test_message( 15, "generate_complete_graph (negative weight)",
+			graph6 == NULL, &no_tests_passed );
+	
+	
+	if( number_of_tests == no_tests_passed )
+		printf("Passed\n");
+	else
+		printf("Failed\n");
+
+	printf("--------------------------------------\n\n");
+
+	return number_of_tests == no_tests_passed;
 }
 
 int test_generate_connected_graph() {
@@ -48,7 +140,7 @@ int test_generate_random_graph() {
 	
 	// Graph 3
 	graph_t graph3 = generate_random_graph( 30, 20, 3, 15 );
-
+	
 	// Test 7
 	test_generate_random_graph_number_of_vertices( 7, graph3, &no_tests_passed );
 	
@@ -99,6 +191,7 @@ int test_generate_random_graph() {
 	print_test_message( 15, "generate_random_graph (negative weight)",
 			graph7 == NULL, &no_tests_passed );
 
+	
 
 	if( number_of_tests == no_tests_passed )
 		printf("Passed\n");
@@ -109,6 +202,39 @@ int test_generate_random_graph() {
 
 	return number_of_tests == no_tests_passed;
 }
+
+int test_generate_complete_graph_is_complete( int number_of_current_test,
+		graph_t graph, int *no_tests_passed ) {
+	print_test_message( number_of_current_test,
+			"generate_complete_graph (is complete)",
+			does_have_all_edges( graph ), no_tests_passed );
+}
+
+int test_generate_complete_graph_number_of_vertices( int number_of_current_test,
+		graph_t graph, int *no_tests_passed ) {
+	
+	print_test_message( number_of_current_test,
+			"generate_complete_graph (number of vertices greater than 1)",
+			graph->no_vertexes > 0, no_tests_passed );
+}
+
+int test_generate_complete_graph_edges( int number_of_current_test,
+		graph_t graph, int *no_tests_passed ) {
+
+	print_test_message( number_of_current_test,
+			"generate_complete_graph (situation of edges)",
+			check_edges(graph), no_tests_passed );
+}
+
+int test_generate_complete_graph_edges_weights( int number_of_current_test, graph_t graph,
+		double from_weight, double to_weight, int *no_tests_passed ) {
+
+	print_test_message( number_of_current_test,
+			"generate_complete_graph (weights in proper range)",
+			check_edges_weights( graph, from_weight, to_weight ), no_tests_passed );
+}
+
+
 
 int test_generate_random_graph_number_of_vertices( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
