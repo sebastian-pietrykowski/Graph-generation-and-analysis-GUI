@@ -18,12 +18,13 @@ int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** pre
 	*(distances[ start_vertex_number ]) = 0;
 }
 
-void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex1, int vertex2, int ** predecessors, double ** distances ) {
+void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex_from, int vertex_to,
+	int ** predecessors, double ** distances ) {
 	
 	// if distances[vertex1]=INIFINITY (it didn't find any path so far) or new path is shorter than current
 	if( *(distances[vertex1]) > *(distances[vertex2]) + graph->adj_mat[vertex2 * graph->no_vertexes + vertex1]) {
 		*(distances[vertex1]) = *(distances[vertex2]) + graph->adj_mat[vertex2 * graph->no_vertexes + vertex1];
-		*(predecessors[index1]) = index2;
+		*(predecessors[index1]) = vertex2;
 
 		// change predecessor in array inside PriorityQueue
 		for( int i = 0; i < pq->no_elements; i++)
