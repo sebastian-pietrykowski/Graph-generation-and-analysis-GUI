@@ -17,11 +17,11 @@ int main() {
 
 	if( !test_generate_complete_graph() )
 		exit(1);	
-
+	if( !test_generate_connected_graph() )
+		exit(1);
 	if( !test_generate_random_graph() )
 		exit(1);
 
 
-	test_generate_connected_graph();
 	return 0;
 }

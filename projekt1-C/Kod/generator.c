@@ -40,10 +40,11 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 	return graph;
 }
 
-graph_t generate_connected_graph( int columns, int rows, double from_weight, double to_weight ) {
+graph_t generate_connected_graph( int start_vertex_number, int columns, int rows, double from_weight, double to_weight ) {
 
 	if( ( columns < 1 || rows < 1 ) ||
-			( from_weight < 0 || to_weight <= 0 || from_weight >= to_weight ) )
+			( from_weight < 0 || to_weight <= 0 || from_weight >= to_weight ) ||
+			( start_vertex_number < 0 || start_vertex_number >= columns*rows-1 ) )
 		return NULL;
 
 	graph_t graph = make_graph(columns, rows);
@@ -55,10 +56,8 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 		visited[i] = 0;
 	
 	// select first vertex and create edge to any neighboring vertex
-	int vertex_from = 0;
-	visited[vertex_from] = 1;
-	add_edge_to_neighbor( vertex_from, graph, &visited, from_weight, to_weight );
-	
+	visited[ start_vertex_number ] = 1;
+	add_edge_to_neighbor( start_vertex_number, graph, &visited, from_weight, to_weight );
 
 	/* Until all vertices are marked as visited add next edges.
 	 * Chose random vertex from visited vertices and add edge to one
@@ -72,7 +71,7 @@ graph_t generate_connected_graph( int columns, int rows, double from_weight, dou
 				Set_add( potential_start_vertices, index );
 		int did_add = 0;
 		while( !Set_is_empty( potential_start_vertices ) && !did_add ) {
-			vertex_from = Set_pop( potential_start_vertices );
+			int vertex_from = Set_pop( potential_start_vertices );
 			did_add = add_edge_to_neighbor( vertex_from, graph, &visited, from_weight, to_weight );
 		}
 		free_Set( potential_start_vertices );
@@ -125,15 +124,18 @@ graph_t generate_random_graph( int columns, int rows, double from_weight, double
 int add_edge_to_neighbor( int vertex_from, graph_t graph, int ** visited,
 		double from_weight, double to_weight ) {
 
+	// get array of potential neighbors
 	int number_of_potential_neighbors = 0;
-
 	int *potential_neighbors_array = potential_neighbors( graph, vertex_from, &number_of_potential_neighbors );
 
+	/* add to set of unvisited neighbors vertices from
+	 * array of potential neighbors which were not visited */
 	Set unvisited_neighbors = make_Set();
 	for( int i = 0; i < number_of_potential_neighbors; i++ )
 		if( (*visited)[ potential_neighbors_array[i] ] == 0 )
 			Set_add( unvisited_neighbors, potential_neighbors_array[i] );
 
+	// create edge
 	if( unvisited_neighbors->no_elements > 0 ) {
 
 		int next_vertex_number = Set_pop( unvisited_neighbors );
