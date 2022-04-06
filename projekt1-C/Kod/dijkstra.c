@@ -11,27 +11,20 @@ int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** pre
 	
 	// set all values in arrays to default
 	for( int i = 0; i < graph->no_vertexes; i++ ) {
-		*(predecessors([i]) = -1;
-		*(distances[i]) = DBL_MAX;
+		(*predecessors)[i] = -1;
+		(*distances)[i] = DBL_MAX;
 	}
 	// start condition
-	*(distances[ start_vertex_number ]) = 0;
+	(*distances)[ start_vertex_number ] = 0;
 }
 
 void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex_from, int vertex_to,
 	int ** predecessors, double ** distances ) {
 	
-	// if distances[vertex1]=INIFINITY (it didn't find any path so far) or new path is shorter than current
-	if( *(distances[vertex1]) > *(distances[vertex2]) + graph->adj_mat[vertex2 * graph->no_vertexes + vertex1]) {
-		*(distances[vertex1]) = *(distances[vertex2]) + graph->adj_mat[vertex2 * graph->no_vertexes + vertex1];
-		*(predecessors[index1]) = vertex2;
-
-		// change predecessor in array inside PriorityQueue
-		for( int i = 0; i < pq->no_elements; i++)
-			if( pq->(vertex[i]) == index1 ) {
-				pq->(predecessors[i]) = index2;
-				break;
-			}
+	// if distances[vertex_to]=INIFINITY (it didn't find any path so far) or new path is shorter than current
+	if( (*distances)[vertex_to] > (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to]) {
+		(*distances)[vertex_to] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
+		(*predecessors)[vertex_to] = vertex_from;
 	}
 }
 
@@ -45,10 +38,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 	Set checked_vertexes = make_Set();
 	PriorityQueue queue = make_PQ();
 
-	/* Fulfill queue with vertexes.
-	 *
-	 * There are two arrays predecessors[] - the one in this function and the one in PriorityQueue - that's because
-	 * elements of array in PriorityQueue are being removed, while elements in array in this function always exist. */
+	// Fulfill queue with vertexes.
 	PQ_put( queue, start_vertex_number, 0 );
 	for( int i = 0; i < graph->no_vertexes; i++ )
 		if( i != start_vertex_number )
