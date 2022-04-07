@@ -45,7 +45,8 @@ graph_t make_graph(int columns, int rows) {
   return graph;
 }
 
-graph_t read_graph(FILE* in, graph_t graph) {
+graph_t read_graph(FILE* in) {
+  graph_t graph;
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
     fprintf(stderr,"Error, can not read the dimensions of the graph");

@@ -2,7 +2,7 @@
 
 #include "../data_structures.h"
 #include "tests_data_structures.h"
-
+#include "tests_dijkstra.h"
 
 int main() {
 	
@@ -12,6 +12,7 @@ int main() {
 	if( test_Set() == 0 )
 		exit(1);
 
+	test_Dijkstra();
 	
 	return 0;
 }

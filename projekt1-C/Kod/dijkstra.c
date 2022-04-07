@@ -24,6 +24,12 @@ void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex
 	// if distances[vertex_to]=INIFINITY (it didn't find any path so far) or new path is shorter than current
 	if( (*distances)[vertex_to] > (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to]) {
 		(*distances)[vertex_to] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
+
+		for( int i = 0; i < pq->no_elements; i++ )
+			if( pq->vertexes[i] == vertex_to ) {
+				pq->distances[vertex_to] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
+				break;
+			}
 		(*predecessors)[vertex_to] = vertex_from;
 	}
 }
@@ -112,4 +118,16 @@ void print_path( int * path, graph_t graph, int no_elements, int does_print_weig
 		else
 			printf("%d -> ", path[ no_elements ] );
 	}
+}
+
+void find_path_dijkstra( graph_t graph, int start_vertex_number, int end_vertex_number, int does_print_weights ) {
+	
+	int * predecessors = dijkstra( graph, start_vertex_number );
+	int number_of_elements_in_path = 0;
+	int * reversed_path = determine_path( &number_of_elements_in_path, predecessors, start_vertex_number, end_vertex_number );
+	if( reversed_path != NULL ) {
+		print_path( reversed_path, graph, number_of_elements_in_path, does_print_weights );
+		free( reversed_path );
+	}
+	free( predecessors );
 }

@@ -9,7 +9,7 @@ typedef struct {
   double **adj_mat; /* adjacency matrix stores information about weights between individual vertives */
 } * graph_t;
 
-graph_t read_graph(FILE *in, graph_t graph); /* Function responsible for reading the graph from the input file and creating adjacency matrix */
+graph_t read_graph(FILE *in); /* Function responsible for reading the graph from the input file and creating adjacency matrix */
 
 int does_have_all_edges(graph_t graph); /* Function responsible for checking if all the possible edges in the graph exist */
 

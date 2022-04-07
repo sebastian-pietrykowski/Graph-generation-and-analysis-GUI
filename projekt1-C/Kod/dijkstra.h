@@ -31,6 +31,10 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
  * if it is set to 0, then doesn't print these weights. */
 void print_path( int * reversed_path, graph_t graph, int no_elements, int does_print_weights );
 
+/* Function directed to final using with aim of finding the shortest path
+ * in graph, it includes all functions needed to work. */
+void find_path_dijkstra( graph_t, int start_vertex_number, int end_vertex_number, int does_print_weights );
+
 
 #endif
 
