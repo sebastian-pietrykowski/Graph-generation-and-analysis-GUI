@@ -74,8 +74,12 @@ int bfs(graph_t graph, int start_vertex_number) {
     }
   }
   for (int i = 0; i < graph->no_vertexes; i++) {
-    if (visited[i] != 1) return 0; /* inconsistent graph */
+    if (visited[i] != 1) {
+	    free_bfs();
+	    return 0; /* inconsistent graph */
+    }
   }
+  free_bfs();
   return 1; /* consistent graph */
 }
 void free_bfs() {
