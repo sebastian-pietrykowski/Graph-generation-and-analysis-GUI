@@ -7,7 +7,8 @@
 #include "graph_test.h"
 #define MAXLINE 256
 
-
+int * expected_vertexes;
+double * expected_weights;
 
 int does_have_all_edges_test(graph_t graph) {
     int temp = 0;
@@ -25,11 +26,19 @@ int does_have_all_edges_test(graph_t graph) {
             return 0;
     
 }
+void expected_make ( graph_t graph) {
+ 
+            expected_vertexes = expected_values_v(graph);
+         expected_weights = expected_values_w(graph);
+	if(expected_vertexes == NULL || expected_weights == NULL) {
+		fprintf(stdout,"Failed to allocate memory for excepted values, can not perform test\n");
+		exit(EXIT_FAILURE);
+	}
 
+}
+ 
 graph_t test_read_graph(FILE* in, graph_t graph) {
 	
-	    int* expected_vertexes = expected_values_v(graph);
-        double* expected_weights = expected_values_w(graph);
 	
     int columns, rows;
     if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
@@ -114,6 +123,7 @@ int* expected_values_v(graph_t graph) {
                                       18, 24, 21, 17, 22, 24, 29, 24};
     return expected_vertexes;
   }
+	return NULL;
 }
 
 double* expected_values_w(graph_t graph) {
@@ -164,7 +174,7 @@ double* expected_values_w(graph_t graph) {
     };
     return expected_weights;
   }
-  if (graph->no_vertexes = 6 * 6) {
+  if (graph->no_vertexes == 6 * 6) {
     static double expected_weights[] = {
         0.106248, 0.940403, 0.032190,
         0.856341, 0.776824, 0.691529,
@@ -175,5 +185,6 @@ double* expected_values_w(graph_t graph) {
     };
     return expected_weights;
   }
+	return NULL;
 }
 
