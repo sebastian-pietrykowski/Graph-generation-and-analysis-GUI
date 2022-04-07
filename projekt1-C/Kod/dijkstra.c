@@ -27,7 +27,7 @@ void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex
 
 		for( int i = 0; i < pq->no_elements; i++ )
 			if( pq->vertexes[i] == vertex_to ) {
-				pq->distances[vertex_to] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
+				pq->distances[i] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
 				break;
 			}
 		(*predecessors)[vertex_to] = vertex_from;
@@ -60,7 +60,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 		for( int i = 0; i < number_of_neighbors; i++ ) {
 			int potential_neighbor = neighbors_array[i];
 			if( !Set_is_element_in( checked_vertexes, potential_neighbor ) )
-				relax( graph, queue, start_vertex_number, potential_neighbor, removed_element, &predecessors, &distances );	
+				relax( graph, queue, start_vertex_number, removed_element, potential_neighbor, &predecessors, &distances );	
 
 		}
 		free( neighbors_array );

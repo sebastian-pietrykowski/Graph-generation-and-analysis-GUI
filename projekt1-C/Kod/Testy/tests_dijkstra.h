@@ -10,5 +10,6 @@
 int test_Dijkstra();
 
 
+int compare_arrays( int * array1, int *array2, int length );
 
 #endif

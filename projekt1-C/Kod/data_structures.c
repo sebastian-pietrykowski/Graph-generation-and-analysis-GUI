@@ -35,9 +35,9 @@ int PQ_get( PriorityQueue pq ) {
 				index = i;
 				min_distance = pq->distances[i];
 			}
-		// if chosen element has distance negative or equal 0, then return -1 and print error message
-		if( min_distance <= 0 ) {
-			fprintf(stderr, "Element taken off from PriorityQueue has distance negative or equal 0: %lf\n", min_distance );
+		// if chosen element has negative distance, then return -1 and print error message
+		if( min_distance < 0 ) {
+			fprintf(stderr, "Element taken off from PriorityQueue has negative distance: %lf\n", min_distance );
 			return -1;
 		}
 		
