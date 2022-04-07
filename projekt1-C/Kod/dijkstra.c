@@ -65,6 +65,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 		}
 		free( neighbors_array );
 	}
+	free( distances );
 	free_PQ( queue );
 	free_Set( checked_vertexes );
 
@@ -75,7 +76,7 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 	
 	// set path to one element being end_vertex_number
 	*no_path_elements = 1;
-	int * path = malloc( 1 ); // reverted path
+	int * path = malloc( 1 * sizeof(int) ); // reversed path
 	path[0] = end_vertex_number;
 
 	// determine path
@@ -89,15 +90,17 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 	// it didn't find path
 	if( element == -1 ) {
 		*no_path_elements = 0;
+		free( path );
 		return NULL;
 	}
 	// the last element to add - start_vertex_number
 	else if( element == start_vertex_number ) {
 		(*no_path_elements)++;
+		path = realloc( path, sizeof(int) * (*no_path_elements) );
 		path[(*no_path_elements)-1] = start_vertex_number;
 		return path;
 	}
-
+	free( path );
 	return NULL;
 }
 

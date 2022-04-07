@@ -1,3 +1,4 @@
+#include <stdlib.h>
 
 #include "tests_dijkstra.h"
 #include "tests_auxiliary_functions.h"
@@ -26,7 +27,10 @@ int test_Dijkstra() {
 	int reversed_path1_proper[] = { 24, 23, 22, 21, 20, 15, 10, 5, 0 };
 	print_test_message( 3, "determine_path (proper_values)", compare_arrays( reversed_path1, reversed_path1_proper, number_of_elements_in_path1 ), &no_tests_passed );
 
-	
+	fclose( in1 );
+	free_graph( graph1 );
+	free( predecessors1 );
+	free( reversed_path1 );
 	
 	
 	if( no_tests_passed == no_tests )
