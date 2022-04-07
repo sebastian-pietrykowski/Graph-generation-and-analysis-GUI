@@ -109,7 +109,7 @@ void print_path( int * path, graph_t graph, int no_elements, int does_print_weig
 	/* Do untill it reaches the last element of path,
 	 * path received from argument is reversed
 	 * so it need to revert it. */
-	while( --no_elements > 0 ) {
+	while( --no_elements >= 0 ) {
 
 		// this is the last element
 		if( no_elements == 0 )
@@ -121,6 +121,7 @@ void print_path( int * path, graph_t graph, int no_elements, int does_print_weig
 		else
 			printf("%d -> ", path[ no_elements ] );
 	}
+	printf("\n");
 }
 
 void find_path_dijkstra( graph_t graph, int start_vertex_number, int end_vertex_number, int does_print_weights ) {
