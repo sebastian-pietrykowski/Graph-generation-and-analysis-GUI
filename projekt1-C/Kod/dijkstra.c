@@ -36,6 +36,11 @@ void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex
 
 int * dijkstra( graph_t graph, int start_vertex_number ) {
 	
+	if( start_vertex_number < 0 || start_vertex_number > graph->no_vertexes-1 ) {
+		fprintf( stderr, "Inproper vertex in function dijkstra\n" );
+		return NULL;
+	}
+
 	// create arrays of predecessors and distances, initiate them
 	int * predecessors;
 	double * distances;
@@ -50,7 +55,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 		if( i != start_vertex_number )
 			PQ_put( queue, i, DBL_MAX );
 	
-	while( queue->no_elements != 0 ) {
+	while( queue->no_elements > 0 ) {
 		int removed_element = PQ_get( queue );   // index of vertex removed from queue
 		int number_of_neighbors = 0;
 		int * neighbors_array = neighbors( graph, removed_element, &number_of_neighbors ); // array of indices of removed_element's neighbors
@@ -72,8 +77,14 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 	return predecessors;
 }
 
-int * determine_path( int * no_path_elements, int * predecessors, int start_vertex_number, int end_vertex_number ) {
+int * determine_path( graph_t graph, int * no_path_elements, int * predecessors, int start_vertex_number, int end_vertex_number ) {
 	
+	if( start_vertex_number < 0 || start_vertex_number > graph->no_vertexes-1 ||
+			end_vertex_number < 0 || end_vertex_number > graph->no_vertexes-1 ) {
+		fprintf( stderr, "Inproper vertex in function determine_path\n" );
+		return NULL;
+	}
+
 	// set path to one element being end_vertex_number
 	*no_path_elements = 1;
 	int * path = malloc( 1 * sizeof(int) ); // reversed path
@@ -81,7 +92,7 @@ int * determine_path( int * no_path_elements, int * predecessors, int start_vert
 
 	// determine path
 	int element = end_vertex_number;
-	while( (element = predecessors[element]) != start_vertex_number || element == -1 ) {
+	while( (element = predecessors[element]) != start_vertex_number && element != -1 ) {
 		(*no_path_elements)++;
 		path = realloc( path, sizeof(int) * (*no_path_elements) );
 		path[(*no_path_elements)-1] = element;
@@ -128,10 +139,14 @@ void find_path_dijkstra( graph_t graph, int start_vertex_number, int end_vertex_
 	
 	int * predecessors = dijkstra( graph, start_vertex_number );
 	int number_of_elements_in_path = 0;
-	int * reversed_path = determine_path( &number_of_elements_in_path, predecessors, start_vertex_number, end_vertex_number );
-	if( reversed_path != NULL ) {
-		print_path( reversed_path, graph, number_of_elements_in_path, does_print_weights );
-		free( reversed_path );
+	if( dijkstra != NULL ) {
+		int * reversed_path = determine_path( graph, &number_of_elements_in_path, predecessors, start_vertex_number, end_vertex_number );
+		if( reversed_path != NULL ) {
+			print_path( reversed_path, graph, number_of_elements_in_path, does_print_weights );
+			free( reversed_path );
+		}
+		else
+			printf( "There not exists path between these vertices\n");
+		free( predecessors );
 	}
-	free( predecessors );
 }

@@ -23,7 +23,7 @@ int * dijkstra( graph_t graph, int start_vertex_number );
 /* Given array of predecessors[] received from dijkstra(...) function,
  * returns reversed path from vertex of index start_vertex_number to vertex of index end_vertex_number.
  * If path is not determined, it returns null. */
-int * determine_path( int * no_path_elements, int * predecessors, int start_vertex_number, int end_vertex_number );
+int * determine_path( graph_t graph, int * no_path_elements, int * predecessors, int start_vertex_number, int end_vertex_number );
 
 /* Given reversed path received from determine path(...) functiom, prints the path..
  * 

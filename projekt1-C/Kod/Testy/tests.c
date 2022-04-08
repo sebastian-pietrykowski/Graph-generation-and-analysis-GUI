@@ -7,12 +7,13 @@
 int main() {
 	
 	// Testing data_structures.c
-	if( test_PQ() == 0 )
+	if( !test_PQ() )
 		exit(1);
-	if( test_Set() == 0 )
+	if( !test_Set() )
 		exit(1);
 
-	test_Dijkstra();
+	if( !test_Dijkstra() )
+		exit(1);
 	
 	return 0;
 }
