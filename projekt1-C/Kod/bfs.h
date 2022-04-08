@@ -15,11 +15,10 @@ void FIFO_put(FIFO_t fifo, int vertex); /* Function responsible for putting the 
 
 int bfs(graph_t graph, int start_vertex_number); /* Main function of the bfs algorithm */
 
-void free_bfs(FIFO_t fifo, int * visited); /* Memory clean up */
+void free_bfs( void ); /* Memory clean up */
 
 FIFO_t make_fifo (graph_t graph); /* Initialization of the FIFO_t structure */
 
 int is_FIFO_empty(FIFO_t fifo); /* Function checks if there are vertexes in the queue that are wating to be checked for having neighbors */
 
 #endif
-
