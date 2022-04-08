@@ -11,7 +11,7 @@ int test_generate_complete_graph() {
 
 	// Graph 1
 	graph_t graph1 = generate_complete_graph( 5, 5, 0, 1 );
-
+	
 	// Test 1
 	test_generate_complete_graph_is_complete( 1, graph1, &no_tests_passed );
 
