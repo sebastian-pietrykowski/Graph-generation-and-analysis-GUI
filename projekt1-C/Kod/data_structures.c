@@ -1,12 +1,13 @@
 #include <float.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "data_structures.h"
 
 PriorityQueue make_PQ() {
 
-	PriorityQueue pq = malloc( sizeof(PriorityQueue) );
+	PriorityQueue pq = malloc( sizeof *pq );
 	
 	pq->no_elements = 0;	
 	pq->vertexes = malloc( 0 );
@@ -19,8 +20,10 @@ int PQ_get( PriorityQueue pq ) {
 	
 	if( pq->no_elements < 1 )
 		return -1;
-	else if( pq->no_elements == 1 )
+	else if( pq->no_elements == 1 ) {
+		pq->no_elements = 0;
 		return pq->vertexes[0];
+	}
 	else {   
 	// find vertex from many
 		int index = -1;
@@ -28,7 +31,7 @@ int PQ_get( PriorityQueue pq ) {
 		
 		// find vertex
 		for( int i = 0; i < pq->no_elements; i++ )
-			if( pq->vertexes[i] < min_distance ) {
+			if( pq->distances[i] < min_distance ) {
 				index = i;
 				min_distance = pq->distances[i];
 			}
@@ -38,8 +41,15 @@ int PQ_get( PriorityQueue pq ) {
 			return -1;
 		}
 		
-		// change size of arrays in struct
 		int element = pq->vertexes[index];
+
+		// shift elements by 1 index
+		for( int i = index + 1; i < pq->no_elements; i++ ) {
+			pq->vertexes[i-1] = pq->vertexes[i];
+			pq->distances[i-1] = pq->distances[i];
+		}
+		
+		// change size of arrays in struct
 		pq->no_elements--;
 		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
 		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
@@ -57,13 +67,14 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 	}
 	// increase size of arrays and add another elements
 	else {
+		int index = pq->no_elements;
 		pq->no_elements++;
 		
-		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq-> no_elements );
-		pq->vertexes[0] = vertex;
+		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
+		pq->vertexes[index] = vertex;
 
 		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
-		pq->distances[0] = distance;
+		pq->distances[index] = distance;
 	}
 }
 
@@ -76,8 +87,10 @@ void free_PQ( PriorityQueue pq ) {
 
 
 
-Set make_set() {	
-	Set set = malloc( sizeof( Set ) );
+Set make_Set() {	
+	
+	Set set = malloc( sizeof *set );
+
 	set->no_elements = 0;
 		
 	set->elements = malloc( 0 );
@@ -106,14 +119,14 @@ void Set_add( Set set, int element ) {
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {
-		fprintf( stderr, "data_structures.c: Element being tried to add to set is already in it." );
+		fprintf( stderr, "data_structures.c: Element being tried to add to set is already in it.\n" );
 	}
 	// increase size of array and add another element
 	else {
 		set->no_elements++;
 		
 		set->elements = realloc( set->elements, sizeof(int) * set-> no_elements );
-		set->elements[0] = element;
+		set->elements[ set->no_elements - 1 ] = element;
 	}
 }
 
@@ -133,6 +146,39 @@ void Set_remove( Set set, int element ) {
 	}
 	else
 		fprintf(stderr, "data_structures.c: Element being tried to removed isn't in set.");
+}
+
+int Set_pop( Set set ) {
+
+	// There is no element to be taken from set
+	if( set->no_elements < 1 ) {
+		fprintf( stderr, "Set.c: Set_pop(...) - There is no element to be taken from Set\n" );
+		exit(1);
+		return 0;
+	}
+	// There is only one element in set
+	else if( set->no_elements == 1 ) {
+		int element = set->elements[0];
+		set->elements = realloc( set->elements, 0 );
+		set->no_elements--;
+		return element;
+	}
+	// There is many elements in set
+	else {
+		srand( time( NULL ) );
+		// random number from range <0,set-<no_elements>
+		int taken_element_index = ( rand() % (set->no_elements ) );
+		int taken_element_value = set->elements[ taken_element_index ];
+
+		// shift elements by 1 index starting from taken element
+		for( int index = taken_element_index + 1; index < set->no_elements; index++ ) {
+			set->elements[ index-1 ] = set->elements[ index ];
+		}
+		set->no_elements--;
+		set->elements = realloc( set->elements, sizeof set->elements[0] * set->no_elements );
+		return taken_element_value;
+	}
+	return 0;
 }
 
 void free_Set( Set set ) {
