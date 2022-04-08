@@ -64,7 +64,7 @@ int test_generate_complete_graph() {
 
 
 	// Graph 4
-	graph_t graph4 = generate_random_graph( -1, 5, 0, 1 );
+	graph_t graph4 = generate_complete_graph( -1, 5, 0, 1 );
 
 	// Test 13
 	print_test_message( 13, "generate_complete_graph (negative number of vertices)",
@@ -72,7 +72,7 @@ int test_generate_complete_graph() {
 
 
 	// Graph 5
-	graph_t graph5 = generate_random_graph( 5, 5, 10, 5 );
+	graph_t graph5 = generate_complete_graph( 5, 5, 10, 5 );
 	
 	// Test 14
 	print_test_message( 14, "generate_complete_graph (minimal weight greater than maximum weight)",
@@ -80,7 +80,7 @@ int test_generate_complete_graph() {
 
 
 	// Graph 6
-	graph_t graph6 = generate_random_graph( 5, 5, -1, 1 );
+	graph_t graph6 = generate_complete_graph( 5, 5, -1, 1 );
 	
 	// Test 15
 	print_test_message( 15, "generate_complete_graph (negative weight)",
