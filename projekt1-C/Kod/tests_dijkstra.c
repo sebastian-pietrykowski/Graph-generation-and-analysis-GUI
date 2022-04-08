@@ -12,7 +12,11 @@ int test_Dijkstra() {
 	printf("Testing dijkstra.c\n");
 	
 	// Graph 1 - connected
-	FILE * in1 = fopen( "graph1_test_dijkstra_connected.txt", "r" );
+	FILE * in1 = fopen( "Graphs/graph1_test_dijkstra_connected.txt", "r" );
+	if( in1 == NULL ) {
+		fprintf( stderr, "File loaded unsuccessfully in function test_Dijkstra.\n");
+		exit(1);
+	}
 	graph_t graph1 = read_graph( in1 );
 
 	// Test 1
@@ -34,7 +38,11 @@ int test_Dijkstra() {
 
 
 	// Graph 2 - complete
-	FILE * in2 = fopen( "graph2_test_dijkstra_complete.txt", "r" );
+	FILE * in2 = fopen( "Graphs/graph2_test_dijkstra_complete.txt", "r" );
+	if( in2 == NULL ) {
+		fprintf( stderr, "File loaded unsuccessfully in function test_Dijkstra.\n");
+		exit(1);
+	}
 	graph_t graph2 = read_graph( in2 );
 
 	// Test 4
@@ -67,7 +75,11 @@ int test_Dijkstra() {
 
 
 	// Graph 3 - connected with cycle
-	FILE * in3 = fopen( "graph3_test_dijkstra_connected_with_cycle.txt", "r" );
+	FILE * in3 = fopen( "Graphs/graph3_test_dijkstra_connected_with_cycle.txt", "r" );
+	if( in3 == NULL ) {
+		fprintf( stderr, "File loaded unsuccessfully in function test_Dijkstra.\n");
+		exit(1);
+	}
 	graph_t graph3 = read_graph( in3 );
 
 	// Test 7
@@ -89,7 +101,11 @@ int test_Dijkstra() {
 
 
 	// Graph 4 - 1x8
-	FILE * in4 = fopen( "graph4_test_dijkstra_1_column.txt", "r" );
+	FILE * in4 = fopen( "Graphs/graph4_test_dijkstra_1_column.txt", "r" );
+	if( in4 == NULL ) {
+		fprintf( stderr, "File loaded unsuccessfully in function test_Dijkstra.\n");
+		exit(1);
+	}
 	graph_t graph4 = read_graph( in4 );
 
 	// Test 10
@@ -111,7 +127,11 @@ int test_Dijkstra() {
 
 
 	// Graph 5 - unconnected
-	FILE * in5 = fopen( "graph5_test_dijkstra_unconnected.txt", "r" );
+	FILE * in5 = fopen( "Graphs/graph5_test_dijkstra_unconnected.txt", "r" );
+	if( in5 == NULL ) {
+		fprintf( stderr, "File loaded unsuccessfully in function test_Dijkstra.\n");
+		exit(1);
+	}
 	graph_t graph5 = read_graph( in5 );
 
 	// Test 13

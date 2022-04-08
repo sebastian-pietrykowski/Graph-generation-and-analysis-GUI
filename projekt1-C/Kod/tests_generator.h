@@ -1,8 +1,8 @@
 #ifndef _TESTS_GENERATOR_H_
 #define _TESTS_GENERATOR_H_
 
-#include "../generator.h"
-#include "../bfs.h"
+#include "generator.h"
+#include "bfs.h"
 
 /* Method used for testing function generate_complete_graph().
  * Returns 1 if tests passed, 0 if not. */

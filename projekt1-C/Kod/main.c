@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "%s: can not read file: %s\n\n", argv[0], inp);
 			exit(EXIT_FAILURE);
 		}
-		graph = read_graph( in, graph );
+		graph = read_graph( in );
 		if (check_connectivity == 1) { /* Check connectivity */
 			if (bfs( graph, start_vertex_number)) {
 				fprintf(stdout, "Graph is consistent\n");
@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
 	}
 	else {
 		fprintf( stderr, "Tou didn't attach input or output file" );
-		fprintf( stderr, usage );
+		fprintf( stderr, "%s", usage );
 		exit(EXIT_FAILURE);
 	}
 }
