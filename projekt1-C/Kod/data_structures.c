@@ -21,8 +21,12 @@ int PQ_get( PriorityQueue pq ) {
 	if( pq->no_elements < 1 )
 		return -1;
 	else if( pq->no_elements == 1 ) {
+
+		int element = pq->vertexes[0];
 		pq->no_elements = 0;
-		return pq->vertexes[0];
+		pq->vertexes = realloc( pq->vertexes, 0 );
+		pq->distances = realloc( pq->distances, 0 );
+		return element;
 	}
 	else {   
 	// find vertex from many
@@ -35,12 +39,18 @@ int PQ_get( PriorityQueue pq ) {
 				index = i;
 				min_distance = pq->distances[i];
 			}
-		// if chosen element has distance negative or equal 0, then return -1 and print error message
-		if( min_distance <= 0 ) {
-			fprintf(stderr, "Element taken off from PriorityQueue has distance negative or equal 0: %lf\n", min_distance );
+		// if chosen element has negative distance, then return -1 and print error message
+		if( min_distance < 0 ) {
+			fprintf(stderr, "Element taken off from PriorityQueue has negative distance: %lf\n", min_distance );
 			return -1;
 		}
 		
+		// only remaining values have distance equals to DBL_MAX
+		if( index == -1 )
+			for( int i = 0; i < pq->no_elements; i++ )
+				if( pq->distances[i] == min_distance )
+					index = i;
+
 		int element = pq->vertexes[index];
 
 		// shift elements by 1 index

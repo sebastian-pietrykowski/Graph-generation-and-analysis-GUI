@@ -8,13 +8,9 @@ int test_PQ() {
 	int no_tests = 31;
 	int no_tests_passed = 0;
 
-<<<<<<< HEAD
-	printf("\nTesting PriorityQueue in data_structures.c:\n");
-=======
 	int taken_element = INT_MAX;
 
 	printf("Testing PriorityQueue in data_structures.c:\n");
-	
 	
 	PriorityQueue pq1 = make_PQ();
 
@@ -58,7 +54,6 @@ int test_PQ() {
 
 	// Test 15
 	test_PQ_get_number_of_elements( 15, pq1, 3, &no_tests_passed );
->>>>>>> Data_Structures
 
 	// Test 16
 	print_test_message( 16, "PQ_get (remaining values in PQ)",
@@ -150,24 +145,6 @@ int test_Set() {
 	Set set1 = make_Set();
 	// set1 = {}
 	
-	// Test 1
-<<<<<<< HEAD
-	PriorityQueue pq1 = make_PQ();
-	print_test_message( 1, pq1 != NULL, &no_tests_passed );
-
-	// Test 2
-	PQ_put( pq1, 1, 0.5 );	
-	print_test_message( 2, pq1->no_elements == 1, &no_tests_passed );
-
-	// Test 3
-	print_test_message( 3, pq1->vertexes[0] == 1, &no_tests_passed );
-	
-	// Test 4
-	print_test_message( 4, pq1->distances[0] != 0.5, &no_tests_passed );
-	printf("Test 4 is designed to check if failed test works\n");
-
-	printf("\n");
-=======
 	print_test_message( 1, "make_Set (initializing object Set)", set1 != NULL, &no_tests_passed );
 
 	// Test 2
@@ -354,7 +331,6 @@ int test_Set() {
 
 	free_Set( set1);
 
->>>>>>> Data_Structures
 	if( no_tests_passed == no_tests )
 		printf("Passed\n");
 	else printf("Failed\n");
@@ -409,6 +385,7 @@ void test_PQ_put( int number_of_current_test, PriorityQueue pq, int predicted_nu
 	
 	test_PQ_put_value_of_distance( number_of_current_test++, pq, index, predicted_distance_value, no_tests_passed );
 }
+
 
 
 

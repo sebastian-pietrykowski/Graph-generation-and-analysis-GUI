@@ -3,7 +3,7 @@
 
 #include "tests_data_structures.h"
 #include "tests_generator.h"
-
+#include "tests_dijkstra.h"
 
 int main() {
 	
@@ -22,6 +22,8 @@ int main() {
 	if( !test_generate_random_graph() )
 		exit(1);
 
-
+	if( !test_Dijkstra() )
+		exit(1);
+	
 	return 0;
 }

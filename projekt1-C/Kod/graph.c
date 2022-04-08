@@ -45,7 +45,8 @@ graph_t make_graph(int columns, int rows) {
   return graph;
 }
 
-graph_t read_graph(FILE* in, graph_t graph) {
+graph_t read_graph(FILE* in) {
+  graph_t graph;
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
     fprintf(stderr,"Error, can not read the dimensions of the graph");
@@ -140,16 +141,15 @@ int write_graph(graph_t graph, FILE* out) {
   return 0;
 }
 
-int* neighbors(graph_t graph, int vertex) {
-  int iter = 0;
-  int* neighbors = malloc(4 * sizeof(*neighbors)); /*  One vertex can be connected to up to four other vertices */
+int* neighbors(graph_t graph, int vertex, int * number_of_neighbors) {
+  *number_of_neighbors = 0;
+  int* neighbors = malloc(4 * sizeof(*neighbors) ); /*  One vertex can be connected to up to four other vertices */
   for (int j = 0; j < graph->no_vertexes; j++) {
     if (graph->adj_mat[vertex][j] != -1) {
-      neighbors[iter] = j;
-      iter++;
+      neighbors[ (*number_of_neighbors)++] = j;
     }
   }
-
+  neighbors = realloc( neighbors, *number_of_neighbors * sizeof(*neighbors) );
   return neighbors;
 }
 
