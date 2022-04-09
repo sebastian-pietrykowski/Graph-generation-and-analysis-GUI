@@ -7,8 +7,8 @@
 #include "graph_test.h"
 #define MAXLINE 256
 
-int * expected_vertexes;
-double * expected_weights;
+int* expected_vertexes;
+double* expected_weights;
 
 int does_have_all_edges_test(graph_t graph) {
     int temp = 0;
@@ -20,26 +20,15 @@ int does_have_all_edges_test(graph_t graph) {
         }
     }
     int expected = ((4 * 2 + (graph->columns - 2) * 2 * 3 + (graph->rows - 2) * 2 * 3 + ((graph->rows - 2) * (graph->columns - 2)) * 4));
-        if (temp == expected )
-            return temp;
-        else
-            return 0;
-    
+    if (temp == expected)
+        return temp;
+    else
+        return 0;
 }
-void expected_make ( graph_t graph) {
- 
-            expected_vertexes = expected_values_v(graph);
-         expected_weights = expected_values_w(graph);
-	if(expected_vertexes == NULL || expected_weights == NULL) {
-		fprintf(stdout,"Failed to allocate memory for excepted values, can not perform test\n");
-		exit(EXIT_FAILURE);
-	}
 
-}
+
  
-graph_t test_read_graph(FILE* in, graph_t graph) {
-	
-	
+graph_t read_graph_test(FILE* in, graph_t graph) {
     int columns, rows;
     if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
         fprintf(stderr, "Error, can not read the dimensions of the graph");
@@ -57,19 +46,19 @@ graph_t test_read_graph(FILE* in, graph_t graph) {
     double weight;
     int to_vertex;
     int from_vertex;
-/*We start the iteration from -1 because the vertex and weight data start on the second line of the file */
-for (from_vertex = -1; from_vertex < graph -> no_vertexes; from_vertex++) {
-    while (fgets(line, MAXLINE, in ) != NULL) {
-        char * token = strtok(line, delim); /* breaking line into a series of tokens */
-        int temp = 1;
+    /*We start the iteration from -1 because the vertex and weight data start on the second line of the file */
+    for (from_vertex = -1; from_vertex < graph->no_vertexes; from_vertex++) {
+        while (fgets(line, MAXLINE, in) != NULL) {
+            char* token = strtok(line, delim); /* breaking line into a series of tokens */
+            int temp = 1;
 
-        while (token != NULL) {
-            if (!isspace( * token)) {
-                /* We are only interested in numbers */
-                temp++;
+            while (token != NULL) {
+                if (!isspace(*token)) {
+                    /* We are only interested in numbers */
+                    temp++;
 
-                if (temp % 2 == 0) {
-                    /* Thanks to the condition if we can alternately enter vertexes and weights into the array of subsequent tokens */
+                    if (temp % 2 == 0) {
+    /* Thanks to the condition if we can alternately enter vertexes and weights into the array of subsequent tokens */
                     to_vertex = atoi(token);
                     if (to_vertex != * expected_vertexes) {
                         fprintf(stderr, "cos zle??");
@@ -99,18 +88,30 @@ for (from_vertex = -1; from_vertex < graph -> no_vertexes; from_vertex++) {
 
 
 
+
 return graph;
 }
 
 
-int* expected_values_v(graph_t graph) {
+
+
+void make_expected_values(graph_t graph) {
+    expected_vertexes = return_expected_vertexes(graph);
+    expected_weights = return_expected_weights(graph);
+    if (expected_vertexes == NULL || expected_weights == NULL) {
+        fprintf(stdout, "Failed to allocate memory for excepted values, can not perform test\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+int* return_expected_vertexes(graph_t graph) {
   if (graph->no_vertexes == 3 * 3) {
     static int expected_vertexes[] = {1, 3, 0, 4, 2, 1, 5, 0, 4, 6, 1, 3,
                                       5, 7, 2, 4, 8, 3, 7, 6, 4, 8, 5, 7};
     return expected_vertexes;
   }
   if (graph->no_vertexes == 7 * 4) {
-    static int expected_vertexes[] = {
+   static  int expected_vertexes[] = {
         1,  4,  5,  2,  0,  6,  3,  1,  7,  2,  8,  0,  5,  1,  9,  6,  4,  10,
         7,  2,  5,  6,  3,  11, 4,  12, 9,  13, 5,  8,  10, 14, 6,  9,  11, 15,
         10, 7,  13, 16, 8,  17, 9,  12, 14, 10, 15, 18, 13, 19, 11, 14, 20, 17,
@@ -126,7 +127,7 @@ int* expected_values_v(graph_t graph) {
 	return NULL;
 }
 
-double* expected_values_w(graph_t graph) {
+double* return_expected_weights(graph_t graph) {
   if (graph->no_vertexes == 3 * 3) {
     static double expected_weights[] = {
         0.8864916775696521,  0.2187532451857941,  0.2637754478952221,
@@ -175,7 +176,7 @@ double* expected_values_w(graph_t graph) {
     return expected_weights;
   }
   if (graph->no_vertexes == 6 * 6) {
-    static double expected_weights[] = {
+static     double expected_weights[] = {
         0.106248, 0.940403, 0.032190,
         0.856341, 0.776824, 0.691529,
         0.146817, 0.130497, 0.512511,
