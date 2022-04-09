@@ -14,8 +14,8 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 	int number_of_vertices = columns * rows;
 
 	// add edges horizontally
-	for( int vertical_counter = 0; vertical_counter < graph->columns; vertical_counter++ )
-		for( int horizontal_counter = 1; horizontal_counter < graph->rows; horizontal_counter++ ) {
+	for( int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ )
+		for( int horizontal_counter = 1; horizontal_counter < graph->columns; horizontal_counter++ ) {
 			
 			int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
 			int vertex2 = vertex1 + 1;
@@ -27,11 +27,11 @@ graph_t generate_complete_graph( int columns, int rows, double from_weight, doub
 	}
 	// add edges vertically
 	
-	for( int horizontal_counter = 1; horizontal_counter < graph->columns; horizontal_counter++ )
-		for( int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
+	for( int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ )
+		for( int vertical_counter = 1; vertical_counter < graph->rows; vertical_counter++ ) {
 			
-			int vertex1 = (horizontal_counter-1) *graph->columns + vertical_counter;
-			int vertex2 = horizontal_counter * graph->columns + vertical_counter;
+			int vertex1 = (vertical_counter-1) *graph->columns + horizontal_counter;
+			int vertex2 = vertical_counter * graph->columns + horizontal_counter;
 			
 			graph->adj_mat[vertex1][vertex2] =( ((double)rand()/RAND_MAX) * (to_weight-from_weight) ) + from_weight;
 

@@ -116,18 +116,17 @@ int * determine_path( graph_t graph, int * no_path_elements, int * predecessors,
 }
 
 void print_path( int * path, graph_t graph, int no_elements, int does_print_weights ) {
-	
+
 	/* Do untill it reaches the last element of path,
 	 * path received from argument is reversed
 	 * so it need to revert it. */
 	while( --no_elements >= 0 ) {
-
 		// this is the last element
 		if( no_elements == 0 )
 			printf("%d\n", path[ no_elements ] );
 		// not the last element, print weights
 		else if( does_print_weights )
-			printf("%d (%lf) -> ", path[ no_elements ], graph->adj_mat[ path[no_elements]-1 ][ path[no_elements] ] );
+			printf("%d (%lf) -> ", path[ no_elements ], graph->adj_mat[ path[no_elements-1] ][ path[no_elements] ] );
 		// not the last element, don't print weights
 		else
 			printf("%d -> ", path[ no_elements ] );

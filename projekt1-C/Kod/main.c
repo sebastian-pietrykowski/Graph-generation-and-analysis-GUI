@@ -76,48 +76,48 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 	
-    while ((opt = getopt(argc, argv, "i:n:")) != -1) {
+    while ((opt = getopt(argc, argv, "i:o:c:r:f:t:m:s:e:n:p:")) != -1) {
 		switch (opt) {
 			case 'i':
-			inp = optarg;
-			break;
-			     case 'o':
+				inp = optarg;
+				break;
+			case 'o':
 				ouf = optarg;
 				break;
-				case 'c':
+			case 'c':
 				columns = atoi(optarg);
 				break;
-				case 'r':
+			case 'r':
 				rows = atoi(optarg);
 				break;
-				case 'f':
+			case 'f':
 				from_weight = atof(optarg);
 				break;
-				case 't':
+			case 't':
 				to_weight = atof(optarg);
 				break;
-				case 'm':
+			case 'm':
 				mode = atoi(optarg);
 				break;
-				case 's': {
-					start_vertex_number = atoi(optarg);
-					do_find_path = 1;
-					  }
+			case 's':
+				start_vertex_number = atoi(optarg);
+				if( !do_find_path )
+					end_vertex_number = columns * rows - 1;
+				do_find_path = 1;
 				break;
-				case 'e': {
-					end_vertex_number = atoi(optarg);
-					do_find_path = 1;
-					  }
-			break;
+			case 'e':
+				end_vertex_number = atoi(optarg);
+				do_find_path = 1;
+				break;
 			case 'n':
-			do_check_connectivity = atoi (optarg);
-			break;
-			    case 'p':
+				do_check_connectivity = atoi (optarg);
+				break;
+			case 'p':
 				do_print_weights = atoi(optarg);
-			break;
+				break;
 			default:
-			fprintf(stderr, usage, program_name);
-			exit(EXIT_FAILURE);
+				fprintf(stderr, usage, program_name);
+				exit(EXIT_FAILURE);
 		}
 	}
 	
@@ -128,6 +128,7 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "%s: can not read file: %s\n\n", argv[0], inp);
 			exit(EXIT_FAILURE);
 		}
+
 		graph = read_graph( in );
 
 		if( mode == 1) {
@@ -137,18 +138,22 @@ int main(int argc, char **argv) {
 				free_graph(graph);
 				return 0;
 			}
+			else
+				printf("Loaded graph is complete. According to mode 1 program continues running\n");
 		}
 		else if( mode == 2 ) {
 			if( !does_have_all_edges(graph) ) {
-				printf("Loaded graph is not complete. According to mode 1 program stops running\n");
+				printf("Loaded graph is not complete. According to mode 2 program stops running\n");
 				fclose(in);
 				free_graph(graph);
 				return 0;
 			}
+			else
+				printf("Loaded graph is complete. According to mode 3 program continues running\n");
 		}
 		else {
 			// mode 3
-			// accept all
+			printf("According to mode 3 program doesn't check loaded graph\n");
 		}
 
 		if (do_check_connectivity) { /* Check connectivity */
@@ -177,7 +182,8 @@ int main(int argc, char **argv) {
 			exit(EXIT_FAILURE);
 		}
 
-		if (mode == 1) { 
+		if (mode == 1) {
+		       printf("According to mode 1, generating complete graph to file %s\n", ouf );	
 			graph = generate_complete_graph( columns, rows, from_weight, to_weight);
 			if ( !does_have_all_edges( graph ) ) {
 				fprintf(stderr, "Error, generated graph does not have all the edges\n");
@@ -186,7 +192,8 @@ int main(int argc, char **argv) {
 				exit(EXIT_FAILURE);
 			}
 		}
-		if (mode == 2) { 
+		else if (mode == 2) { 
+			printf("According to mode 2, generating connected graph to file %s\n", ouf );
 			graph = generate_connected_graph( start_vertex_number, columns, rows, from_weight, to_weight);
 			if ( !bfs( graph, start_vertex_number) ) {
 				fprintf(stdout, "Error, graph is not connected\n");
@@ -197,6 +204,7 @@ int main(int argc, char **argv) {
 		}
 		else {
 			// mode 3
+			printf("According to mode 3, generating random graph to file %s\n", ouf );
 			graph = generate_random_graph(columns,rows, from_weight, to_weight);
 		}
 		
