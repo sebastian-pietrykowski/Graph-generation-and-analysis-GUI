@@ -141,11 +141,12 @@ void find_path_dijkstra( graph_t graph, int start_vertex_number, int end_vertex_
 	if( dijkstra != NULL ) {
 		int * reversed_path = determine_path( graph, &number_of_elements_in_path, predecessors, start_vertex_number, end_vertex_number );
 		if( reversed_path != NULL ) {
+			printf("The shortest path from vertex %d to %d:\n", start_vertex_number, end_vertex_number );
 			print_path( reversed_path, graph, number_of_elements_in_path, does_print_weights );
 			free( reversed_path );
 		}
 		else
-			printf( "There not exists path between these vertices\n");
+			printf( "There not exists path between these two vertices\n\n");
 		free( predecessors );
 	}
 }
