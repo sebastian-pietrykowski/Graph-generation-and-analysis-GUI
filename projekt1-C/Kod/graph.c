@@ -1,4 +1,4 @@
-#include <ctype.h> /* isspace function */
+#include <ctype.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +8,7 @@
 #define MAXLINE 256
 
 graph_t make_graph(int columns, int rows) {
- graph_t graph = malloc(sizeof *graph); /* initialization of graph structure */
+ graph_t graph = malloc(sizeof *graph); 
  if( graph == NULL ) {
   fprintf(stderr,"Can not allocate memory for graph");
   return NULL;
@@ -19,20 +19,20 @@ graph_t make_graph(int columns, int rows) {
 
   graph->no_vertexes = columns * rows;
 
-  graph->adj_mat = malloc(graph->no_vertexes * sizeof *(graph->adj_mat)); /* memory allocation for an array of pointers */
+  graph->adj_mat = malloc(graph->no_vertexes * sizeof *(graph->adj_mat)); 
   if( graph->adj_mat == NULL ) {
     free(graph);
-    fprintf(stderr,"Can not allocate memory for adjacency matrix");
+    fprintf(stderr,"Cannot allocate memory for adjacency matrix");
     return NULL;
   }
   for (int i = 0; i < graph->no_vertexes; i++) {
-    graph->adj_mat[i] = malloc(graph->no_vertexes * sizeof **graph->adj_mat); /* memory allocation for the array the pointer points to */
+    graph->adj_mat[i] = malloc(graph->no_vertexes * sizeof **graph->adj_mat); 
     }
   for(int i = 0 ; i < graph->no_vertexes; i++) {
     if(graph->adj_mat[i] == NULL) {
      free(graph->adj_mat);
      free(graph);
-     fprintf(stderr,"Can not allocate memory record for adjacency matrix");
+     fprintf(stderr,"Cannot allocate memory record for adjacency matrix");
      return NULL;
    } 
   }
@@ -48,13 +48,13 @@ graph_t make_graph(int columns, int rows) {
 graph_t read_graph(FILE* in, graph_t graph) {
   int columns, rows;
   if ((fscanf(in, "%d %d", &(rows), &(columns)) != 2)) {
-    fprintf(stderr,"Error, can not read the dimensions of the graph");
+    fprintf(stderr,"Error, cannot read the dimensions of the graph");
     return NULL;
   }
 
   graph = make_graph(columns, rows);
   if(graph == NULL) {
-    exit(EXIT_FAILURE);
+    return NULL;
   }
   char line[MAXLINE];
   char delim[3] = " :"; /* delimiter */
@@ -65,14 +65,14 @@ graph_t read_graph(FILE* in, graph_t graph) {
   /*We start the iteration from -1 because the vertex and weight data start on the second line of the file */
   for (from_vertex = -1; from_vertex < graph->no_vertexes; from_vertex++) {
     while (fgets(line, MAXLINE, in) != NULL) {
-      char* token = strtok(line, delim); /* breaking line into a series of tokens */
+      char* token = strtok(line, delim);
       int temp = 1;
 
       while (token != NULL) {
         if (!isspace(*token)) { /* We are only interested in numbers */
           temp++;
 
-          if (temp % 2 == 0) { /* Thanks to the condition if we can alternately enter vertexes and weights into the array of subsequent tokens */
+          if (temp % 2 == 0) { /* Thanks to the if condition we can alternately enter vertexes and weights into the array of subsequent tokens */
             to_vertex = atoi(token);
             if (to_vertex < 0) {
               fprintf(stderr, "Error, invalid vertex number, line number : %d\n", from_vertex + 2);
@@ -153,89 +153,35 @@ int* neighbors(graph_t graph, int vertex) {
   return neighbors;
 }
 
-int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) {
-	
-	int * potential_neighbors = malloc( sizeof(int) * 4 ); /* array of vertices to
-								  whom edges may be created */
-	*number_of_vertices = 0;
-	int tmp = -1;
+int* potential_neighbors(graph_t graph, int vertex) {
+  int* potential_neighbors = malloc(sizeof(int) * 4); /* array of vertices to
+                                                         whom edges may be created */
+  int iter = 0;
+  int tmp = -1;
 
-	// neighbor to north
-	if( (tmp = vertex - graph->columns) > 0 )
-		potential_neighbors[*number_of_vertices++] = tmp;
-	
-	// neighbor to south
-	if( (tmp = vertex + graph->columns) < graph->no_vertexes )
-		potential_neighbors[*number_of_vertices++] = tmp;
-	
-	// neighbors to west and east
-	// find number of row containing vertex
-	int row_number = vertex / graph->columns +1;
-	
-	// find first and last elements of row
-	int start_row_number = (row_number-1) * graph->columns;
-	int end_row_number = ( (row_number) * graph->columns ) - 1;
+  // neighbor to north
+  if ((tmp = vertex - graph->columns) > 0) potential_neighbors[iter++] = tmp;
 
-	// check if negihbor to east can exist
-	if( start_row_number < vertex )
-		potential_neighbors[*number_of_vertices++] = vertex - 1;
-	// check if neighbor to west can exist
-	if( vertex < end_row_number )
-		potential_neighbors[*number_of_vertices++] = vertex + 1;
+  // neighbor to south
+  if ((tmp = vertex + graph->columns) < graph->no_vertexes) potential_neighbors[iter++] = tmp;
 
-	// trim the size of array
-	if( *number_of_vertices != 4 )
-		potential_neighbors = realloc( potential_neighbors, sizeof(int) * *number_of_vertices );
-	
-	return potential_neighbors;
-}
+  // neighbors to west and east
+  // find number of row containing vertex
+  int row_number = vertex / graph->columns + 1;
 
-void print_graph( graph_t graph ) {
-	for(int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
+  // find first and last elements of row
+  int start_row_number = (row_number - 1) * graph->columns;
+  int end_row_number = ((row_number)*graph->columns) - 1;
 
-		if( vertical_counter != 0 ) {
-			for(int horizonatl_counter = 0; horizonatl_counter < graph->columns; horizonatl_counter++ ) {
-				int vertex1 = (vertical_counter-1) * graph->columns + vertical_counter;
-				int vertex2 = vertical_counter * graph->columns + vertical_counter;
-				
-				int did_find = 0;
-				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
-					did_find = 1;
-					printf(" \\/     ");
-				}
-				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
-					did_find = 1;
-					printf(" /\\     ");
-				}
-				if( !did_find )
-				       	printf("        ");
-			}
-			printf("\n\n");
-		}
+  // check if negihbor to east can exist
+  if (start_row_number < vertex) potential_neighbors[iter++] = vertex - 1;
+  // check if neighbor to west can exist
+  if (vertex < end_row_number) potential_neighbors[iter++] = vertex + 1;
 
-		for(int horizontal_counter = 0; horizontal_counter < graph->columns; horizontal_counter++ ) {
-			
-			if( horizontal_counter != 0 ) {
-				int vertex1 = vertical_counter * graph->columns + horizontal_counter - 1;
-				int vertex2 = vertex1 + 1;
-				
-				int did_find = 0;
-				if( graph->adj_mat[vertex1][vertex2] != -1 ) {
-					did_find = 1;
-					printf(" -> ");
-				}
-				if( graph->adj_mat[vertex2][vertex1] != -1 ) {
-					did_find = 1;
-					printf(" <- ");
-				}
-				if( !did_find )
-				       	printf("    ");
-			}
-			
-			printf("%4d", vertical_counter*graph->columns + horizontal_counter );
-		}
-		printf("\n\n");
-	}
+  // fulfill the rest of array with -1
+  while (iter < 4) {
+    potential_neighbors[iter++] = -1;
+  }
 }
 
 void free_graph(graph_t graph) {
@@ -245,5 +191,4 @@ void free_graph(graph_t graph) {
   free(graph->adj_mat);
   free(graph);
 }
-
 
