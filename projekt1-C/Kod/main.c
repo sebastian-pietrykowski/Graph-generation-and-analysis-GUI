@@ -1,6 +1,7 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "bfs.h"
 #include "data_structures.h"
@@ -186,6 +187,7 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "%s: can not write to file: %s\n\n", argv[0], ouf);
 			exit(EXIT_FAILURE);
 		}
+		srand(time(NULL));
 
 		if (mode == 1) {
 		       printf("According to mode 1, generating complete graph to file %s\n\n", ouf );	
