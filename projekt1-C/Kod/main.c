@@ -121,8 +121,8 @@ int main(int argc, char **argv) {
 		}
 	}
 	
-	
 	if (inp != NULL) {
+
 		FILE *in = fopen(inp, "r");
 		if (in == NULL) {
 			fprintf(stderr, "%s: can not read file: %s\n\n", argv[0], inp);
@@ -130,32 +130,32 @@ int main(int argc, char **argv) {
 		}
 		graph = read_graph( in );
 
-		switch( mode ) {
-			case 1: {
-					if( !bfs( graph, start_vertex_number ) ) {
-						printf("Loaded graph is not complete. According to mode 1 program stops running\n");
-						return 0;
-					}
-				}
-				break;
-			case 2: {
-					if( !does_have_all_edges(graph) ) {
-						printf("Loaded graph is not complete. According to mode 1 program stops running\n");
-						return 0;
-					}
-				}
-				break;
-			default: {
-					 // mode 3
-					 break;
-				 }
+		if( mode == 1) {
+			if( !bfs( graph, start_vertex_number ) ) {
+				printf("Loaded graph is not complete. According to mode 1 program stops running\n");
+				fclose(in);
+				free_graph(graph);
+				return 0;
+			}
+		}
+		else if( mode == 2 ) {
+			if( !does_have_all_edges(graph) ) {
+				printf("Loaded graph is not complete. According to mode 1 program stops running\n");
+				fclose(in);
+				free_graph(graph);
+				return 0;
+			}
+		}
+		else {
+			// mode 3
+			// accept all
 		}
 
 		if (do_check_connectivity) { /* Check connectivity */
-			if (bfs( graph, start_vertex_number)) {
+			if (bfs( graph, start_vertex_number))
 				fprintf(stdout, "Graph is connected\n");
-			} else
-			fprintf(stdout, "Graph is not connected\n");
+			else
+				fprintf(stdout, "Graph is not connected\n");
 		}
 
 		if( do_find_path ) { // Find the shortest path
@@ -163,24 +163,23 @@ int main(int argc, char **argv) {
 			find_path_dijkstra( graph, start_vertex_number, end_vertex_number, do_print_weights );
 		}
 		
-		// int * dijkstra = dijkstra( graph, start_vertex_number );
-		
 		
 		fclose(in);
-		free_graph(graph);
-		free_bfs();  
+		free_graph(graph); 
 		exit(EXIT_SUCCESS);
 	}
 	
 	else if (ouf != NULL) {
+		
 		FILE *out = fopen(ouf, "w");
 		if (out == NULL) {
 			fprintf(stderr, "%s: can not write to file: %s\n\n", argv[0], ouf);
 			exit(EXIT_FAILURE);
 		}
+
 		if (mode == 1) { 
-			//    graph = generate_complete_graph(columns,rows,from_weight, to_weight);
-			if ((does_have_all_edges( graph )) == 0) {
+			graph = generate_complete_graph( columns, rows, from_weight, to_weight);
+			if ( !does_have_all_edges( graph ) ) {
 				fprintf(stderr, "Error, generated graph does not have all the edges\n");
 				fclose(out);
 				free_graph(graph);
@@ -188,22 +187,32 @@ int main(int argc, char **argv) {
 			}
 		}
 		if (mode == 2) { 
-			//  graph = generate_connected_graph(columns,rows, from_weight, to_weight);
-			if ((bfs( graph, start_vertex_number)) == 0) {
-				fprintf(stdout, "Error, graph is inconsistent\n");
+			graph = generate_connected_graph(columns,rows, from_weight, to_weight);
+			if ( !bfs( graph, start_vertex_number) ) {
+				fprintf(stdout, "Error, graph is not connected\n");
 				fclose(out);
 				free_graph(graph);
-				free_bfs();
 				exit(EXIT_FAILURE);
 			}
-			} else if (mode == 3) {
-			//graph = generate_random_graph(columns,rows, from_weight, to_weight);
+		}
+		else {
+			// mode 3
+			graph = generate_random_graph(columns,rows, from_weight, to_weight);
 		}
 		
-		/* Tutaj juz dijkstra */
+		if (do_check_connectivity) { /* Check connectivity */
+			if (bfs( graph, start_vertex_number))
+				fprintf(stdout, "Graph is connected\n");
+			else
+				fprintf(stdout, "Graph is not connected\n");
+		}
+
+		if( do_find_path ) { // Find the shortest path
+			
+			find_path_dijkstra( graph, start_vertex_number, end_vertex_number, do_print_weights );
+		}
 		fclose(out);
 		free_graph(graph);
-		free_bfs();
 		exit(EXIT_SUCCESS);
 	}
 	else {

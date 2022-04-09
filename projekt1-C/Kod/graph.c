@@ -153,8 +153,6 @@ int* neighbors(graph_t graph, int vertex, int * number_of_neighbors) {
   return neighbors;
 }
 
-<<<<<<< HEAD
-
 void print_graph( graph_t graph ) {
 	for(int vertical_counter = 0; vertical_counter < graph->rows; vertical_counter++ ) {
 		// print arrows up and down
@@ -209,7 +207,8 @@ void print_graph( graph_t graph ) {
 		}
 		printf("\n\n");
 	}
-=======
+}
+
 int* potential_neighbors(graph_t graph, int vertex) {
   int* potential_neighbors = malloc(sizeof(int) * 4); /* array of vertices to
                                                          whom edges may be created */
@@ -239,7 +238,6 @@ int* potential_neighbors(graph_t graph, int vertex) {
   while (iter < 4) {
     potential_neighbors[iter++] = -1;
   }
->>>>>>> Graph
 }
 
 void free_graph(graph_t graph) {
