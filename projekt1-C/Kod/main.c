@@ -24,6 +24,7 @@ char *usage =
 "\t\tabout number of rows \"rows\", default: 5\n"
 "\t\t\"columns\" and \"rows\" must be > 1\n"
 "\t\tabout edges with weights in range(\"from_weight\",\"to_weight\")\n"
+"\t\t \"from_weight\" defaults to 0, \"to_weight\" defaults to 1\n"
 "\t\t\"from_weight\" must be > 0 and \"to_weight\" must be > 0\n"
 "\n"
 "Reading graph - modes:\n"
@@ -40,8 +41,10 @@ char *usage =
 "\tif \"-n\" is 0 then don't check connectivity\n"
 "\tdefault: 0\n"
 "\n"
-"If \"start_vertex_number\" and \"end_vertex_number\" are given then\n"
+"If \"start_vertex_number\" or \"end_vertex_number\" are given then\n"
 "\tfind and print the shortest path from vertex with number \"start_vertex_number\" to vertex with number \"end_vertex_number\"\n"
+"\t\"start_vertex_number\" defaults to 0\n"
+"\t\"end_vertex_number\" defaults to the last vertex in graph\n"
 "\tif \"-p\" is given then\n"
 "\t\tif \"-p\" is 1 then print weights of edges in the shortest path\n"
 "\t\tif \"-p\" is 0 then dont' print weights of edges in the shortest path\n"
@@ -60,10 +63,11 @@ int main(int argc, char **argv) {
 	double to_weight = 1;
 	
 	int mode = 3; /* By default, we generate a random graph */
+	int do_find_path = 0;
 	int start_vertex_number = 0;
 	int end_vertex_number = columns * rows - 1;
-	int check_connectivity = 0;
-	int print_weights = 1;
+	int do_check_connectivity = 0;
+	int do_print_weights = 1;
 	
 	graph_t graph;
 	
@@ -77,7 +81,7 @@ int main(int argc, char **argv) {
 			case 'i':
 			inp = optarg;
 			break;
-			/*     case 'o':
+			     case 'o':
 				ouf = optarg;
 				break;
 				case 'c':
@@ -95,18 +99,22 @@ int main(int argc, char **argv) {
 				case 'm':
 				mode = atoi(optarg);
 				break;
-				case 's':
-				start_vertex_number = atoi(optarg);
+				case 's': {
+					start_vertex_number = atoi(optarg);
+					do_find_path = 1;
+					  }
 				break;
-				case 'e':
-				end_vertex_number = atoi(optarg);
-			break; */
-			case 'n':
-			check_connectivity = atoi (optarg);
+				case 'e': {
+					end_vertex_number = atoi(optarg);
+					do_find_path = 1;
+					  }
 			break;
-			/*    case 'p':
-				print_weights = atoi(optarg);
-			break; */
+			case 'n':
+			do_check_connectivity = atoi (optarg);
+			break;
+			    case 'p':
+				do_print_weights = atoi(optarg);
+			break;
 			default:
 			fprintf(stderr, usage, program_name);
 			exit(EXIT_FAILURE);
@@ -121,11 +129,38 @@ int main(int argc, char **argv) {
 			exit(EXIT_FAILURE);
 		}
 		graph = read_graph( in );
-		if (check_connectivity == 1) { /* Check connectivity */
+
+		switch( mode ) {
+			case 1: {
+					if( !bfs( graph, start_vertex_number ) ) {
+						printf("Loaded graph is not complete. According to mode 1 program stops running\n");
+						return 0;
+					}
+				}
+				break;
+			case 2: {
+					if( !does_have_all_edges(graph) ) {
+						printf("Loaded graph is not complete. According to mode 1 program stops running\n");
+						return 0;
+					}
+				}
+				break;
+			default: {
+					 // mode 3
+					 break;
+				 }
+		}
+
+		if (do_check_connectivity) { /* Check connectivity */
 			if (bfs( graph, start_vertex_number)) {
-				fprintf(stdout, "Graph is consistent\n");
+				fprintf(stdout, "Graph is connected\n");
 			} else
-			fprintf(stdout, "Graph is inconsistent\n");
+			fprintf(stdout, "Graph is not connected\n");
+		}
+
+		if( do_find_path ) { // Find the shortest path
+			
+			find_path_dijkstra( graph, start_vertex_number, end_vertex_number, do_print_weights );
 		}
 		
 		// int * dijkstra = dijkstra( graph, start_vertex_number );
