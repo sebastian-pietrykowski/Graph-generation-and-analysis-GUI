@@ -11,23 +11,10 @@ int* expected_visited;
 int* expected_FIFO_put;
 int* expected_FIFO_get;
 
-void expected_bfs_make(graph_t graph) {
-    expected_visited = expected_visited_vertexes(graph);
-
-    expected_FIFO_put = expected_FIFO_put_vertexes(graph);
-
-    expected_FIFO_get = expected_FIFO_get_vertexes(graph);
-    
-    if(expected_visited == NULL || expected_FIFO_put == NULL || expected_FIFO_get == NULL ) {
-	fprintf(stdout," Failed to allocate memory for expected values, can not perform test\n");
-	exit(EXIT_FAILURE);
-	}
-}
-
 FIFO_t make_fifo(graph_t graph) {
     fifo = malloc(sizeof *fifo);
     if (fifo == NULL) {
-        fprintf(stderr, "\tCan not allocate memory for fifo queue");
+        fprintf(stderr, "\tCannot allocate memory for fifo queue");
         exit(EXIT_FAILURE);
     }
     fifo->head = -1;
@@ -35,7 +22,7 @@ FIFO_t make_fifo(graph_t graph) {
     fifo->vertexes = malloc(graph->no_vertexes * sizeof *(fifo->vertexes));
     if (fifo->vertexes == NULL) {
         free(fifo);
-        fprintf(stderr, "\tCan not allocate memory for vertexes in queue");
+        fprintf(stderr, "\tCannot allocate memory for vertexes in queue");
         exit(EXIT_FAILURE);
     }
     return fifo;
@@ -70,7 +57,7 @@ int bfs_test(graph_t graph, int start_vertex_number) {
     if (visited == NULL) {
         free(fifo->vertexes);
         free(fifo);
-        fprintf(stderr, "\tCan not allocate memory for visited array");
+        fprintf(stderr, "\tCannot allocate memory for visited array");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < graph->no_vertexes; i++) {
@@ -143,6 +130,19 @@ void free_bfs() {
 
 
 
+void expected_bfs_make(graph_t graph) {
+    expected_visited = expected_visited_vertexes(graph);
+
+    expected_FIFO_put = expected_FIFO_put_vertexes(graph);
+
+    expected_FIFO_get = expected_FIFO_get_vertexes(graph);
+    
+    if(expected_visited == NULL || expected_FIFO_put == NULL || expected_FIFO_get == NULL ) {
+	fprintf(stdout," Failed to allocate memory for expected values, can not perform test\n");
+	exit(EXIT_FAILURE);
+	}
+}
+
 int* expected_visited_vertexes(graph_t graph) {
     if (graph->no_vertexes == 3 * 3) {
         static int expected_visited[] = {
@@ -151,7 +151,7 @@ int* expected_visited_vertexes(graph_t graph) {
         return expected_visited;
     }
     if (graph->no_vertexes == 7 * 4) {
-        static int expected_visited[] = {
+        static  int expected_visited[] = {
             0,  1,  4,  2,  5,  8,  3,
             6,  9,  12, 7,  10, 13, 16,
             11, 14, 17, 20, 15, 18, 21,
@@ -159,7 +159,7 @@ int* expected_visited_vertexes(graph_t graph) {
         return expected_visited;
     }
     if (graph->no_vertexes == 6 * 6) {
-        static int expected_visited[] = {
+       static  int expected_visited[] = {
             0, 1, 6, 2, 7, 12, 3, 18, 24, 25, 30};
         return expected_visited;
     }
@@ -167,7 +167,7 @@ int* expected_visited_vertexes(graph_t graph) {
 }
 int* expected_FIFO_put_vertexes(graph_t graph) {
     if (graph->no_vertexes == 3 * 3) {
-        static int expected_FIFO_put[] = {
+       static  int expected_FIFO_put[] = {
             0, 1, 3, 2, 4, 6, 5, 7, 8};
         return expected_FIFO_put;
     }
@@ -180,7 +180,7 @@ int* expected_FIFO_put_vertexes(graph_t graph) {
         return expected_FIFO_put;
     }
     if (graph->no_vertexes == 6 * 6) {
-        static int expected_FIFO_put[] = {
+       static  int expected_FIFO_put[] = {
             0, 1, 6, 2, 7, 12, 3, 18, 24, 25, 30};
         return expected_FIFO_put;
     }
@@ -193,7 +193,7 @@ int* expected_FIFO_get_vertexes(graph_t graph) {
         return expected_FIFO_get;
     }
     if (graph->no_vertexes == 7 * 4) {
-        static int expected_FIFO_get[] = {
+       static  int expected_FIFO_get[] = {
             0,  1,  4,  2,  5,  8,  3,
             6,  9,  12, 7,  10, 13, 16,
             11, 14, 17, 20, 15, 18, 21,
@@ -201,7 +201,7 @@ int* expected_FIFO_get_vertexes(graph_t graph) {
         return expected_FIFO_get;
     }
     if (graph->no_vertexes == 6 * 6) {
-        static int expected_FIFO_get[] = {
+       static  int expected_FIFO_get[] = {
             0, 1, 6, 2, 7, 12, 3, 18, 24, 25, 30};
         return expected_FIFO_get;
     }
