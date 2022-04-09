@@ -10,7 +10,42 @@
 
 char *usage =
 "Usage:\n"
-"/projekt1 [ -i input-file | [ [-o output-file] [ [-c columns] [-r rows] [-f from-weight] [-t to-weight] ] ] ] [-m1|2|3] [-s start-vertex-number -e end-vertex-number] [-n 0|1] [-p 0|1]";
+"/projekt1 [ -i input-file | [ [-o output-file] [ [-c columns] [-r rows] [-f from-weight]"
+"[-t to-weight] ] ] ] [-m1|2|3] [-s start-vertex-number -e end-vertex-number] [-n 0|1] [-p 0|1]\n"
+"\n"
+"If \"input-file\" is given then\n"
+"\treads graph from \"input-file\"\n"
+"\taccepts only graph according to chosen mode in \"-m\", default: 3\n"
+"If \"output-file\" is given then\n"
+"\tgenerates graph and saves it to \"output-file\"\n"
+"\tgenerates graph:\n"
+"\t\taccording to chosen mode in \"-m\", default: 3\n"
+"\t\tabout numer of columns \"columns\", default: 5\n"
+"\t\tabout number of rows \"rows\", default: 5\n"
+"\t\t\"columns\" and \"rows\" must be > 1\n"
+"\t\tabout edges with weights in range(\"from_weight\",\"to_weight\")\n"
+"\t\t\"from_weight\" must be > 0 and \"to_weight\" must be > 0\n"
+"\n"
+"Reading graph - modes:\n"
+"\t1. accepts only graph with all possible edges between vertices neighboring vertically and horizontally\n"
+"\t2. accepts only connected graph\n"
+"\t3. accepts any graph\n"
+"Generating graph - modes:\n"
+"\t1. generates graph with all possible edges between vertices neighboring vertically and horizontally\n"
+"\t2. generates connected graph\n"
+"\t3. generates random graph\n"
+"\n"
+"If \"-n\" is given then\n"
+"\tif \"-n\" is 1 then check connectivity of graph and print information\n"
+"\tif \"-n\" is 0 then don't check connectivity\n"
+"\tdefault: 0\n"
+"\n"
+"If \"start_vertex_number\" and \"end_vertex_number\" are given then\n"
+"\tfind and print the shortest path from vertex with number \"start_vertex_number\" to vertex with number \"end_vertex_number\"\n"
+"\tif \"-p\" is given then\n"
+"\t\tif \"-p\" is 1 then print weights of edges in the shortest path\n"
+"\t\tif \"-p\" is 0 then dont' print weights of edges in the shortest path\n"
+"\t\tdefault: 1\n";
 
 int main(int argc, char **argv) {
 	char *program_name = argv[0];
