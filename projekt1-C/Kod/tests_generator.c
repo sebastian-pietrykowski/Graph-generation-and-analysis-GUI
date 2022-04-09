@@ -323,14 +323,14 @@ int test_generate_random_graph() {
 	return number_of_tests == no_tests_passed;
 }
 
-int test_generate_complete_graph_is_complete( int number_of_current_test,
+void test_generate_complete_graph_is_complete( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 	print_test_message( number_of_current_test,
 			"generate_complete_graph (is complete)",
 			does_have_all_edges( graph ), no_tests_passed );
 }
 
-int test_generate_complete_graph_number_of_vertices( int number_of_current_test,
+void test_generate_complete_graph_number_of_vertices( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 	
 	print_test_message( number_of_current_test,
@@ -338,7 +338,7 @@ int test_generate_complete_graph_number_of_vertices( int number_of_current_test,
 			graph->no_vertexes > 0, no_tests_passed );
 }
 
-int test_generate_complete_graph_edges( int number_of_current_test,
+void test_generate_complete_graph_edges( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -346,7 +346,7 @@ int test_generate_complete_graph_edges( int number_of_current_test,
 			check_edges(graph), no_tests_passed );
 }
 
-int test_generate_complete_graph_edges_weights( int number_of_current_test, graph_t graph,
+void test_generate_complete_graph_edges_weights( int number_of_current_test, graph_t graph,
 		double from_weight, double to_weight, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -357,14 +357,14 @@ int test_generate_complete_graph_edges_weights( int number_of_current_test, grap
 
 
 
-int test_generate_connected_graph_is_connected( int number_of_current_test,
+void test_generate_connected_graph_is_connected( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 	print_test_message( number_of_current_test,
 			"generate_connected_graph (is connected)",
 			bfs( graph, 0 ), no_tests_passed );
 }
 
-int test_generate_connected_graph_number_of_vertices( int number_of_current_test,
+void test_generate_connected_graph_number_of_vertices( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 	
 	print_test_message( number_of_current_test,
@@ -372,7 +372,7 @@ int test_generate_connected_graph_number_of_vertices( int number_of_current_test
 			graph->no_vertexes > 0, no_tests_passed );
 }
 
-int test_generate_connected_graph_edges( int number_of_current_test,
+void test_generate_connected_graph_edges( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -380,7 +380,7 @@ int test_generate_connected_graph_edges( int number_of_current_test,
 			check_edges(graph), no_tests_passed );
 }
 
-int test_generate_connected_graph_edges_weights( int number_of_current_test, graph_t graph,
+void test_generate_connected_graph_edges_weights( int number_of_current_test, graph_t graph,
 		double from_weight, double to_weight, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -391,7 +391,7 @@ int test_generate_connected_graph_edges_weights( int number_of_current_test, gra
 
 
 
-int test_generate_random_graph_number_of_vertices( int number_of_current_test,
+void test_generate_random_graph_number_of_vertices( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -399,7 +399,7 @@ int test_generate_random_graph_number_of_vertices( int number_of_current_test,
 			graph->no_vertexes > 0, no_tests_passed );
 }
 
-int test_generate_random_graph_edges( int number_of_current_test,
+void test_generate_random_graph_edges( int number_of_current_test,
 		graph_t graph, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
@@ -407,7 +407,7 @@ int test_generate_random_graph_edges( int number_of_current_test,
 			check_edges(graph), no_tests_passed );
 }
 
-int test_generate_random_graph_edges_weights( int number_of_current_test, graph_t graph,
+void test_generate_random_graph_edges_weights( int number_of_current_test, graph_t graph,
 		double from_weight, double to_weight, int *no_tests_passed ) {
 
 	print_test_message( number_of_current_test,
