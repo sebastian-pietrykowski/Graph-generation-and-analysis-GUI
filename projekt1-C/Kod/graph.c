@@ -209,35 +209,41 @@ void print_graph( graph_t graph ) {
 	}
 }
 
-int* potential_neighbors(graph_t graph, int vertex) {
-  int* potential_neighbors = malloc(sizeof(int) * 4); /* array of vertices to
-                                                         whom edges may be created */
-  int iter = 0;
-  int tmp = -1;
+int *potential_neighbors( graph_t graph, int vertex, int * number_of_vertices ) {
+	
+	int * potential_neighbors = malloc( sizeof(int) * 4 ); /* array of vertices to
+								  whom edges may be created */
+	*number_of_vertices = 0;
+	int tmp = -1;
 
-  // neighbor to north
-  if ((tmp = vertex - graph->columns) > 0) potential_neighbors[iter++] = tmp;
+	// neighbor to north
+	if( (tmp = vertex - graph->columns) > 0 )
+		potential_neighbors[*number_of_vertices++] = tmp;
+	
+	// neighbor to south
+	if( (tmp = vertex + graph->columns) < graph->no_vertexes )
+		potential_neighbors[*number_of_vertices++] = tmp;
+	
+	// neighbors to west and east
+	// find number of row containing vertex
+	int row_number = vertex / graph->columns +1;
+	
+	// find first and last elements of row
+	int start_row_number = (row_number-1) * graph->columns;
+	int end_row_number = ( (row_number) * graph->columns ) - 1;
 
-  // neighbor to south
-  if ((tmp = vertex + graph->columns) < graph->no_vertexes) potential_neighbors[iter++] = tmp;
+	// check if negihbor to east can exist
+	if( start_row_number < vertex )
+		potential_neighbors[*number_of_vertices++] = vertex - 1;
+	// check if neighbor to west can exist
+	if( vertex < end_row_number )
+		potential_neighbors[*number_of_vertices++] = vertex + 1;
 
-  // neighbors to west and east
-  // find number of row containing vertex
-  int row_number = vertex / graph->columns + 1;
-
-  // find first and last elements of row
-  int start_row_number = (row_number - 1) * graph->columns;
-  int end_row_number = ((row_number)*graph->columns) - 1;
-
-  // check if negihbor to east can exist
-  if (start_row_number < vertex) potential_neighbors[iter++] = vertex - 1;
-  // check if neighbor to west can exist
-  if (vertex < end_row_number) potential_neighbors[iter++] = vertex + 1;
-
-  // fulfill the rest of array with -1
-  while (iter < 4) {
-    potential_neighbors[iter++] = -1;
-  }
+	// trim the size of array
+	if( *number_of_vertices != 4 )
+		potential_neighbors = realloc( potential_neighbors, sizeof(int) * *number_of_vertices );
+	
+	return potential_neighbors;
 }
 
 void free_graph(graph_t graph) {

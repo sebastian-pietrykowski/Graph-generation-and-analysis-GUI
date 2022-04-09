@@ -187,7 +187,7 @@ int main(int argc, char **argv) {
 			}
 		}
 		if (mode == 2) { 
-			graph = generate_connected_graph(columns,rows, from_weight, to_weight);
+			graph = generate_connected_graph( start_vertex_number, columns, rows, from_weight, to_weight);
 			if ( !bfs( graph, start_vertex_number) ) {
 				fprintf(stdout, "Error, graph is not connected\n");
 				fclose(out);
