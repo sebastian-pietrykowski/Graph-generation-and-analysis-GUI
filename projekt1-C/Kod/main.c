@@ -215,7 +215,8 @@ int main(int argc, char **argv) {
 			graph = generate_random_graph(columns,rows, from_weight, to_weight);
 		}
 
-		write_graph( graph, out );
+		if(write_graph( graph, out ))
+			exit(EXIT_FAILURE);
 		
 		if (do_check_connectivity) { /* Check connectivity */
 			if (bfs( graph, start_vertex_number))
