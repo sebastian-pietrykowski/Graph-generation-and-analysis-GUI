@@ -72,11 +72,6 @@ int main(int argc, char **argv) {
 	
 	graph_t graph;
 	
-	if (argc == 1 ) {
-		fprintf(stderr, usage, program_name);
-		exit(EXIT_FAILURE);
-	}
-	
     while ((opt = getopt(argc, argv, "i:o:c:r:f:t:m:s:e:n:p:")) != -1) {
 		switch (opt) {
 			case 'i':
