@@ -155,7 +155,7 @@ int main(int argc, char **argv) {
 			printf("According to mode 3 program doesn't check loaded graph\n\n");
 		}
 
-		if (do_check_connectivity) { /* Check connectivity */
+		if (do_check_connectivity) { 
 			if (bfs( graph, start_vertex_number))
 				fprintf(stdout, "Graph is connected\n\n");
 			else
