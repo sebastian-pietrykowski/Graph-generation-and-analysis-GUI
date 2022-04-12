@@ -126,33 +126,33 @@ int main(int argc, char **argv) {
 		graph = read_graph( in );
 
 		if( graph == NULL ) {
-			printf("Error in reading graph\n");
+			fprintf(stderr,"Error in reading graph\n");
 			exit(EXIT_FAILURE);
 		}
 
 		if( mode == 1) {
 			if( !does_have_all_edges(graph) ) {
-				printf("Loaded graph is not complete. According to mode 1 program stops running\n\n");
+				fprintf(stderr,"Loaded graph is not complete. According to mode 1 program stops running\n\n");
 				fclose(in);
 				free_graph(graph);
 				return 0;
 			}
 			else
-				printf("Loaded graph is complete. According to mode 1 program continues running\n\n");
+				fprintf(stdout,"Loaded graph is complete. According to mode 1 program continues running\n\n");
 		}
 		else if( mode == 2 ) {
 			 if( !bfs( graph, start_vertex_number )  ) {
-				printf("Loaded graph is not complete. According to mode 2 program stops running\n\n");
+				fprintf(stderr,"Loaded graph is not connected. According to mode 2 program stops running\n\n");
 				fclose(in);
 				free_graph(graph);
 				return 0;
 			}
 			else
-				printf("Loaded graph is complete. According to mode 3 program continues running\n\n");
+				fprintf(stdout,"Loaded graph is connected. According to mode 2 program continues running\n\n");
 		}
 		else {
 			// mode 3
-			printf("According to mode 3 program doesn't check loaded graph\n\n");
+			fprintf(stdout,"According to mode 3 program doesn't check loaded graph\n\n");
 		}
 
 		if (do_check_connectivity) { 
@@ -183,7 +183,7 @@ int main(int argc, char **argv) {
 		srand(time(NULL));
 
 		if (mode == 1) {
-		       printf("According to mode 1, generating complete graph to file %s\n\n", ouf );	
+		       fprintf(stdout,"According to mode 1, generating complete graph to file %s\n\n", ouf );	
 			graph = generate_complete_graph( columns, rows, from_weight, to_weight);
 			if ( !does_have_all_edges( graph ) ) {
 				fprintf(stderr, "Error, generated graph does not have all the edges\n");
@@ -193,10 +193,10 @@ int main(int argc, char **argv) {
 			}
 		}
 		else if (mode == 2) { 
-			printf("According to mode 2, generating connected graph to file %s\n\n", ouf );
+			fprintf(stdout,"According to mode 2, generating connected graph to file %s\n\n", ouf );
 			graph = generate_connected_graph( start_vertex_number, columns, rows, from_weight, to_weight);
 			if ( !bfs( graph, start_vertex_number) ) {
-				fprintf(stdout, "Error, graph is not connected\n");
+				fprintf(stderr, "Error, graph is not connected\n");
 				fclose(out);
 				free_graph(graph);
 				exit(EXIT_FAILURE);
@@ -204,7 +204,7 @@ int main(int argc, char **argv) {
 		}
 		else {
 			// mode 3
-			printf("According to mode 3, generating random graph to file %s\n\n", ouf );
+			fprintf(stdout,"According to mode 3, generating random graph to file %s\n\n", ouf );
 			graph = generate_random_graph(columns,rows, from_weight, to_weight);
 		}
 
