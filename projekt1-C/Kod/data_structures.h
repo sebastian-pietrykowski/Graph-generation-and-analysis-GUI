@@ -22,15 +22,15 @@ typedef struct {
 // Initializes new PriorityQueue
 PriorityQueue make_PQ();
 
-// Removes from PriorityQueue pq vertex with the shortest distance, returns it.
+/* Removes from PriorityQueue pq vertex with the shortest distance, returns it.
+ * If pq doesn't contain any elements, stops running program. */
 int PQ_get( PriorityQueue pq );
 
 /* Special case used in function PQ_get in situation when pq has more than 1 element.
  * Removes from PriorityQueue pq vertex with the shortest distances, returns it. */
 int PQ_get_many_elements_in_pq( PriorityQueue pq );
 
-/* Adds to PriorityQueue pp vertex with given number (vertex) and distance.
- * If pq doesn't contain any element returns -1. */
+/* Adds to PriorityQueue pp vertex with given number (vertex) and distance. */
 void PQ_put( PriorityQueue pq, int vertex, double distance );
 
 // Removes priority queue from memory.
@@ -50,10 +50,12 @@ int Set_is_empty( Set set );
  * Added elements must be unique integers. */
 void Set_add( Set set, int element );
 
-// Removes from set element with given number.
+/* Removes from set element with given number.
+ * If set doesn't contain any element, stops running program. */
 void Set_remove( Set set, int element );
 
-// Removes from set random number and returns its value.
+/* Removes from set random number and returns its value.
+ * If set doesn't contain any element, stops running program. */
 int Set_pop( Set set );
 
 // Removes set from memory.

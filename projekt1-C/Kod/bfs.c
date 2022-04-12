@@ -40,9 +40,9 @@ int FIFO_get(FIFO_t fifo) {
 
 int is_FIFO_empty(FIFO_t fifo) {
   if (fifo->back >= fifo->head) /* If this condition is true, it means that there are vertexes in FIFO queue */
-    return 1;
-  else
     return 0;
+  else
+    return 1;
 }
 
 int bfs(graph_t graph, int start_vertex_number) {
@@ -62,7 +62,7 @@ int bfs(graph_t graph, int start_vertex_number) {
   visited[start_vertex_number] = 1;    /* The value of one means that vertex has been visited */
   FIFO_put(fifo, start_vertex_number);
 
-  while (is_FIFO_empty(fifo)) {       
+  while (!is_FIFO_empty(fifo)) {       
     int current_vertex = FIFO_get(fifo); /* Current_vertex is vertex that we have taken out the queue and we will look for his neighbours */
     for (int i = 0; i < graph->no_vertexes; i++) { 
       /* Second condition prevents against adding vertexes to queue that have been already visited */
