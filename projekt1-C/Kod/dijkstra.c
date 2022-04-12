@@ -5,16 +5,18 @@
 
 int initiate_values_dijkstra( graph_t graph, int start_vertex_number, int ** predecessors, double ** distances ) {
 	
-	// initiate arrays
 	*predecessors = malloc( sizeof(int) * graph->no_vertexes );
 	*distances = malloc( sizeof(double) * graph->no_vertexes );
+	if( *predecessors == NULL || *distances == NULL ) {
+		fprintf( stderr, "Error: not enough storage to malloc array\n");
+		exit(1);
+	}
 	
-	// set all values in arrays to default
 	for( int i = 0; i < graph->no_vertexes; i++ ) {
 		(*predecessors)[i] = -1;
 		(*distances)[i] = DBL_MAX;
 	}
-	// start condition
+	
 	(*distances)[ start_vertex_number ] = 0;
 }
 
@@ -23,8 +25,10 @@ void relax( graph_t graph, PriorityQueue pq, int start_vertex_number, int vertex
 	
 	// if distances[vertex_to]=INIFINITY (it didn't find any path so far) or new path is shorter than current
 	if( (*distances)[vertex_to] > (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to]) {
+		// change value in seperate array
 		(*distances)[vertex_to] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
 
+		//change value in array inside PriorityQueue
 		for( int i = 0; i < pq->no_elements; i++ )
 			if( pq->vertexes[i] == vertex_to ) {
 				pq->distances[i] = (*distances)[vertex_from] + graph->adj_mat[vertex_from][vertex_to];
@@ -45,33 +49,33 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 	double * distances;
 	initiate_values_dijkstra( graph, start_vertex_number, &predecessors, &distances );
 
-	Set checked_vertexes = make_Set();
-	PriorityQueue queue = make_PQ();
+	Set checked_vertexes_set = make_Set();
+	PriorityQueue unchecked_vertexes_pq = make_PQ();
 
-	// Fulfill queue with vertexes.
-	PQ_put( queue, start_vertex_number, 0 );
+	// Fulfill unchecked_vertexes_pq with vertexes
+	PQ_put( unchecked_vertexes_pq, start_vertex_number, 0 );
 	for( int i = 0; i < graph->no_vertexes; i++ )
 		if( i != start_vertex_number )
-			PQ_put( queue, i, DBL_MAX );
+			PQ_put( unchecked_vertexes_pq, i, DBL_MAX );
 	
-	while( queue->no_elements > 0 ) {
-		int removed_element = PQ_get( queue );   // index of vertex removed from queue
+	while( unchecked_vertexes_pq->no_elements > 0 ) {
+		int removed_element = PQ_get( unchecked_vertexes_pq );
 		int number_of_neighbors = 0;
-		int * neighbors_array = neighbors( graph, removed_element, &number_of_neighbors ); // array of indices of removed_element's neighbors
-		Set_add( checked_vertexes, removed_element ); // add element removed from queue to array of removed elements
+		int * neighbors_array = neighbors( graph, removed_element, &number_of_neighbors );
+		Set_add( checked_vertexes_set, removed_element );
 		
-		// check if removed_element's neighbors were removed from queue, if not try to determine path to them
+		// check if removed_element's neighbors were removed from unechecked_vertexes_pq, if not try to determine path to them
 		for( int i = 0; i < number_of_neighbors; i++ ) {
 			int potential_neighbor = neighbors_array[i];
-			if( !Set_is_element_in( checked_vertexes, potential_neighbor ) )
-				relax( graph, queue, start_vertex_number, removed_element, potential_neighbor, &predecessors, &distances );	
+			if( !Set_is_element_in( checked_vertexes_set, potential_neighbor ) )
+				relax( graph, unchecked_vertexes_pq, start_vertex_number, removed_element, potential_neighbor, &predecessors, &distances );	
 
 		}
 		free( neighbors_array );
 	}
 	free( distances );
-	free_PQ( queue );
-	free_Set( checked_vertexes );
+	free_PQ( unchecked_vertexes_pq );
+	free_Set( checked_vertexes_set );
 
 	return predecessors;
 }
@@ -89,7 +93,7 @@ int * determine_path( graph_t graph, int * no_path_elements, int * predecessors,
 	int * path = malloc( 1 * sizeof(int) ); // reversed path
 	path[0] = end_vertex_number;
 
-	// determine path
+	// determine all path
 	int element = end_vertex_number;
 	while( (element = predecessors[element]) != start_vertex_number && element != -1 ) {
 		(*no_path_elements)++;
@@ -125,7 +129,7 @@ void print_path( int * path, graph_t graph, int no_elements, int does_print_weig
 			printf("%d\n", path[ no_elements ] );
 		// not the last element, print weights
 		else if( does_print_weights )
-			printf("%d (%lf) -> ", path[ no_elements ], graph->adj_mat[ path[no_elements-1] ][ path[no_elements] ] );
+			printf("%d (%lf) -> ", path[ no_elements ], graph->adj_mat[ path[no_elements] ][ path[no_elements-1] ] );
 		// not the last element, don't print weights
 		else
 			printf("%d -> ", path[ no_elements ] );
