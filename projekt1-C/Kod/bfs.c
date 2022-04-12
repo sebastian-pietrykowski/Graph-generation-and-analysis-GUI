@@ -75,11 +75,11 @@ int bfs(graph_t graph, int start_vertex_number) {
   for (int i = 0; i < graph->no_vertexes; i++) {
     if (visited[i] != 1) {
 	    free_bfs();
-	    return 0; /* inconsistent graph */
+	    return 0; 
     }
   }
   free_bfs();
-  return 1; /* consistent graph */
+  return 1; /* connected graph */
 }
 void free_bfs() {
   free(fifo->vertexes);
