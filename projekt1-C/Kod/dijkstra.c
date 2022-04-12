@@ -140,6 +140,9 @@ void print_path( int * path, graph_t graph, int no_elements, int does_print_weig
 void find_path_dijkstra( graph_t graph, int start_vertex_number, int end_vertex_number, int does_print_weights ) {
 	
 	int * predecessors = dijkstra( graph, start_vertex_number );
+	if( predecessors == NULL )
+		exit(1);
+
 	int number_of_elements_in_path = 0;
 	if( dijkstra != NULL ) {
 		int * reversed_path = determine_path( graph, &number_of_elements_in_path, predecessors, start_vertex_number, end_vertex_number );
