@@ -5,7 +5,7 @@
 
 int test_PQ() {
 	
-	int no_tests = 31;
+	int no_tests = 30;
 	int no_tests_passed = 0;
 
 	int taken_element = INT_MAX;
@@ -95,7 +95,7 @@ int test_PQ() {
 	print_test_message( 24, "PQ_get (remaining values in PQ)",
 			pq1->vertexes[0] == 7, &no_tests_passed );
 	// Test 25
-	print_test_message( 25, "Pq_get (remaining distances in PQ)",
+	print_test_message( 25, "PQ_get (remaining distances in PQ)",
 			pq1->distances[0] == 2, &no_tests_passed );
 
 
@@ -109,17 +109,12 @@ int test_PQ() {
 	test_PQ_get_number_of_elements( 27, pq1, 0, &no_tests_passed );
 
 
-	taken_element = PQ_get( pq1 );
-	
-	// Test 28
-	test_PQ_get_value_of_taken_element( 28, taken_element, -1, &no_tests_passed );
-
 
 	PQ_put( pq1, 4, 1.2 );
 	// pq1 = { (4,1.2) }
 
-	// Tests 29, 30, 31
-	test_PQ_put( 29, pq1, 1, 0, 4, 1.2, &no_tests_passed );
+	// Tests 28, 29, 30
+	test_PQ_put( 28, pq1, 1, 0, 4, 1.2, &no_tests_passed );
 	
 	
 	free_PQ( pq1);

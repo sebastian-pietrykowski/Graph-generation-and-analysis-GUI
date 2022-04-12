@@ -8,18 +8,28 @@
 PriorityQueue make_PQ() {
 
 	PriorityQueue pq = malloc( sizeof *pq );
-	
+	if( pq == NULL ) {
+		fprintf( stderr, "Error: Not enough storage to initialize PriorityQueue\n");
+		exit(1);
+	}
+
 	pq->no_elements = 0;	
 	pq->vertexes = malloc( 0 );
 	pq->distances = malloc( 0 );
+	if( pq->vertexes == NULL || pq->distances == NULL) {
+		fprintf( stderr, "Error: Not enough storage to initialize in PriorityQueue\n");
+		exit(1);
+	}
 
 	return pq;
 }
 
 int PQ_get( PriorityQueue pq ) {
 	
-	if( pq->no_elements < 1 )
-		return -1;
+	if( pq->no_elements < 1 ) {
+		fprintf( stderr, "Error: There are no elements in PQ to remove\n");
+		exit(1);
+	}
 	else if( pq->no_elements == 1 ) {
 
 		int element = pq->vertexes[0];
@@ -28,52 +38,56 @@ int PQ_get( PriorityQueue pq ) {
 		pq->distances = realloc( pq->distances, 0 );
 		return element;
 	}
-	else {   
-	// find vertex from many
-		int index = -1;
-		double min_distance = DBL_MAX;
-		
-		// find vertex
-		for( int i = 0; i < pq->no_elements; i++ )
-			if( pq->distances[i] < min_distance ) {
-				index = i;
-				min_distance = pq->distances[i];
-			}
-		// if chosen element has negative distance, then return -1 and print error message
-		if( min_distance < 0 ) {
-			fprintf(stderr, "Element taken off from PriorityQueue has negative distance: %lf\n", min_distance );
-			return -1;
-		}
-		
-		// only remaining values have distance equals to DBL_MAX
-		if( index == -1 )
-			for( int i = 0; i < pq->no_elements; i++ )
-				if( pq->distances[i] == min_distance )
-					index = i;
-
-		int element = pq->vertexes[index];
-
-		// shift elements by 1 index
-		for( int i = index + 1; i < pq->no_elements; i++ ) {
-			pq->vertexes[i-1] = pq->vertexes[i];
-			pq->distances[i-1] = pq->distances[i];
-		}
-		
-		// change size of arrays in struct
-		pq->no_elements--;
-		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
-		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
-
-		return element;
-	}
+	// pq has more than 1 element
+	return PQ_get_many_elements_in_pq( pq );
 }
 
+int PQ_get_many_elements_in_pq( PriorityQueue pq ) {
+	
+	// find vertex from many
+	int index = -1;
+	double min_distance = DBL_MAX;
+	
+	// find vertex
+	for( int i = 0; i < pq->no_elements; i++ )
+		if( pq->distances[i] < min_distance ) {
+			index = i;
+			min_distance = pq->distances[i];
+		}
+	// if chosen element has negative distance, then return -1 and print error message
+	if( min_distance < 0 ) {
+		fprintf(stderr, "Element taken off from PriorityQueue has negative distance: %lf\n", min_distance );
+		exit(1);
+	}
+	
+	// only remaining values have distance equals to DBL_MAX
+	if( index == -1 )
+		for( int i = 0; i < pq->no_elements; i++ )
+			if( pq->distances[i] == min_distance )
+				index = i;
+
+	int element = pq->vertexes[index];
+
+	// shift elements by 1 index
+	for( int i = index + 1; i < pq->no_elements; i++ ) {
+		pq->vertexes[i-1] = pq->vertexes[i];
+		pq->distances[i-1] = pq->distances[i];
+	}
+	
+	// change size of arrays in struct
+	pq->no_elements--;
+	pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
+	pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
+
+	return element;
+}
 
 void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 
 	// initialize PriorityQueue pq if necessary and add elements
 	if( pq == NULL ) {
 		fprintf(stderr, "To use PriorityQueue you first need to reassign function make_PQ() to it.\n");
+		exit(1);
 	}
 	// increase size of arrays and add another elements
 	else {
@@ -81,9 +95,9 @@ void PQ_put( PriorityQueue pq, int vertex, double distance ) {
 		pq->no_elements++;
 		
 		pq->vertexes = realloc( pq->vertexes, sizeof(int) * pq->no_elements );
-		pq->vertexes[index] = vertex;
-
 		pq->distances = realloc( pq->distances, sizeof(double) * pq->no_elements );
+
+		pq->vertexes[index] = vertex;
 		pq->distances[index] = distance;
 	}
 }
@@ -100,10 +114,18 @@ void free_PQ( PriorityQueue pq ) {
 Set make_Set() {	
 	
 	Set set = malloc( sizeof *set );
+	if( set == NULL ) {
+		fprintf( stderr, "Error: Not enough storage to initialize Set\n");
+		exit(1);
+	}
 
 	set->no_elements = 0;
 		
 	set->elements = malloc( 0 );
+	if( set->elements == NULL ) {
+		fprintf( stderr, "Error: Not enough storage to initialize in Set\n");
+		exit(1);
+	}
 	
 	return set;
 }
@@ -126,6 +148,7 @@ void Set_add( Set set, int element ) {
 	// initialize Set set if necessary and add element
 	if( set == NULL ) {
 		fprintf(stderr, "To use Set you first need to reassign function make_Set() to it.\n");
+		exit(1);
 	}
 	// check if element is already in set
 	else if ( Set_is_element_in( set, element) ) {
@@ -136,6 +159,7 @@ void Set_add( Set set, int element ) {
 		set->no_elements++;
 		
 		set->elements = realloc( set->elements, sizeof(int) * set-> no_elements );
+
 		set->elements[ set->no_elements - 1 ] = element;
 	}
 }
@@ -154,8 +178,10 @@ void Set_remove( Set set, int element ) {
 		set->no_elements--;
 		set->elements = realloc( set->elements, sizeof set->elements[0] * set->no_elements );
 	}
-	else
+	else {
 		fprintf(stderr, "data_structures.c: Element being tried to removed isn't in set.");
+		exit(1);
+	}
 }
 
 int Set_pop( Set set ) {
@@ -164,7 +190,6 @@ int Set_pop( Set set ) {
 	if( set->no_elements < 1 ) {
 		fprintf( stderr, "Set.c: Set_pop(...) - There is no element to be taken from Set\n" );
 		exit(1);
-		return 0;
 	}
 	// There is only one element in set
 	else if( set->no_elements == 1 ) {
@@ -185,6 +210,7 @@ int Set_pop( Set set ) {
 		}
 		set->no_elements--;
 		set->elements = realloc( set->elements, sizeof set->elements[0] * set->no_elements );
+		
 		return taken_element_value;
 	}
 	return 0;

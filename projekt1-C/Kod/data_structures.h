@@ -22,8 +22,12 @@ typedef struct {
 // Initializes new PriorityQueue
 PriorityQueue make_PQ();
 
-// Removes from PriorityQueue pp vertex with the shortest distance, returns it.
+// Removes from PriorityQueue pq vertex with the shortest distance, returns it.
 int PQ_get( PriorityQueue pq );
+
+/* Special case used in function PQ_get in situation when pq has more than 1 element.
+ * Removes from PriorityQueue pq vertex with the shortest distances, returns it. */
+int PQ_get_many_elements_in_pq( PriorityQueue pq );
 
 /* Adds to PriorityQueue pp vertex with given number (vertex) and distance.
  * If pq doesn't contain any element returns -1. */
