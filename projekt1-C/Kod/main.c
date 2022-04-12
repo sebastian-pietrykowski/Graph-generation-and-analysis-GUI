@@ -72,11 +72,6 @@ int main(int argc, char **argv) {
 	
 	graph_t graph;
 	
-	if (argc == 1 ) {
-		fprintf(stderr, usage, program_name);
-		exit(EXIT_FAILURE);
-	}
-	
     while ((opt = getopt(argc, argv, "i:o:c:r:f:t:m:s:e:n:p:")) != -1) {
 		switch (opt) {
 			case 'i':
@@ -101,9 +96,7 @@ int main(int argc, char **argv) {
 				mode = atoi(optarg);
 				break;
 			case 's':
-				start_vertex_number = atoi(optarg);
-				if( !do_find_path )
-					end_vertex_number = columns * rows - 1;
+				start_vertex_number = atoi(optarg);	
 				do_find_path = 1;
 				break;
 			case 'e':
@@ -138,7 +131,7 @@ int main(int argc, char **argv) {
 		}
 
 		if( mode == 1) {
-			if( !bfs( graph, start_vertex_number ) ) {
+			if( !does_have_all_edges(graph) ) {
 				printf("Loaded graph is not complete. According to mode 1 program stops running\n\n");
 				fclose(in);
 				free_graph(graph);
@@ -148,7 +141,7 @@ int main(int argc, char **argv) {
 				printf("Loaded graph is complete. According to mode 1 program continues running\n\n");
 		}
 		else if( mode == 2 ) {
-			if( !does_have_all_edges(graph) ) {
+			 if( !bfs( graph, start_vertex_number )  ) {
 				printf("Loaded graph is not complete. According to mode 2 program stops running\n\n");
 				fclose(in);
 				free_graph(graph);
@@ -162,7 +155,7 @@ int main(int argc, char **argv) {
 			printf("According to mode 3 program doesn't check loaded graph\n\n");
 		}
 
-		if (do_check_connectivity) { /* Check connectivity */
+		if (do_check_connectivity) { 
 			if (bfs( graph, start_vertex_number))
 				fprintf(stdout, "Graph is connected\n\n");
 			else
@@ -215,7 +208,8 @@ int main(int argc, char **argv) {
 			graph = generate_random_graph(columns,rows, from_weight, to_weight);
 		}
 
-		write_graph( graph, out );
+		if(write_graph( graph, out ))
+			exit(EXIT_FAILURE);
 		
 		if (do_check_connectivity) { /* Check connectivity */
 			if (bfs( graph, start_vertex_number))

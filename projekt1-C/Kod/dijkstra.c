@@ -40,8 +40,7 @@ int * dijkstra( graph_t graph, int start_vertex_number ) {
 		fprintf( stderr, "Inproper vertex in function dijkstra\n" );
 		return NULL;
 	}
-
-	// create arrays of predecessors and distances, initiate them
+	
 	int * predecessors;
 	double * distances;
 	initiate_values_dijkstra( graph, start_vertex_number, &predecessors, &distances );
