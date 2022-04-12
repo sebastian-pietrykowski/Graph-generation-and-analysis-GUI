@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
 				printf("Loaded graph is complete. According to mode 1 program continues running\n\n");
 		}
 		else if( mode == 2 ) {
-			if( !does_have_all_edges(graph) ) {
+			 if( !bfs( graph, start_vertex_number )  ) {
 				printf("Loaded graph is not complete. According to mode 2 program stops running\n\n");
 				fclose(in);
 				free_graph(graph);
