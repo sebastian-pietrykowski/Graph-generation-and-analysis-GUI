@@ -96,9 +96,7 @@ int main(int argc, char **argv) {
 				mode = atoi(optarg);
 				break;
 			case 's':
-				start_vertex_number = atoi(optarg);
-				if( !do_find_path )
-					end_vertex_number = columns * rows - 1;
+				start_vertex_number = atoi(optarg);	
 				do_find_path = 1;
 				break;
 			case 'e':
