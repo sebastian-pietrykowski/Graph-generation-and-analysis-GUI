@@ -107,7 +107,7 @@ int * determine_path( graph_t graph, int * no_path_elements, int * predecessors,
 		free( path );
 		return NULL;
 	}
-	// the last element to add - start_vertex_number
+	// path found: add start_vertex_number
 	else if( element == start_vertex_number ) {
 		(*no_path_elements)++;
 		path = realloc( path, sizeof(int) * (*no_path_elements) );
