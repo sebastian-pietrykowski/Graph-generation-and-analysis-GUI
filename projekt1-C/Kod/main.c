@@ -185,6 +185,10 @@ int main(int argc, char **argv) {
 		if (mode == 1) {
 		       fprintf(stdout,"According to mode 1, generating complete graph to file %s\n\n", ouf );	
 			graph = generate_complete_graph( columns, rows, from_weight, to_weight);
+			if(graph == NULL) {
+				fprintf(stderr, "Error in generating graph\n");
+				exit(1);
+			}
 			if ( !does_have_all_edges( graph ) ) {
 				fprintf(stderr, "Error, generated graph does not have all the edges\n");
 				fclose(out);
@@ -195,6 +199,10 @@ int main(int argc, char **argv) {
 		else if (mode == 2) { 
 			fprintf(stdout,"According to mode 2, generating connected graph to file %s\n\n", ouf );
 			graph = generate_connected_graph( start_vertex_number, columns, rows, from_weight, to_weight);
+			if(graph == NULL) {
+				fprintf(stderr, "Error in generating graph\n");
+				exit(1);
+			}
 			if ( !bfs( graph, start_vertex_number) ) {
 				fprintf(stderr, "Error, graph is not connected\n");
 				fclose(out);
@@ -206,6 +214,10 @@ int main(int argc, char **argv) {
 			// mode 3
 			fprintf(stdout,"According to mode 3, generating random graph to file %s\n\n", ouf );
 			graph = generate_random_graph(columns,rows, from_weight, to_weight);
+			if(graph == NULL) {
+				fprintf(stderr, "Error in generating graph\n");
+				exit(1);
+			}
 		}
 
 		if(write_graph( graph, out ))
