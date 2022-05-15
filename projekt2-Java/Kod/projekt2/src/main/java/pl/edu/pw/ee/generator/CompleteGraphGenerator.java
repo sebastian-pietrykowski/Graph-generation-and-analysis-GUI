@@ -3,7 +3,7 @@ package pl.edu.pw.ee.generator;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
-public class CompleteGraphGenerator extends Generator {
+public class CompleteGraphGenerator extends AbstractGenerator implements Generator {
 
     private Graph graph;
     private int columns;
@@ -40,7 +40,15 @@ public class CompleteGraphGenerator extends Generator {
                 graph.addEdge( new Edge(vertexFrom, vertexTo, super.generateEdgeWeight()));
                 graph.addEdge( new Edge(vertexTo, vertexFrom, super.generateEdgeWeight()));
             }
+        // add edges vertically
+        for( int horizontalCounter = 0; horizontalCounter < graph.getColumns(); horizontalCounter++ )
+            for( int verticalCounter = 1; verticalCounter < graph.getRows(); verticalCounter++ ) {
+                int vertexFrom = (verticalCounter-1) * graph.getColumns() + horizontalCounter;
+                int vertexTo = verticalCounter * graph.getColumns() + horizontalCounter;
 
+                graph.addEdge( new Edge(vertexFrom, vertexTo, super.generateEdgeWeight()) );
+                graph.addEdge( new Edge(vertexTo, vertexFrom, super.generateEdgeWeight()) );
+            }
         return graph;
     }
     

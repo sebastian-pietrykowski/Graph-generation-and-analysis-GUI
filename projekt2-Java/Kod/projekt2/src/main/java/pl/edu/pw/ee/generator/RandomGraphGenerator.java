@@ -1,11 +1,18 @@
 package pl.edu.pw.ee.generator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
+import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
-public class RandomGraphGenerator extends Generator {
+public class RandomGraphGenerator extends CompleteGraphGenerator implements Generator {
 
     private Graph graph;
     private int columns;
@@ -30,14 +37,18 @@ public class RandomGraphGenerator extends Generator {
     @Override
     public Graph generate() {
         
-        graph = new Graph( columns, rows );
+        // get graph with all possible edges
+        graph = super.generate();
 
-        //int maxPossibleEdges = graph.maxPossibleNumberOfEdges();
-        int maxPossibleEdges = columns * rows;
-        Set<Integer> remainingVertices = new HashSet<>();
-        
+        // remove random number of edges
+        int maxPossibleEdges = graph.maxPossibleNumberOfEdges();
+        Random random = new Random();
+        int numberOfEdgesToRemove = random.nextInt(maxPossibleEdges);
 
+        while( numberOfEdgesToRemove > 0 ) {
+            int indexOfEdgeToDelete = random.nextInt( graph.getNumberOfEdges() );
+            graph.removeEdge( indexOfEdgeToDelete );
+        }
         return graph;
     }
-    
 }
