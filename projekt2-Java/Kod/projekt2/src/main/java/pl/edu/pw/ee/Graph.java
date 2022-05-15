@@ -1,13 +1,16 @@
 package pl.edu.pw.ee;
 
+import java.util.LinkedList;
+
 public class Graph {
     int columns, rows;
-        Graph( int columns, int rows ) {
+    private LinkedList<Edge> adjList[];
+        public Graph( int columns, int rows ) {
             this.columns = columns;
             this.rows = rows;
         }
-        int getNumberOfVertices() {return 1;}
-        int getColumns() {return columns;}
-        int getRows() {return rows;}
-        void addEdge( Edge e ) {}
+        public int getNumberOfVertices() {return 1;}
+        public int getColumns() {return columns;}
+        public int getRows() {return rows;}
+        public void addEdge( Edge e ) {}
 }
