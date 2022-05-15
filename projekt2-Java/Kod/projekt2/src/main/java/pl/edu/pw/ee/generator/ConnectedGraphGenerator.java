@@ -8,7 +8,7 @@ import java.util.Set;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
-public class ConnectedGraphGenerator extends AbstractGenerator implements Generator {
+public class ConnectedGraphGenerator extends Generator {
 
     private Graph graph;
     private int columns;

@@ -3,7 +3,7 @@ package pl.edu.pw.ee.generator;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
-public class CompleteGraphGenerator extends AbstractGenerator implements Generator {
+public class CompleteGraphGenerator extends Generator {
 
     private Graph graph;
     private int columns;

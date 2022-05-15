@@ -5,11 +5,12 @@ import java.util.Set;
 
 public class Graph {
     int columns, rows;
-    private LinkedList<Edge> adjList[];
+    private LinkedList<Edge> adjacencyList;
 
     public Graph( int columns, int rows ) {
         this.columns = columns;
         this.rows = rows;
+        adjacencyList = new LinkedList<>();
     }
 
     public int getColumns() {return columns;}
@@ -21,7 +22,10 @@ public class Graph {
     public Edge getEdge( int index ) {return null;}
     public int getNumberOfEdges() {return 1;}
 
+    public LinkedList<Edge> getAdjacencyList(){
+        return adjacencyList;}
     public Set<Integer> potenialNeighbors( int vertex ) {return null;}
 
-    public int maxPossibleNumberOfEdges() {return 1;}
+    public int getMaxPossibleNumberOfEdges() {return 1;}
+    public boolean isEdgeProperlySituated( Edge edge ) {return true;}
 }

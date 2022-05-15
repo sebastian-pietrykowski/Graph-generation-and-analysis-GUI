@@ -1,18 +1,9 @@
 package pl.edu.pw.ee.generator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
-
-import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
-public class RandomGraphGenerator extends CompleteGraphGenerator implements Generator {
+public class RandomGraphGenerator extends CompleteGraphGenerator {
 
     private Graph graph;
     private int columns;
@@ -41,7 +32,7 @@ public class RandomGraphGenerator extends CompleteGraphGenerator implements Gene
         graph = super.generate();
 
         // remove random number of edges
-        int maxPossibleEdges = graph.maxPossibleNumberOfEdges();
+        int maxPossibleEdges = graph.getMaxPossibleNumberOfEdges();
         Random random = new Random();
         int numberOfEdgesToRemove = random.nextInt(maxPossibleEdges);
 
