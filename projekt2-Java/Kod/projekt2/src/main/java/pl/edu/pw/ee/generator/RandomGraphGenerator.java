@@ -20,8 +20,8 @@ public class RandomGraphGenerator extends CompleteGraphGenerator implements Gene
     private double fromWeight;
     private double toWeight;
 
-    public RandomGraphGenerator(int columns, int rows, double fromWeight, double toWeight) {
-        super(columns, rows, fromWeight, toWeight);
+    public RandomGraphGenerator( int columns, int rows, double fromWeight, double toWeight ) {
+        super( columns, rows, fromWeight, toWeight );
         this.columns = columns;
         this.rows = rows;
         this.fromWeight = fromWeight;
@@ -36,7 +36,7 @@ public class RandomGraphGenerator extends CompleteGraphGenerator implements Gene
      */
     @Override
     public Graph generate() {
-        
+
         // get graph with all possible edges
         graph = super.generate();
 

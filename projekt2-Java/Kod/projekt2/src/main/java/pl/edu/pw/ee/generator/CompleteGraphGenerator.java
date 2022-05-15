@@ -11,8 +11,8 @@ public class CompleteGraphGenerator extends AbstractGenerator implements Generat
     private double fromWeight;
     private double toWeight;
 
-    public CompleteGraphGenerator(int columns, int rows, double fromWeight, double toWeight) {
-        super(columns, rows, fromWeight, toWeight);
+    public CompleteGraphGenerator( int columns, int rows, double fromWeight, double toWeight ) {
+        super( columns, rows, fromWeight, toWeight );
         this.columns = columns;
         this.rows = rows;
         this.fromWeight = fromWeight;

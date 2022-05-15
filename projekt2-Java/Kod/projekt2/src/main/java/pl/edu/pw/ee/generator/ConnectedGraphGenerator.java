@@ -1,9 +1,11 @@
 package pl.edu.pw.ee.generator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
 public class ConnectedGraphGenerator extends AbstractGenerator implements Generator {
@@ -30,8 +32,37 @@ public class ConnectedGraphGenerator extends AbstractGenerator implements Genera
 
     @Override
     public Graph generate() {
-        // TODO Auto-generated method stub
-        return null;
+        
+        graph = new Graph( columns, rows );
+        visited = new HashSet<>();
+        frontier = new HashSet<>();
+
+        visited.add( startVertexNumber );
+        Set<Integer> neighborsArray = graph.potenialNeighbors( startVertexNumber );
+        for( Integer neighbor: neighborsArray )
+            frontier.add( neighbor );
+
+        while( !frontier.isEmpty() ) {
+            Random random = new Random();
+            int frontierVertexIndex = random.nextInt( frontier.size() );
+            int frontierVertex = -1;
+            try {
+                frontierVertex = frontierElement( frontierVertexIndex );
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+            int visitedVertex = visitedNeighbor( frontierVertex );
+
+            graph.addEdge( new Edge(visitedVertex, frontierVertex, super.generateEdgeWeight()) );
+            frontier.remove( frontierVertex );
+            visited.add( visitedVertex );
+
+            ArrayList<Integer> unvisitedNeighbors = unvisitedNeighbors( frontierVertex );
+            for( Integer e: unvisitedNeighbors )
+                frontier.add(e);
+        }
+        return graph;
     }
     
     /**
@@ -61,5 +92,16 @@ public class ConnectedGraphGenerator extends AbstractGenerator implements Genera
             if( !visited.contains( neighbor ))
             unvisitedNeighbors.add( neighbor );
         return unvisitedNeighbors;
+    }
+
+
+    private int frontierElement( int index ) throws Exception {
+        int counter = 0;
+        for( Integer frontierVertex: frontier ) {
+            if( counter == index )
+                return frontierVertex;
+            counter++;
+        }
+        throw new Exception("Zbiór frontier nie zawiera wierzchołka o zadanym numerze.");
     }
 }
