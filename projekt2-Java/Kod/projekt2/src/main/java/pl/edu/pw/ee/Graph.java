@@ -19,7 +19,7 @@ public class Graph {
     
     public void addEdge( Edge edge ) {}
     public void removeEdge( int index ) {}
-    public Edge getEdge( int index ) {return null;}
+    public Edge getEdge( int fromVertex, int toVertex ) {return null;}
     public int getNumberOfEdges() {return 1;}
 
     public LinkedList<Edge> getAdjacencyList(){
