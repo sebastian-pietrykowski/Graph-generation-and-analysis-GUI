@@ -54,8 +54,8 @@ public class CompleteGraphGeneratorTest {
     }
 
     @Test
-    public void generate_sameColumnsAndRows_graph0_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[0]) );
+    public void generate_sameColumnsAndRows_graph0_areEdgesSituatedProperly() {
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[0]) );
     }
 
     @Test
@@ -81,8 +81,8 @@ public class CompleteGraphGeneratorTest {
     }
 
     @Test
-    public void generate_sameColumnsAndRowsHugeGraph_graph1_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[1]) );
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesSituatedProperly() {
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[1]) );
     }
 
     @Test
@@ -109,8 +109,8 @@ public class CompleteGraphGeneratorTest {
     }
 
     @Test
-    public void generate_differentColumnsAndRows_graph2_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[2]) );
+    public void generate_differentColumnsAndRows_graph2_areEdgesSituatedProperly() {
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[2]) );
     }
 
     @Test
@@ -137,8 +137,8 @@ public class CompleteGraphGeneratorTest {
     }
 
     @Test
-    public void generate_1column_graph3_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[3]) );
+    public void generate_1column_graph3_areEdgesSituatedProperly() {
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[3]) );
     }
 
     @Test
@@ -161,12 +161,12 @@ public class CompleteGraphGeneratorTest {
 
     @Test
     public void generate_1row_graph4_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[4]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[4]) );
     }
 
     @Test
     public void generate_1row_graph4_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[4]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[4]) );
     }
 
     @Test

@@ -10,15 +10,22 @@ public abstract class Generator {
     private int rows;
     private double fromWeight;
     private double toWeight;
+    boolean success = true; // true if no exceptions were thrown
 
     public Generator( int columns, int rows, double fromWeight, double toWeight ) {
 
-        if( fromWeight < 0 || toWeight < 0 )
+        if( fromWeight < 0 || toWeight < 0 ) {
+            success = false;
             throw new IllegalArgumentException("Minimalna waga lub maksymalna waga mniejsza od 0:");
-        if( toWeight < fromWeight )
+        }
+        if( toWeight < fromWeight ) {
+            success = false;
             throw new IllegalArgumentException("Minimalna waga jest większa niż maksymalna waga.");
-        if( columns <= 0 || rows <= 0 )
+        }
+        if( columns <= 0 || rows <= 0 ) {
+            success = false;
             throw new IllegalArgumentException("Liczba kolumn lub rzędów mniejsza lub równa 0");
+        }
 
         this.columns = columns;
         this.rows = rows;

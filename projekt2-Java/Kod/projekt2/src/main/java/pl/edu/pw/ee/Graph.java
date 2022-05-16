@@ -27,5 +27,5 @@ public class Graph {
     public Set<Integer> potenialNeighbors( int vertex ) {return null;}
 
     public int getMaxPossibleNumberOfEdges() {return 1;}
-    public boolean isEdgeProperlySituated( Edge edge ) {return true;}
+    public boolean isEdgeSituatedProperly( Edge edge ) {return true;}
 }

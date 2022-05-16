@@ -23,12 +23,19 @@ public class ConnectedGraphGenerator extends Generator {
 
     public ConnectedGraphGenerator( int columns, int rows, double fromWeight, double toWeight, int startVertexNumber ) {
         super( columns, rows, fromWeight, toWeight );
+        
         this.columns = columns;
         this.rows = rows;
         this.fromWeight = fromWeight;
         this.toWeight = toWeight;
         this.startVertexNumber = startVertexNumber;
+        /*
+        if( startVertexNumber < 0 || startVertexNumber > columns*rows-1 )
+            throw new IllegalArgumentException("Wierzchołek, od którego graf ma zacząć generować graf nie istnieje w zadanym grafie.");
+        */
     }
+
+    public int getStartVertexNumber() { return startVertexNumber; }
 
     @Override
     public Graph generate() {

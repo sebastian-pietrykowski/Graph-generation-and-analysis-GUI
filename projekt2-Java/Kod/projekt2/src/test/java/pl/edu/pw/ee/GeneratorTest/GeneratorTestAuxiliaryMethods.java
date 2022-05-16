@@ -1,7 +1,9 @@
 package pl.edu.pw.ee.GeneratorTest;
 
+import pl.edu.pw.ee.BFS;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
+import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
 
 public class GeneratorTestAuxiliaryMethods {
@@ -13,9 +15,9 @@ public class GeneratorTestAuxiliaryMethods {
      * @return <code>true</code> is all vertices are situated properly,
      *         <br><code>false</code> if not
      */
-    public static boolean checkEdgesSituation( Graph graph ) {
+    public static boolean areEdgesSituatedProperly( Graph graph ) {
         for( Edge edge: graph.getAdjacencyList() )
-            if( !graph.isEdgeProperlySituated(edge) )
+            if( !graph.isEdgeSituatedProperly(edge) )
                 return false;
         return true;
     }
@@ -30,6 +32,15 @@ public class GeneratorTestAuxiliaryMethods {
         return graph.getAdjacencyList().size() == graph.getMaxPossibleNumberOfEdges();
     }
 
+    /**
+     * Checks if <code>graph</code>'s number of edges is less than or equal to the maximum one for this <code>graph</code>.
+     * @param graph graph to be checked
+     * @return <code>true</code> if number of edges is less than or equal to the maximum one for this <code>graph</code>,
+     *         <br><code>false</code> if not
+     */
+    public static boolean isNumberOfEdgesLessThanOrEqualToMax( Graph graph ) {
+        return graph.getAdjacencyList().size() <= graph.getMaxPossibleNumberOfEdges();
+    }
 
     /**
      * Checks if there not exist multiple edges between the same vertices.
@@ -109,5 +120,15 @@ public class GeneratorTestAuxiliaryMethods {
             }
         }
         return (int)graph.getAdjacencyList().stream().map(EdgeWrapper::new).distinct().map(EdgeWrapper::unwrap).count();
+    }
+
+    /**
+     * Checks if graph is connected using BFS algorithm in class <code>BFS</code>.
+     * @param generator graph to be checked
+     * @param graph generator to get value <code>startVertexNumber</code>
+     * @return <code>true</code> if graph is connected, <code>false</code> if not
+     */
+    public static boolean isGraphConnected( ConnectedGraphGenerator generator, Graph graph ) {
+        return new BFS(graph, generator.getStartVertexNumber()).checkConnectivty();
     }
 }
