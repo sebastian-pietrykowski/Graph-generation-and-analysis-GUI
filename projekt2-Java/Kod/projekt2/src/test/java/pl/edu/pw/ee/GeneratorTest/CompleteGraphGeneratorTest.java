@@ -44,54 +44,54 @@ public class CompleteGraphGeneratorTest {
 
     // graph[0]
     @Test
-    public void generate_graph0_checkNumberOfVertices() {
+    public void generate_sameColumnsAndRows_graph0_checkNumberOfVertices() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[0]) );
     }
 
     @Test
-    public void generate_graph0_isNumberOfEdgesMax() {
+    public void generate_sameColumnsAndRows_graph0_isNumberOfEdgesMax() {
         assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[0]) );
     }
 
     @Test
-    public void generate_graph0_checkEdgesSituation() {
+    public void generate_sameColumnsAndRows_graph0_checkEdgesSituation() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[0]) );
     }
 
     @Test
-    public void generate_graph0_areEdgesNotTheSame() {
+    public void generate_sameColumnsAndRows_graph0_areEdgesNotTheSame() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[0] ) );
     }
 
     @Test
-    public void generate_graph0_areEdgesWithinRange() {
+    public void generate_sameColumnsAndRows_graph0_areEdgesWithinRange() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[0], graph[0] ) );
     }
 
 
     // graph[1]
     @Test
-    public void generate_graph1_checkNumberOfVertices() {
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_checkNumberOfVertices() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[1]) );
     }
 
     @Test
-    public void generate_graph1_isNumberOfEdgesMax() {
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_isNumberOfEdgesMax() {
         assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[1]) );
     }
 
     @Test
-    public void generate_graph1_checkEdgesSituation() {
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_checkEdgesSituation() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[1]) );
     }
 
     @Test
-    public void generate_graph1_areEdgesNotTheSame() {
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesNotTheSame() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[1] ) );
     }
 
     @Test
-    public void generate_graph1_areEdgesWithinRange() {
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesWithinRange() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[1], graph[1] ) );
     }
 
@@ -99,27 +99,27 @@ public class CompleteGraphGeneratorTest {
     
     // graph[2]
     @Test
-    public void generate_graph2_checkNumberOfVertices() {
+    public void generate_differentColumnsAndRows_graph2_checkNumberOfVertices() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[2]) );
     }
 
     @Test
-    public void generate_graph2_isNumberOfEdgesMax() {
+    public void generate_differentColumnsAndRows_graph2_isNumberOfEdgesMax() {
         assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[2]) );
     }
 
     @Test
-    public void generate_graph2_checkEdgesSituation() {
+    public void generate_differentColumnsAndRows_graph2_checkEdgesSituation() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[2]) );
     }
 
     @Test
-    public void generate_graph2_areEdgesNotTheSame() {
+    public void generate_differentColumnsAndRows_graph2_areEdgesNotTheSame() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[2] ) );
     }
 
     @Test
-    public void generate_graph2_areEdgesWithinRange() {
+    public void generate_differentColumnsAndRows_graph2_areEdgesWithinRange() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[2], graph[2] ) );
     }
 
@@ -127,27 +127,27 @@ public class CompleteGraphGeneratorTest {
 
     // graph[3]
     @Test
-    public void generate_graph3_checkNumberOfVertices() {
+    public void generate_1column_graph3_checkNumberOfVertices() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[3]) );
     }
 
     @Test
-    public void generate_graph3_isNumberOfEdgesMax() {
+    public void generate_1column_graph3_isNumberOfEdgesMax() {
         assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[3]) );
     }
 
     @Test
-    public void generate_graph3_checkEdgesSituation() {
+    public void generate_1column_graph3_checkEdgesSituation() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[3]) );
     }
 
     @Test
-    public void generate_graph3_areEdgesNotTheSame() {
+    public void generate_1column_graph3_areEdgesNotTheSame() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[3] ) );
     }
 
     @Test
-    public void generate_graph3_areEdgesWithinRange() {
+    public void generate_1column_graph3_areEdgesWithinRange() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[3], graph[3] ) );
     }
 
@@ -155,27 +155,27 @@ public class CompleteGraphGeneratorTest {
 
     // graph[4]
     @Test
-    public void generate_graph4_checkNumberOfVertices() {
+    public void generate_1row_graph4_checkNumberOfVertices() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[4]) );
     }
 
     @Test
-    public void generate_graph4_isNumberOfEdgesMax() {
+    public void generate_1row_graph4_isNumberOfEdgesMax() {
         assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[4]) );
     }
 
     @Test
-    public void generate_graph4_checkEdgesSituation() {
+    public void generate_1row_graph4_checkEdgesSituation() {
         assertTrue( GeneratorTestAuxiliaryMethods.checkEdgesSituation(graph[4]) );
     }
 
     @Test
-    public void generate_graph4_areEdgesNotTheSame() {
+    public void generate_1row_graph4_areEdgesNotTheSame() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[4] ) );
     }
 
     @Test
-    public void generate_graph4_areEdgesWithinRange() {
+    public void generate_1row_graph4_areEdgesWithinRange() {
         assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[4], graph[4] ) );
     }
 
