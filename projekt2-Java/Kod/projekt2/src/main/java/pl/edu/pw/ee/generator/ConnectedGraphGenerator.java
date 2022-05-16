@@ -21,7 +21,8 @@ public class ConnectedGraphGenerator extends Generator {
     private Set<Integer> frontier; /* set of vertices to which it is possible to create
                                     single edge from one of the vertices from set visited */
 
-    public ConnectedGraphGenerator( int columns, int rows, double fromWeight, double toWeight, int startVertexNumber ) {
+    public ConnectedGraphGenerator( int columns, int rows, double fromWeight,
+                double toWeight, int startVertexNumber ) throws IllegalArgumentException {
         super( columns, rows, fromWeight, toWeight );
         
         this.columns = columns;
@@ -29,10 +30,10 @@ public class ConnectedGraphGenerator extends Generator {
         this.fromWeight = fromWeight;
         this.toWeight = toWeight;
         this.startVertexNumber = startVertexNumber;
-        /*
+        
         if( startVertexNumber < 0 || startVertexNumber > columns*rows-1 )
             throw new IllegalArgumentException("Wierzchołek, od którego graf ma zacząć generować graf nie istnieje w zadanym grafie.");
-        */
+        
     }
 
     public int getStartVertexNumber() { return startVertexNumber; }

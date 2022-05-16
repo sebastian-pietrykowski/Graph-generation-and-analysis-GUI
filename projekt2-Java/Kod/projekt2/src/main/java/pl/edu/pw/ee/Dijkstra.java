@@ -1,6 +1,7 @@
 package pl.edu.pw.ee;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -13,11 +14,11 @@ public class Dijkstra {
     private Graph graph;
     private int startVertexNumber; // number of vertex to start searching with
     private int[] predecessors; /* value in array corresponding to index being number of vertex
-                                   is previous vertex leading to this vertex, where where the path to
+                                   is previous vertex leading to this vertex, where the path to
                                    this vertex is the shortest among all posible ones */
 
     private double[] distances; /* value in array corresponding to index being number of vertex
-                                   is the shortest combined distance of path from
+                                   is combined distance of the shortest path from
                                    startVertexNumber to this vertex */
     private Set<Integer> checkedVerticesSet = new HashSet<>();
      PriorityQueue<VertexWithDistance> uncheckedVerticesPQ = new PriorityQueue<>();
@@ -25,6 +26,7 @@ public class Dijkstra {
     public Dijkstra( Graph graph, int startVertexNumber ) {
         this.graph = graph;
         this.startVertexNumber = startVertexNumber;
+
     }
     
     /**
@@ -58,22 +60,55 @@ public class Dijkstra {
      * Function responsible for performing Dijkstra's algorithm. <p>
      * This is the only method to perform before getting the results.<p>
      * 
-     * It sets values in array <code>predecessors</code> so that value corresponding to index being vertex number
+     * It sets values in array <code>predecessors</code> so that value corresponding to
+     * index being vertex number of vertex so that it is previous vertex leading to this vertex
+     * (being index), where the path to this vertex is the shortest among all posible ones. <p>
      * 
-     * 
+     * It sets value in array <code>distances</code> corresponding to index being number
+     * of vertex so that it is combined distance of the shortest path from startVertexNumber
+     * to this vertex (being index).
      */
     private void dijkstra() {
-        /*
-        – funkcja odpowiedzialna za wykonanie algorytmu Dijkstry; ustawia
-        wartości w tablicy predecessors[] tak, aby wartość tablicy o danym indeksie równoważnemu
-        numerowi wierzchołka odpowiadała numerowi wierzchołka będącego jego poprzednikiem;
-        ustawia wartości w tablicy distances tak, aby wartość tablicy o danym indeksie równoważnemu
-        numerowi wierzchołka odpowiadała łącznej najkrótszej odległości od wierzchołka
-        start; wywołuje metody initiateValues i relax
-        */
+
+        initiateValues();
+        for( int vertex = 0; vertex < graph.getNumberOfVertices(); vertex++ )
+            uncheckedVerticesPQ.add( new VertexWithDistance(vertex, distances[vertex]) );
+        while( !uncheckedVerticesPQ.isEmpty() ) {
+                int fromVertex = uncheckedVerticesPQ.remove().getVertex();
+                checkedVerticesSet.add( fromVertex );
+                for( int toVertex: graph.potenialNeighbors(fromVertex) )
+                    relax(fromVertex, toVertex);
+        }
     }
 
+    /**
+     * Returns array containing vertices, creating the shortest possible path from
+     * vertex <code>startVertexNumber</code> to <code>endVertexNumber</code>.
+     * @param startVertexNumber vertex where path beggins
+     * @param endVertexNumber vertex where path ends
+     * @return array of vertices creating path if the path exists, <br>
+     *         <code>null</code> if such path doesn't exist
+     */
+    public ArrayList<Integer> determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
+        ArrayList<Integer> path = new ArrayList<>();
 
+        int element = endVertexNumber;
+        path.add(endVertexNumber);
+        while(true) {
+            element = predecessors[element];
+            if( element < 0 )
+                return null;
+            path.add(element);
+            if( element == startVertexNumber ) {
+                Collections.reverse(path);
+                return path;
+            }
+        }
+    }
+
+    /**
+     * Class used in priority queue.
+     */
     class VertexWithDistance implements Comparable<VertexWithDistance> {
         private int vertex;
         private double distance;
@@ -83,15 +118,17 @@ public class Dijkstra {
             this.distance = distance;
         }
     
+        public int getVertex() { return vertex; }
+        public double getDistance() { return distance; }
+
         @Override
         public int compareTo(VertexWithDistance that) {
             return Double.compare( this.distance, that.distance );
         }
     
         @Override
-        public String toString(){
+        public String toString() {
             return "v: " + vertex + ", d: " + distance;
-    
         }
     
         @Override

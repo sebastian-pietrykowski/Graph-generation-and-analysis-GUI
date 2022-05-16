@@ -12,7 +12,7 @@ public abstract class Generator {
     private double toWeight;
     boolean success = true; // true if no exceptions were thrown
 
-    public Generator( int columns, int rows, double fromWeight, double toWeight ) {
+    public Generator( int columns, int rows, double fromWeight, double toWeight ) throws IllegalArgumentException {
 
         if( fromWeight < 0 || toWeight < 0 ) {
             success = false;
