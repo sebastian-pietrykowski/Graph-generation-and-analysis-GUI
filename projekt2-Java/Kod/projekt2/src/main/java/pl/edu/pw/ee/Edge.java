@@ -2,20 +2,21 @@ package pl.edu.pw.ee;
 
 public class Edge {
 
-    int from;
-    int to;
-    double weight;
+    private int fromVertex;
+    private int toVertex;
+    private double weight;
 
-    public Edge(int from, int to ) {
-        this.from = from;
-        this.to = to;
+    public Edge(int fromVertex, int toVertex ) {
+        this.fromVertex = fromVertex;
+        this.toVertex = toVertex;
     }
-    public Edge(int from, int to, double weight) {
-        this.from = from;
-        this.to = to;
+    public Edge(int fromVertex, int toVertex, double weight) {
+        this( fromVertex, toVertex );
         this.weight = weight;
     }
 
+    public int getFromVertex() { return fromVertex; }
+    public int getToVertex() { return toVertex; }
     public void setWeight( double weight ) {
 
     }
