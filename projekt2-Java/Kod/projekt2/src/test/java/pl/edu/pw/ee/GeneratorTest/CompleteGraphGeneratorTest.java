@@ -29,7 +29,7 @@ public class CompleteGraphGeneratorTest {
         graph[1] = generator[1].generate();
 
         // different columns and rows
-        generator[2] = new CompleteGraphGenerator(17, 19, 0.123, 1.8910);
+        generator[2] = new CompleteGraphGenerator(11, 19, 0.123, 1.8910);
         graph[2] = generator[2].generate();
 
         // 1 column
@@ -44,8 +44,8 @@ public class CompleteGraphGeneratorTest {
 
     // graph[0]
     @Test
-    public void generate_sameColumnsAndRows_graph0_checkNumberOfVertices() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[0]) );
+    public void generate_sameColumnsAndRows_graph0_isNumberOfVerticesProper() {
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[0]) );
     }
 
     @Test
@@ -71,8 +71,8 @@ public class CompleteGraphGeneratorTest {
 
     // graph[1]
     @Test
-    public void generate_sameColumnsAndRowsHugeGraph_graph1_checkNumberOfVertices() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[1]) );
+    public void generate_sameColumnsAndRowsHugeGraph_graph1_isNumberOfVerticesProper() {
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[1]) );
     }
 
     @Test
@@ -99,8 +99,8 @@ public class CompleteGraphGeneratorTest {
     
     // graph[2]
     @Test
-    public void generate_differentColumnsAndRows_graph2_checkNumberOfVertices() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[2]) );
+    public void generate_differentColumnsAndRows_graph2_isNumberOfVerticesProper() {
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[2]) );
     }
 
     @Test
@@ -127,8 +127,8 @@ public class CompleteGraphGeneratorTest {
 
     // graph[3]
     @Test
-    public void generate_1column_graph3_checkNumberOfVertices() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[3]) );
+    public void generate_1column_graph3_isNumberOfVerticesProper() {
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[3]) );
     }
 
     @Test
@@ -155,8 +155,8 @@ public class CompleteGraphGeneratorTest {
 
     // graph[4]
     @Test
-    public void generate_1row_graph4_checkNumberOfVertices() {
-        assertTrue( GeneratorTestAuxiliaryMethods.checkNumberOfVertices(graph[4]) );
+    public void generate_1row_graph4_isNumberOfVerticesProper() {
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[4]) );
     }
 
     @Test
@@ -187,13 +187,43 @@ public class CompleteGraphGeneratorTest {
     }
 
     @Test
+    public void generate_0rows() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(1, 0, 0, 1) );
+    }
+
+    @Test
+    public void generate_0columnsand0rows() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(0, 0, 0, 1) );
+    }
+
+    @Test
     public void generate_negativNumberOfColumns() {
         assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(-8, 1, 0, 1) );
     }
 
     @Test
+    public void generate_negativNumberOfRows() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(5, -1, 0, 1) );
+    }
+
+    @Test
+    public void generate_negativNumberOfColumnsAndRows() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(-5, -1, 0, 1) );
+    }
+
+    @Test
     public void generate_negativeFromWeight() {
         assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(4, 5, -10, 1) );
+    }
+
+    @Test
+    public void generate_negativeToWeight() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(4, 5, 10, -1) );
+    }
+
+    @Test
+    public void generate_negativeFromWeightAndToWeight() {
+        assertThrows(IllegalArgumentException.class, () -> new CompleteGraphGenerator(4, -5, -10, 1) );
     }
 
     @Test
