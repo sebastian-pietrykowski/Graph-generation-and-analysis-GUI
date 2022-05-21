@@ -19,13 +19,13 @@ public class BFS {
         return startVertexNumber;
     }
 
-    public boolean checkConnectivty(BFS bfs) {
+    public boolean checkConnectivty() {
 
         boolean[] visited = new boolean[graph.getNumberOfVertices()];
 
-        visited[bfs.getStartVertexNumber()] = true;
+        visited[this.getStartVertexNumber()] = true;
      
-        fifo.add(bfs.getStartVertexNumber());
+        fifo.add(this.getStartVertexNumber());
         // Object[] adjacencyArray = graph.getAdjacencyList().toArray();
         while (!fifo.isEmpty()) {
             int currentVertex = fifo.poll();

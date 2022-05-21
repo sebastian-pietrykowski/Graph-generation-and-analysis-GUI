@@ -15,7 +15,7 @@ public class Main {
         try {
             Graph.readGraph(file);
             BFS bfs = new BFS(Graph.readGraph(file), 0);
-            System.out.println(bfs.checkConnectivty(bfs));
+            System.out.println(bfs.checkConnectivty());
         } catch (IOException ex) {
             System.err.println("zle");
         }

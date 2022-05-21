@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -17,7 +18,7 @@ public class DijkstraTest {
     public static int startVertexNumber = 0;
     
     @BeforeClass
-    public static void initiateGraphs() {
+    public static void initiateGraphs() throws IOException {
         graphs = new Graph[4];
         dijkstra = new Dijkstra[4];
 

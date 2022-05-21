@@ -56,7 +56,7 @@ public class PrimaryController {
      @FXML
     private void checkGraphConnectivity(ActionEvent event) {
         BFS bfs = new BFS(graph,0);
-        System.out.println(bfs.checkConnectivty(bfs));
+        System.out.println(bfs.checkConnectivty());
     }
 
 }

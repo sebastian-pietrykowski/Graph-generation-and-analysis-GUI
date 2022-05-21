@@ -41,6 +41,10 @@ public class Graph {
         return null;
     }
 
+    public Edge getEdge( int startVertexNumber, int endVertexNumber ) {
+        return null;
+    }
+
     public int getNumberOfEdges() {
         return 1;
     }
