@@ -3,6 +3,7 @@ package pl.edu.pw.ee;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -21,7 +22,8 @@ public class Dijkstra {
                                    is combined distance of the shortest path from
                                    startVertexNumber to this vertex */
     private Set<Integer> checkedVerticesSet = new HashSet<>();
-     PriorityQueue<VertexWithDistance> uncheckedVerticesPQ = new PriorityQueue<>();
+    PriorityQueue<VertexWithDistance> uncheckedVerticesPQ = new PriorityQueue<>();
+    boolean didPerformAlgorithm = false;
 
     public Dijkstra( Graph graph, int startVertexNumber ) {
         this.graph = graph;
@@ -29,6 +31,8 @@ public class Dijkstra {
 
     }
     
+    public int[] getPredecessors() { return predecessors; }
+
     /**
      * Initiates values according to Dijkstra's Algorithm.
      */
@@ -68,7 +72,7 @@ public class Dijkstra {
      * of vertex so that it is combined distance of the shortest path from startVertexNumber
      * to this vertex (being index).
      */
-    private void dijkstra() {
+    public void dijkstra() {
 
         initiateValues();
         for( int vertex = 0; vertex < graph.getNumberOfVertices(); vertex++ )
@@ -83,14 +87,18 @@ public class Dijkstra {
 
     /**
      * Returns array containing vertices, creating the shortest possible path from
-     * vertex <code>startVertexNumber</code> to <code>endVertexNumber</code>.
+     * vertex <code>startVertexNumber</code> to <code>endVertexNumber</code>.<p>
+     * It is ready to be performed without using any methods from this class before it.
      * @param startVertexNumber vertex where path beggins
      * @param endVertexNumber vertex where path ends
      * @return array of vertices creating path if the path exists, <br>
      *         <code>null</code> if such path doesn't exist
      */
-    public ArrayList<Integer> determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
-        ArrayList<Integer> path = new ArrayList<>();
+    public LinkedList<Integer> determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
+        LinkedList<Integer> path = new LinkedList<>();
+
+        if (!didPerformAlgorithm)
+            dijkstra();
 
         int element = endVertexNumber;
         path.add(endVertexNumber);

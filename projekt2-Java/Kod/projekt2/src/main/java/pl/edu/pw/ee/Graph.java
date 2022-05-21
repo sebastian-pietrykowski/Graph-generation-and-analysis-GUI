@@ -1,5 +1,6 @@
 package pl.edu.pw.ee;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -28,4 +29,6 @@ public class Graph {
 
     public int getMaxPossibleNumberOfEdges() {return 1;}
     public boolean isEdgeSituatedProperly( Edge edge ) {return true;}
+
+    public static Graph readGraph( File file ) { return null; }
 }
