@@ -35,5 +35,6 @@
             <Button fx:id="btnCheckConnectivity" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" onAction="#checkGraphConnectivity" text="Sprawdź spójność grafu" />
          </children>
       </Pane>
+      <Pane fx:id="graphPaneParent" layoutX="5.0" layoutY="30.0" onMouseEntered="#onGraphPaneClicked" prefHeight="384.0" prefWidth="384.0" />
    </children>
 </AnchorPane>
