@@ -12,87 +12,87 @@ import pl.edu.pw.ee.generator.Generator;
 
 public class CompleteGraphGeneratorTest {
     
-    static Generator generator[];
-    static Graph graph[];
+    static Generator generators[];
+    static Graph graphs[];
 
     @BeforeClass
     public static void initiateGraphs() {
-        generator = new Generator[10];
-        graph = new Graph[10];
+        generators = new Generator[10];
+        graphs = new Graph[10];
 
         // same columns and rows
-        generator[0] = new CompleteGraphGenerator(4, 4, 0, 1);
-        graph[0] = generator[0].generate();
+        generators[0] = new CompleteGraphGenerator(4, 4, 0, 1);
+        graphs[0] = generators[0].generate();
 
         // same columns and rows, huge graph
-        generator[1] = new CompleteGraphGenerator(50, 50, 13.4, 87.1323);
-        graph[1] = generator[1].generate();
+        generators[1] = new CompleteGraphGenerator(50, 50, 13.4, 87.1323);
+        graphs[1] = generators[1].generate();
 
         // different columns and rows
-        generator[2] = new CompleteGraphGenerator(11, 19, 0.123, 1.8910);
-        graph[2] = generator[2].generate();
+        generators[2] = new CompleteGraphGenerator(11, 19, 0.123, 1.8910);
+        graphs[2] = generators[2].generate();
 
         // 1 column
-        generator[3] = new CompleteGraphGenerator(1, 15, 7813.98, 9999.999);
-        graph[3] = generator[3].generate();
+        generators[3] = new CompleteGraphGenerator(1, 15, 7813.98, 9999.999);
+        graphs[3] = generators[3].generate();
 
         // 1 row
-        generator[4] = new CompleteGraphGenerator(15, 1, 7813.98, 9999.999);
-        graph[4] = generator[4].generate();
+        generators[4] = new CompleteGraphGenerator(15, 1, 7813.98, 9999.999);
+        graphs[4] = generators[4].generate();
     }
 
 
     // graph[0]
     @Test
     public void generate_sameColumnsAndRows_graph0_isNumberOfVerticesProper() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[0]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graphs[0]) );
     }
 
     @Test
     public void generate_sameColumnsAndRows_graph0_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[0]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graphs[0]) );
     }
 
     @Test
     public void generate_sameColumnsAndRows_graph0_areEdgesSituatedProperly() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[0]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[0]) );
     }
 
     @Test
     public void generate_sameColumnsAndRows_graph0_areEdgesNotTheSame() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[0] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graphs[0] ) );
     }
 
     @Test
     public void generate_sameColumnsAndRows_graph0_areEdgesWithinRange() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[0], graph[0] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generators[0], graphs[0] ) );
     }
 
 
     // graph[1]
     @Test
     public void generate_sameColumnsAndRowsHugeGraph_graph1_isNumberOfVerticesProper() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[1]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graphs[1]) );
     }
 
     @Test
     public void generate_sameColumnsAndRowsHugeGraph_graph1_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[1]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graphs[1]) );
     }
 
     @Test
     public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesSituatedProperly() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[1]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[1]) );
     }
 
     @Test
     public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesNotTheSame() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[1] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graphs[1] ) );
     }
 
     @Test
     public void generate_sameColumnsAndRowsHugeGraph_graph1_areEdgesWithinRange() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[1], graph[1] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generators[1], graphs[1] ) );
     }
 
 
@@ -100,27 +100,27 @@ public class CompleteGraphGeneratorTest {
     // graph[2]
     @Test
     public void generate_differentColumnsAndRows_graph2_isNumberOfVerticesProper() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[2]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graphs[2]) );
     }
 
     @Test
     public void generate_differentColumnsAndRows_graph2_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[2]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graphs[2]) );
     }
 
     @Test
     public void generate_differentColumnsAndRows_graph2_areEdgesSituatedProperly() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[2]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[2]) );
     }
 
     @Test
     public void generate_differentColumnsAndRows_graph2_areEdgesNotTheSame() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[2] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graphs[2] ) );
     }
 
     @Test
     public void generate_differentColumnsAndRows_graph2_areEdgesWithinRange() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[2], graph[2] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generators[2], graphs[2] ) );
     }
 
 
@@ -128,27 +128,27 @@ public class CompleteGraphGeneratorTest {
     // graph[3]
     @Test
     public void generate_1column_graph3_isNumberOfVerticesProper() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[3]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graphs[3]) );
     }
 
     @Test
     public void generate_1column_graph3_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graph[3]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfEdgesMax(graphs[3]) );
     }
 
     @Test
     public void generate_1column_graph3_areEdgesSituatedProperly() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[3]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[3]) );
     }
 
     @Test
     public void generate_1column_graph3_areEdgesNotTheSame() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[3] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graphs[3] ) );
     }
 
     @Test
     public void generate_1column_graph3_areEdgesWithinRange() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[3], graph[3] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generators[3], graphs[3] ) );
     }
 
 
@@ -156,27 +156,27 @@ public class CompleteGraphGeneratorTest {
     // graph[4]
     @Test
     public void generate_1row_graph4_isNumberOfVerticesProper() {
-        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graph[4]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.isNumberOfVerticesProper(graphs[4]) );
     }
 
     @Test
     public void generate_1row_graph4_isNumberOfEdgesMax() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[4]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[4]) );
     }
 
     @Test
     public void generate_1row_graph4_checkEdgesSituation() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graph[4]) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesSituatedProperly(graphs[4]) );
     }
 
     @Test
     public void generate_1row_graph4_areEdgesNotTheSame() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graph[4] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesNotTheSame( graphs[4] ) );
     }
 
     @Test
     public void generate_1row_graph4_areEdgesWithinRange() {
-        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generator[4], graph[4] ) );
+        assertTrue( GeneratorTestAuxiliaryMethods.areEdgesWeightWithinRange( generators[4], graphs[4] ) );
     }
 
 
