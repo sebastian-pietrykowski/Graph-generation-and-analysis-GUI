@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -18,10 +19,10 @@ public class Graph {
         adjacencyList = new LinkedList<>();
     }
 
+
     public int getColumns() {
         return columns;
     }
-
     public int getRows() {
         return rows;
     }
@@ -96,7 +97,6 @@ public class Graph {
             System.exit(1);
         }
         return null;
-
     }
 
     public void writeGraph(File file) {
