@@ -43,8 +43,6 @@ public class PrimaryController {
         ScrollPane scrollPane = new ScrollPane(graphPane);
         scrollPane.setMinSize(parentWidth, parentHeight);
         scrollPane.setMaxSize(parentWidth, parentHeight);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
         
         this.graphPaneParent.getChildren().add(scrollPane);
     }
