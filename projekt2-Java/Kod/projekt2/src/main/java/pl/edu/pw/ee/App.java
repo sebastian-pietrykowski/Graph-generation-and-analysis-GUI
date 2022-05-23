@@ -2,9 +2,7 @@ package pl.edu.pw.ee;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,9 +21,7 @@ public class App extends Application {
 
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane();
-        //int g = controller.graph.rows;
 
-        
         stage.setScene(scene);
         stage.show();
     }
