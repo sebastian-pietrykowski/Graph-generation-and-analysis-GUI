@@ -180,9 +180,11 @@ public class GraphPane extends GridPane {
         
         //getEdgeCell(3,7).getChildren().add(new Label("a"));            
         splitEdgesCells();
+        /*
         GridPane g = (GridPane) getEdgeCell(3,7).getChildren().get(0);
         g.add(new Label("a"), 0, 0);
         g.add(new Label("a"), 1, 0);
+        */
         
     }
 
