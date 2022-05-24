@@ -3,6 +3,7 @@ package pl.edu.pw.ee;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -12,6 +13,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 
 public class GraphPane extends GridPane {
     int parentWidth;
@@ -21,10 +27,10 @@ public class GraphPane extends GridPane {
 
     
     Graph graph;
-    int numberOfColumnsInGraph;
     int numberOfRowsInGraph;
-    int numberOfGridColumns;
+    int numberOfColumnsInGraph;
     int numberOfGridRows;
+    int numberOfGridColumns;
     static final int defaultNumberOfVerticesDimension = 5;
     static final int defaultNumberOfCellsDimension = 11;
 
@@ -47,20 +53,27 @@ public class GraphPane extends GridPane {
         // this.setAlignment(Pos.CENTER);
 
         this.setBackground(new Background(new BackgroundFill(Color.SILVER, CornerRadii.EMPTY, Insets.EMPTY)));
-        createCells(numberOfGridColumns, numberOfGridRows);
+        createCells();
         
         createColumnNumbersLabels();
         createRowNumbersLabels();
+
+        setGraph(new Graph(4, 7));
+
+        
     }
 
-    private void setDimensionsSizes( int numberOfColumnsInGraph, int numberOfRowsInGraph ) {
-        this.numberOfColumnsInGraph = numberOfColumnsInGraph;
+    private void setDimensionsSizes( int numberOfRowsInGraph, int numberOfColumnsInGraph ) {
         this.numberOfRowsInGraph = numberOfRowsInGraph;
-        this.numberOfGridColumns = numberOfColumnsInGraph > 11 ? numberOfColumnsInGraph*2 : defaultNumberOfCellsDimension;
-        this.numberOfGridRows = numberOfRowsInGraph > 11 ? numberOfRowsInGraph*2 : defaultNumberOfCellsDimension;
+        this.numberOfColumnsInGraph = numberOfColumnsInGraph;
+        this.numberOfGridRows = numberOfRowsInGraph > 5 ? numberOfRowsInGraph*2 : defaultNumberOfCellsDimension;
+        this.numberOfGridColumns = numberOfColumnsInGraph > 5 ? numberOfColumnsInGraph*2 : defaultNumberOfCellsDimension;
     }
 
     private void setSizeOfCellsIdentical() {
+
+        this.getRowConstraints().clear();
+        this.getColumnConstraints().clear();
 
         RowConstraints rc = new RowConstraints();
         rc.setMinHeight(cellDimension);
@@ -79,21 +92,31 @@ public class GraphPane extends GridPane {
         }
     }
 
-    private void createCells(int columns, int rows) {
-        cells = new StackPane[columns][rows];
-        for (int i = 0; i < columns; i++)
-            for (int j = 0; j < rows; j++) {
-                cells[i][j] = new StackPane();
-                cells[i][j].setBackground(
+    private void createCells() {
+        cells = new StackPane[numberOfGridRows][numberOfGridColumns];
+        for (int rowIndex = 0; rowIndex < numberOfGridRows; rowIndex++)
+            for (int columnIndex = 0; columnIndex < numberOfGridColumns; columnIndex++) {
+                cells[rowIndex][columnIndex] = new StackPane();
+                cells[rowIndex][columnIndex].setBackground(
                         new Background(new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY)));
-                // cells[i][j].set
-                this.add(cells[i][j], i, j);
+                this.add(cells[rowIndex][columnIndex], columnIndex, rowIndex);
             }
     }
 
     private void createColumnNumbersLabels() {
         // horizontal
-        int numberOfDisplayedRowNumbers = numberOfColumnsInGraph > 5 ? numberOfColumnsInGraph : defaultNumberOfVerticesDimension;
+        int numberOfDisplayedColumnNumbers = numberOfColumnsInGraph > 5 ? numberOfColumnsInGraph : defaultNumberOfVerticesDimension;
+        for (int i = 0; i < numberOfDisplayedColumnNumbers; i++) {
+            Label label = new Label("" + (i + 1));
+            label.setAlignment(Pos.CENTER);
+            setHalignment(label, HPos.CENTER);
+            cells[0][1 + i * 2].getChildren().add(label);
+        }
+    }
+
+    private void createRowNumbersLabels() {
+        // vertical
+        int numberOfDisplayedRowNumbers = numberOfRowsInGraph > 5 ? numberOfRowsInGraph : defaultNumberOfVerticesDimension;
         for (int i = 0; i < numberOfDisplayedRowNumbers; i++) {
             Label label = new Label("" + (i + 1));
             label.setAlignment(Pos.CENTER);
@@ -102,14 +125,63 @@ public class GraphPane extends GridPane {
         }
     }
 
-    private void createRowNumbersLabels() {
-        // vertical
-        int numberOfDisplayedRColumnNumbers = numberOfRowsInGraph > 5 ? numberOfRowsInGraph : defaultNumberOfVerticesDimension;
-        for (int i = 0; i < numberOfDisplayedRColumnNumbers; i++) {
-            Label label = new Label("" + (i + 1));
-            label.setAlignment(Pos.CENTER);
-            setHalignment(label, HPos.CENTER);
-            cells[0][1 + i * 2].getChildren().add(label);
-        }
+    private StackPane getVertexCell(int vertexNumber) {
+        
+        int rowInGraphNumber = vertexNumber/numberOfColumnsInGraph;
+        int columnInGraphNumber = vertexNumber%numberOfColumnsInGraph;
+        
+        int rowInGridNumber = (rowInGraphNumber+1)*2-1;
+        int columnInGridNumber = (columnInGraphNumber+1)*2-1;
+
+        return cells[rowInGridNumber][columnInGridNumber];
+    }
+
+    private Circle createVertexCircle() {
+        Circle circle = new Circle(cellDimension/2 *0.8);
+        circle.setStroke(Color.BLACK);
+        circle.setStrokeWidth(2);
+        circle.setStrokeType(StrokeType.CENTERED);
+        circle.setFill(Color.LIGHTGRAY);
+        circle.relocate(0,0);
+        
+        return circle;
+    }
+
+    public void setGraph( Graph graph ) {
+        this.graph = graph;
+        setDimensionsSizes(graph.getRows(), graph.getColumns());
+        setSizeOfCellsIdentical();
+        createCells();
+        
+        createColumnNumbersLabels();
+        createRowNumbersLabels();
+        
+        addVerticesCircles();
+        
+            
+        
+        
+    }
+
+    private StackPane createCircleWithVertexNumber( int vertexNumber ) {
+        Circle vertexCircle = createVertexCircle();
+        Text vertexNumberText = new Text(""+vertexNumber);
+        //vertexNumberText.setFont(new Font(30));
+        vertexNumberText.setBoundsType(TextBoundsType.VISUAL);
+        vertexNumberText.setTextAlignment(TextAlignment.CENTER);
+
+        Group group = new Group(vertexCircle);
+
+        StackPane pane = new StackPane();
+        pane.getChildren().addAll(group, vertexNumberText);
+
+        StackPane.setAlignment(vertexCircle, Pos.CENTER);
+        StackPane.setAlignment(vertexNumberText, Pos.CENTER);
+        return pane;
+    }
+
+    private void addVerticesCircles() {
+        for( int i = 0; i < graph.getNumberOfVertices(); i++)
+            getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i));
     }
 }
