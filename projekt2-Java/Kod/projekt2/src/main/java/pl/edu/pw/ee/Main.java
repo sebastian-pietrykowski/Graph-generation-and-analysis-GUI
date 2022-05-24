@@ -38,14 +38,23 @@ public class Main {
         Generator g3 = new ConnectedGraphGenerator(3, 3, 0, 1, 0);
         Graph graph3 = g3.generate();
         */
-        
+        /*
         Generator g = new CompleteGraphGenerator(2, 2, 0, 1);
         Graph gr = g.generate();
         //gr.printEdges();
-        //System.out.println( gr.getMaxPossibleNumberOfEdges());
-        //System.out.println(gr.getAdjacencyList().size());
-        System.out.println(new BFS(gr, 0).checkConnectivty());
+        System.out.println( gr.getMaxPossibleNumberOfEdges());
+        System.out.println(gr.getAdjacencyList().size());
+        //System.out.println(new BFS(gr, 0).checkConnectivty());
+        */
+
+        Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
+        Graph graph6 = gen6.generate();
+        //System.out.println(graph6.getNumberOfEdges());
+        //System.out.println(graph6.getMaxPossibleNumberOfEdges());
+        //graph6.printEdges();
 
     }
+
+
 
 }

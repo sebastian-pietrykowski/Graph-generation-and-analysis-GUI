@@ -47,6 +47,7 @@ public class ConnectedGraphGenerator extends Generator {
 
         visited.add( startVertexNumber );
         Set<Integer> neighborsArray = graph.potenialNeighbors( startVertexNumber );
+        System.out.println(neighborsArray);
         for( Integer neighbor: neighborsArray )
             frontier.add( neighbor );
 
