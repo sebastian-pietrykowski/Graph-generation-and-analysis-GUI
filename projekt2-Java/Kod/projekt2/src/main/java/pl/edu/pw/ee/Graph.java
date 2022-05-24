@@ -170,7 +170,8 @@ public class Graph {
          */
         if( columns == 1) return rows;
         if( rows == 1 ) return columns;
-        return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (2 - this.getColumns())) * 4);
+
+        return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (this.getColumns() - 2) * 4));
     }
 
     public boolean isEdgeSituatedProperly(Edge edge) {
