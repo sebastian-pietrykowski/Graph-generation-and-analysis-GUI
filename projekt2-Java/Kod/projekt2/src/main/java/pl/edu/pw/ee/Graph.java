@@ -169,7 +169,7 @@ public class Graph {
     *  and "4" because this vertices can be connected to up to four other vertices.
          */
 
-        return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (2 - this.getColumns())) * 4);
+        return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (this.getColumns() - 2) * 4));
     }
 
     public boolean isEdgeSituatedProperly(Edge edge) {
