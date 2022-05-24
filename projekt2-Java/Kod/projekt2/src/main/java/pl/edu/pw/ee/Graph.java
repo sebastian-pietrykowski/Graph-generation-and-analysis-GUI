@@ -168,7 +168,8 @@ public class Graph {
        are not the most distant vertices from the center of the graph - lying on its outer sides
     *  and "4" because this vertices can be connected to up to four other vertices.
          */
-
+        if( columns == 1) return rows;
+        if( rows == 1 ) return columns;
         return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (2 - this.getColumns())) * 4);
     }
 
@@ -184,5 +185,11 @@ public class Graph {
         }
 
         return false;
+    }
+
+    public void printEdges() {
+        for( Edge e: adjacencyList) {
+            System.out.println("from: " + e.getFromVertex() + ", to: " + e.getToVertex() + ", weight: " + e.getWeight());
+        }
     }
 }

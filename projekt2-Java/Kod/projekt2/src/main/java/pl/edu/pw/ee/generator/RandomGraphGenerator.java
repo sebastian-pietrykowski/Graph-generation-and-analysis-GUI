@@ -34,11 +34,12 @@ public class RandomGraphGenerator extends CompleteGraphGenerator {
         // remove random number of edges
         int maxPossibleEdges = graph.getMaxPossibleNumberOfEdges();
         Random random = new Random();
-        int numberOfEdgesToRemove = random.nextInt(maxPossibleEdges);
+        int numberOfEdgesToRemove = random.nextInt(Math.abs(maxPossibleEdges));
 
         while( numberOfEdgesToRemove > 0 ) {
             int indexOfEdgeToDelete = random.nextInt( graph.getNumberOfEdges() );
             graph.removeEdge( indexOfEdgeToDelete );
+            numberOfEdgesToRemove--;
         }
         return graph;
     }
