@@ -136,6 +136,26 @@ public class GraphPane extends GridPane {
         return cells[rowInGridNumber][columnInGridNumber];
     }
 
+    private StackPane getEdgeCell(int vertex1Number, int vertex2Number) {
+        
+        int rowInGraphNumberVertex1 = vertex1Number/numberOfColumnsInGraph;
+        int columnInGraphNumberVertex1 = vertex1Number%numberOfColumnsInGraph;
+        
+        int rowInGridNumberVertex1 = (rowInGraphNumberVertex1+1)*2-1;
+        int columnInGridNumberVertex1 = (columnInGraphNumberVertex1+1)*2-1;
+
+        int rowInGraphNumberVertex2 = vertex2Number/numberOfColumnsInGraph;
+        int columnInGraphNumberVertex2 = vertex2Number%numberOfColumnsInGraph;
+        
+        int rowInGridNumberVertex2 = (rowInGraphNumberVertex2+1)*2-1;
+        int columnInGridNumberVertex2 = (columnInGraphNumberVertex2+1)*2-1;
+
+        int edgeRowInGridNumber = (rowInGridNumberVertex1+rowInGridNumberVertex2)/2;
+        int edgeColumnInGridNumber = (columnInGridNumberVertex1+columnInGridNumberVertex2)/2;
+
+        return cells[edgeRowInGridNumber][edgeColumnInGridNumber];
+    }
+
     private Circle createVertexCircle() {
         Circle circle = new Circle(cellDimension/2 *0.8);
         circle.setStroke(Color.BLACK);
@@ -158,8 +178,11 @@ public class GraphPane extends GridPane {
         
         addVerticesCircles();
         
-            
-        
+        //getEdgeCell(3,7).getChildren().add(new Label("a"));            
+        splitEdgesCells();
+        GridPane g = (GridPane) getEdgeCell(3,7).getChildren().get(0);
+        g.add(new Label("a"), 0, 0);
+        g.add(new Label("a"), 1, 0);
         
     }
 
@@ -183,5 +206,66 @@ public class GraphPane extends GridPane {
     private void addVerticesCircles() {
         for( int i = 0; i < graph.getNumberOfVertices(); i++)
             getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i));
+    }
+
+    private void splitEdgesCells() {
+
+
+        // add horizontal edges' pane
+        for( int verticalCounter = 0; verticalCounter < graph.getRows(); verticalCounter++)
+            for( int horizontalCounter = 1; horizontalCounter < graph.getColumns(); horizontalCounter++ ) {
+                int vertexFrom = verticalCounter * graph.getColumns() + horizontalCounter - 1;
+                int vertexTo = vertexFrom + 1;
+                
+                GridPane horizontalEdgesPane = createHorizontalEdgesPane();
+                getEdgeCell(vertexFrom, vertexTo).getChildren().add(horizontalEdgesPane);
+                
+            }
+        // add vertical edges' pane
+        for( int horizontalCounter = 0; horizontalCounter < graph.getColumns(); horizontalCounter++ )
+            for( int verticalCounter = 1; verticalCounter < graph.getRows(); verticalCounter++ ) {
+                int vertexFrom = (verticalCounter-1) * graph.getColumns() + horizontalCounter;
+                int vertexTo = verticalCounter * graph.getColumns() + horizontalCounter;
+
+                GridPane verticalEdgesPane = createVerticalEdgesPane();
+                getEdgeCell(vertexFrom, vertexTo).getChildren().add(verticalEdgesPane);
+            } 
+    }
+
+    private GridPane createHorizontalEdgesPane() {
+        GridPane horizontalEdgesPane = new GridPane();
+
+        RowConstraints rc = new RowConstraints();
+        rc.setMinHeight((cellDimension-1)/2);
+        rc.setMaxHeight((cellDimension-1)/2);
+        for (int i = 0; i < 2; i++) {
+            horizontalEdgesPane.getRowConstraints().add(rc);
+        }
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setMinWidth((cellDimension-1));
+        cc.setMaxWidth((cellDimension-1));
+        horizontalEdgesPane.getColumnConstraints().add(cc);
+
+        return horizontalEdgesPane;
+    }
+
+    private GridPane createVerticalEdgesPane() {
+        GridPane verticalEdgesPane = new GridPane();
+
+        RowConstraints rc = new RowConstraints();
+        rc.setMinHeight((cellDimension-1));
+        rc.setMaxHeight((cellDimension-1));
+        verticalEdgesPane.getRowConstraints().add(rc);
+        
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setMinWidth((cellDimension-1)/2);
+        cc.setMaxWidth((cellDimension-1)/2);
+        for (int i = 0; i < 2; i++) {
+            verticalEdgesPane.getColumnConstraints().add(cc);
+        }
+
+        return verticalEdgesPane;
     }
 }
