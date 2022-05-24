@@ -1,10 +1,10 @@
 package pl.edu.pw.ee;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
+import static java.lang.Math.abs;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -171,11 +171,18 @@ public class Graph {
 
         return (4 * 2 + (this.getColumns() - 2) * 2 * 3 + (this.getRows() - 2) * 2 * 3 + ((this.getRows() - 2) * (2 - this.getColumns())) * 4);
     }
-    /*
+
     public boolean isEdgeSituatedProperly(Edge edge) {
-        for (int i = 0; i < this.getAdjacencyList().size(); i++) {
-            if ( ) 
-            }
+
+        //checking if it is a vertival connection
+        if (this.getColumns() == abs(edge.getFromVertex() - edge.getToVertex())) {
+            return true;
         }
-    }*/
+        //checking if it is a horizontal connection
+        if (abs(edge.getFromVertex() - edge.getToVertex()) == 1) {
+            return true;
+        }
+
+        return false;
+    }
 }
