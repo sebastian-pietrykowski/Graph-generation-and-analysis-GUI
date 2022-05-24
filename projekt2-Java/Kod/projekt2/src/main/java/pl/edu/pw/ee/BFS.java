@@ -24,17 +24,17 @@ public class BFS {
         boolean[] visited = new boolean[graph.getNumberOfVertices()];
 
         visited[this.getStartVertexNumber()] = true;
-     
+
         fifo.add(this.getStartVertexNumber());
-        // Object[] adjacencyArray = graph.getAdjacencyList().toArray();
+
         while (!fifo.isEmpty()) {
             int currentVertex = fifo.poll();
-            // System.out.println("curr= "+currentVertex);
+
             for (int i = 0; i < graph.getAdjacencyList().size(); i++) {
-                //  int neighbourVertex = graph.getAdjacencyList().get(i).getToVertex();
+
                 if (currentVertex == graph.getAdjacencyList().get(i).getFromVertex()) {
                     int neighbourVertex = graph.getAdjacencyList().get(i).getToVertex();
-                 //   System.out.println(graph.getAdjacencyList().get(i).getToVertex());
+
                     if (!visited[neighbourVertex]) {
                         visited[neighbourVertex] = true;
                         fifo.add(neighbourVertex);
@@ -42,15 +42,12 @@ public class BFS {
                 }
             }
         }
-      //  for(int i = 0 ; i < visited.length;i++)
-      //  System.out.println(visited[i]);
+
         for (int i = 0; i < visited.length; i++) {
             if (!visited[i]) {
-               // System.out.println("?");
+
                 return false;
             }
-           // System.out.println("?");
-            //return true;
 
         }
         return true;
