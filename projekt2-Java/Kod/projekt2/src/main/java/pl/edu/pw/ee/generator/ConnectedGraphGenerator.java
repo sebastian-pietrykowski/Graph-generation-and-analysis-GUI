@@ -1,9 +1,12 @@
 package pl.edu.pw.ee.generator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
@@ -47,7 +50,6 @@ public class ConnectedGraphGenerator extends Generator {
 
         visited.add( startVertexNumber );
         Set<Integer> neighborsArray = graph.potenialNeighbors( startVertexNumber );
-        System.out.println(neighborsArray);
         for( Integer neighbor: neighborsArray )
             frontier.add( neighbor );
 
@@ -65,7 +67,7 @@ public class ConnectedGraphGenerator extends Generator {
 
             graph.addEdge( new Edge(visitedVertex, frontierVertex, super.generateEdgeWeight()) );
             frontier.remove( frontierVertex );
-            visited.add( visitedVertex );
+            visited.add( frontierVertex );
 
             ArrayList<Integer> unvisitedNeighbors = unvisitedNeighbors( frontierVertex );
             for( Integer e: unvisitedNeighbors )
@@ -81,10 +83,11 @@ public class ConnectedGraphGenerator extends Generator {
      */
     private int visitedNeighbor( int frontierVertex ) {
         Set<Integer> potenialNeighbors = graph.potenialNeighbors(frontierVertex);
+        ArrayList<Integer> visitedNeighbors = potenialNeighbors.stream().filter(v -> visited.contains(v)).collect(Collectors.toCollection(ArrayList::new));
+
         Random random = new Random();
-        int neighborNumber = random.nextInt( potenialNeighbors.size() );
-        Integer[] potenialNeighborsArray = potenialNeighbors.toArray( new Integer[potenialNeighbors.size()] );
-        return potenialNeighborsArray[ neighborNumber ];
+        int neighborNumber = random.nextInt( visitedNeighbors.size() );
+        return visitedNeighbors.get(neighborNumber);
     }
 
     /**

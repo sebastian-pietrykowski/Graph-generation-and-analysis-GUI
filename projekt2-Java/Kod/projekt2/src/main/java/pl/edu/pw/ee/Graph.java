@@ -54,6 +54,16 @@ public class Graph {
         return null;
     }
 
+    public boolean containsEdge(int startVertexNumber, int endVertexNumber) {
+        for (int i = 0; i < this.getAdjacencyList().size(); i++) {
+            if (this.getAdjacencyList().get(i).getFromVertex() == startVertexNumber
+                    && this.getAdjacencyList().get(i).getToVertex() == endVertexNumber) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getNumberOfEdges() {
         return this.getAdjacencyList().size();
     }
@@ -68,7 +78,7 @@ public class Graph {
         try {
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-
+            System.out.println("ala");
             String line = bufferedReader.readLine();
 
             String[] dimensions = line.trim().split("\\s+");
@@ -104,6 +114,7 @@ public class Graph {
 
                 lineNumber++;
             }
+            bufferedReader.close();
             return graph;
         } catch (IOException e) {
             //  e.printStackTrace();
@@ -124,7 +135,7 @@ public class Graph {
         Set<Integer> potenialNeighborsSet = new HashSet<>();
         int neighbor;
         //neighbor to north
-        if ((neighbor = vertex - this.getColumns()) > 0) {
+        if ((neighbor = vertex - this.getColumns()) >= 0) {
             potenialNeighborsSet.add(neighbor);
         }
         //neighbor to south
@@ -133,7 +144,7 @@ public class Graph {
         }
         //neighbors to west and east
         //find number of row containing vertex
-        int rowNumber = vertex / this.getColumns();
+        int rowNumber = vertex / this.getColumns() + 1;
 
         //find first and last elements of row
         int startRowNumber = (rowNumber - 1) * this.getColumns();
@@ -150,6 +161,43 @@ public class Graph {
         }
 
         return potenialNeighborsSet;
+
+    }
+
+    public Set<Integer> getNeighbors(int vertex) {
+        Set<Integer> neighborsSet = new HashSet<>();
+        int neighbor;
+        //neighbor to north
+        if ((neighbor = vertex - this.getColumns()) >= 0) {
+            if(this.containsEdge(vertex, neighbor))
+                neighborsSet.add(neighbor);
+        }
+        //neighbor to south
+        if ((neighbor = vertex + this.getColumns()) < this.getNumberOfVertices()) {
+            if(this.containsEdge(vertex, neighbor))
+                neighborsSet.add(neighbor);
+        }
+        //neighbors to west and east
+        //find number of row containing vertex
+        int rowNumber = vertex / this.getColumns() + 1;
+
+        //find first and last elements of row
+        int startRowNumber = (rowNumber - 1) * this.getColumns();
+        int endRowNumber = ((rowNumber) * this.getColumns()) - 1;
+
+        //check if neighbor to east can exist
+        if (startRowNumber < vertex) {
+            if(this.containsEdge(vertex, vertex-1))
+                neighborsSet.add(vertex - 1);
+        }
+
+        //check if neighbor to west can exist
+        if (vertex < endRowNumber) {
+            if(this.containsEdge(vertex, vertex + 1))
+                neighborsSet.add(vertex + 1);
+        }
+
+        return neighborsSet;
 
     }
 

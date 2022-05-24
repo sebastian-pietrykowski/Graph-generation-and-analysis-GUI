@@ -2,6 +2,8 @@ package pl.edu.pw.ee;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+
 import pl.edu.pw.ee.generator.CompleteGraphGenerator;
 import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
@@ -9,7 +11,7 @@ import pl.edu.pw.ee.generator.RandomGraphGenerator;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         /*
         File file = new File("C:\\Users\\Paweł\\Downloads\\mygraph3.txt");
@@ -47,12 +49,20 @@ public class Main {
         //System.out.println(new BFS(gr, 0).checkConnectivty());
         */
 
-        Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
-        Graph graph6 = gen6.generate();
+        //Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
+        //Graph graph6 = gen6.generate();
         //System.out.println(graph6.getNumberOfEdges());
         //System.out.println(graph6.getMaxPossibleNumberOfEdges());
         //graph6.printEdges();
+        //Dijkstra dijkstra = new Dijkstra(graph6, 0);
+        
+        //System.out.println( dijkstra.determineShortestPath(0, 3));
+        //System.out.println(Arrays.toString(dijkstra.getPredecessors()));
 
+        //Graph graph7 = Graph.readGraph(new File("testGraphs/Dijkstra/graph0_5x5_connected.txt"));
+        //System.out.println(graph7.getColumns());
+        //System.out.println(graph7.getAdjacencyList().size());
+        //graph7.printEdges();
     }
 
 

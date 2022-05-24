@@ -259,9 +259,11 @@ public class ConnectedGraphGeneratorTest {
     public void generate_negativeStartVertexNumber() {
         assertThrows(IllegalArgumentException.class, () -> new ConnectedGraphGenerator(4, 5, 1, 10, -15 ) );
     }
-
+/*
     @Test(expected = IllegalArgumentException.class)
     public void generate_startVertexNumberEqualTo0() {
         new ConnectedGraphGenerator(4, 5, 1, 10, 0 );
     }
+    */
 }
+

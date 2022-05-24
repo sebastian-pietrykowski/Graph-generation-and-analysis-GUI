@@ -36,6 +36,9 @@ public class Dijkstra {
      * Initiates values according to Dijkstra's Algorithm.
      */
     private void initiateValues() {
+        predecessors = new int[graph.getNumberOfVertices()];
+        distances = new double[graph.getNumberOfVertices()];
+
         for( int vertex = 0; vertex < graph.getNumberOfVertices(); vertex++ ) {
             distances[vertex] = Double.POSITIVE_INFINITY;
             predecessors[vertex] = -1;
@@ -51,9 +54,10 @@ public class Dijkstra {
      * @param toVertex vertex where edge ends
      */
     private void relax( int fromVertex, int toVertex ) {
-
+        System.out.println("relax - f: " + fromVertex + ", t: " + toVertex);
         double potenitalNewDistance = distances[fromVertex] + graph.getEdge(fromVertex, toVertex).getWeight();
         if( distances[toVertex] > potenitalNewDistance ) {
+            System.out.println("relax wew - f: " + fromVertex + ", t: " + toVertex);
             distances[toVertex] = potenitalNewDistance;
             predecessors[toVertex] = fromVertex;
         }
@@ -79,7 +83,7 @@ public class Dijkstra {
         while( !uncheckedVerticesPQ.isEmpty() ) {
                 int fromVertex = uncheckedVerticesPQ.remove().getVertex();
                 checkedVerticesSet.add( fromVertex );
-                for( int toVertex: graph.potenialNeighbors(fromVertex) )
+                for( int toVertex: graph.getNeighbors(fromVertex) )
                     relax(fromVertex, toVertex);
         }
     }
