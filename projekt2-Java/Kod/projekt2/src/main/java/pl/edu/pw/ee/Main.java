@@ -49,16 +49,18 @@ public class Main {
         //System.out.println(new BFS(gr, 0).checkConnectivty());
         */
 
-        //Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
-        //Graph graph6 = gen6.generate();
-        //System.out.println(graph6.getNumberOfEdges());
-        //System.out.println(graph6.getMaxPossibleNumberOfEdges());
-        //graph6.printEdges();
-        //Dijkstra dijkstra = new Dijkstra(graph6, 0);
+        Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
+        Graph graph6 = gen6.generate();
+        System.out.println(graph6.getNumberOfEdges());
+        System.out.println(graph6.getMaxPossibleNumberOfEdges());
+        graph6.printEdges();
+        Dijkstra dijkstra = new Dijkstra(graph6, 0);
         
-        //System.out.println( dijkstra.determineShortestPath(0, 3));
-        //System.out.println(Arrays.toString(dijkstra.getPredecessors()));
+        System.out.println( dijkstra.determineShortestPath(0, 3));
+        System.out.println(Arrays.toString(dijkstra.getPredecessors()));
 
+        // PoC
+        /*
         Generator generator1 = new RandomGraphGenerator(4, 4, 0, 1);
         Graph graph1 = generator1.generate();
         graph1.printEdges();
@@ -89,7 +91,7 @@ public class Main {
         graph4.printEdges();
         //System.out.println(graph7.getColumns());
         //System.out.println(graph7.getAdjacencyList().size());
-        
+        */
     }
 
 

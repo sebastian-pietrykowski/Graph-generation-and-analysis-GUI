@@ -58,7 +58,7 @@ public class GraphPane extends GridPane {
         createColumnNumbersLabels();
         createRowNumbersLabels();
 
-        setGraph(new Graph(8,10));
+        setGraph(new Graph(3,4));
 
         
     }

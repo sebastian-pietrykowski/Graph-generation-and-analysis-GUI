@@ -59,6 +59,7 @@ public class Dijkstra {
         if( distances[toVertex] > potenitalNewDistance ) {
             System.out.println("relax wew - f: " + fromVertex + ", t: " + toVertex);
             distances[toVertex] = potenitalNewDistance;
+            setDistanceToVertexInUncheckedVerticesSet( toVertex, potenitalNewDistance );
             predecessors[toVertex] = fromVertex;
         }
     }
@@ -86,6 +87,14 @@ public class Dijkstra {
                 for( int toVertex: graph.getNeighbors(fromVertex) )
                     relax(fromVertex, toVertex);
         }
+    }
+
+    private void setDistanceToVertexInUncheckedVerticesSet( int vertexNumber, double newDistace ) {
+        for( VertexWithDistance v: uncheckedVerticesPQ )
+            if( v.getVertex() == vertexNumber ) {
+                v.setDistance(newDistace);
+                break;
+            }
     }
 
     /**
@@ -131,6 +140,7 @@ public class Dijkstra {
     
         public int getVertex() { return vertex; }
         public double getDistance() { return distance; }
+        public void setDistance( double distance) { this.distance = distance; }
 
         @Override
         public int compareTo(VertexWithDistance that) {
