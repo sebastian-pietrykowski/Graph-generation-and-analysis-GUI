@@ -48,17 +48,15 @@ public class Main {
         System.out.println(gr.getAdjacencyList().size());
         //System.out.println(new BFS(gr, 0).checkConnectivty());
         */
-
+/*
         Generator gen6 = new ConnectedGraphGenerator(1, 15, 7813.98, 9999.999, 0);
         Graph graph6 = gen6.generate();
-        System.out.println(graph6.getNumberOfEdges());
-        System.out.println(graph6.getMaxPossibleNumberOfEdges());
-        graph6.printEdges();
+        //graph6.printEdges();
         Dijkstra dijkstra = new Dijkstra(graph6, 0);
         
-        System.out.println( dijkstra.determineShortestPath(0, 3));
+        System.out.println( dijkstra.determineShortestPath(0, 14));
         System.out.println(Arrays.toString(dijkstra.getPredecessors()));
-
+*/
         // PoC
         /*
         Generator generator1 = new RandomGraphGenerator(4, 4, 0, 1);
@@ -92,8 +90,29 @@ public class Main {
         //System.out.println(graph7.getColumns());
         //System.out.println(graph7.getAdjacencyList().size());
         */
+
+
+        
+        Graph graph = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph2_4x7_connected.txt"));
+        Dijkstra dijkstra = new Dijkstra(graph);
+        dijkstra.dijkstra(0);
+
+        int[] actual = dijkstra.getPredecessors();
+        int[] expected = {
+                    -1, 0,  1,  7,
+                    0,  9,  2,  6,
+                    4,  8,  6,  7,
+                    13, 9,  10, 11,
+                    12, 16, 17, 18,
+                    21, 22, 23, 19,
+                    20, 24, 25, 26
+                    };
+        System.out.println(Arrays.toString(actual));
+        
+        /*
+        Graph graph5 = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph1_5x5_connected_with_cycle.txt"));
+        Dijkstra dijkstra5 = new Dijkstra(graph5, 0);
+        dijkstra5.dijkstra();
+        */
     }
-
-
-
 }
