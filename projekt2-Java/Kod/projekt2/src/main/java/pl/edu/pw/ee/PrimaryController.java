@@ -58,7 +58,7 @@ public class PrimaryController {
         if (file != null) {
             try {
 
-                Graph.readGraph(file);
+                this.graph = Graph.readGraph(file);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

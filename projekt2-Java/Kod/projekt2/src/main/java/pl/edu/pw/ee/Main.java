@@ -59,10 +59,37 @@ public class Main {
         //System.out.println( dijkstra.determineShortestPath(0, 3));
         //System.out.println(Arrays.toString(dijkstra.getPredecessors()));
 
-        //Graph graph7 = Graph.readGraph(new File("testGraphs/Dijkstra/graph0_5x5_connected.txt"));
+        Generator generator1 = new RandomGraphGenerator(4, 4, 0, 1);
+        Graph graph1 = generator1.generate();
+        graph1.printEdges();
+        BFS bfs1 = new BFS(graph1, 0);
+        System.out.println(bfs1.checkConnectivty());
+
+
+        System.out.println("----------------------------------------");
+
+        Generator generator2 = new CompleteGraphGenerator(4, 3, 0, 1);
+        Graph graph2 = generator2.generate();
+        graph2.printEdges();
+        BFS bfs2 = new BFS(graph2, 0);
+        System.out.println(bfs2.checkConnectivty());
+
+        System.out.println("----------------------------------------");
+
+        Generator generator3 = new ConnectedGraphGenerator(5, 5, 0, 1, 0);
+        Graph graph3 = generator3.generate();
+        graph3.printEdges();
+        BFS bfs3 = new BFS(graph3, 0);
+        System.out.println(bfs3.checkConnectivty());
+
+        System.out.println("----------------------------------------");
+
+
+        Graph graph4 = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph0_5x5_connected.txt"));
+        graph4.printEdges();
         //System.out.println(graph7.getColumns());
         //System.out.println(graph7.getAdjacencyList().size());
-        //graph7.printEdges();
+        
     }
 
 

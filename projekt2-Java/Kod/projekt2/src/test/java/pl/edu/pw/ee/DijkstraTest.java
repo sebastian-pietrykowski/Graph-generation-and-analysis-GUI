@@ -23,22 +23,22 @@ public class DijkstraTest {
         dijkstra = new Dijkstra[4];
 
         // 5x5 connected
-        graphs[0] = Graph.readGraph(new File("testGraphs/Dijkstra/graph0_5x5_connected.txt"));
+        graphs[0] = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph0_5x5_connected.txt"));
         dijkstra[0] = new Dijkstra(graphs[0], startVertexNumber);
         dijkstra[0].dijkstra();
 
         // 5x5 connected with cycle
-        graphs[1] = Graph.readGraph(new File("testGraphs/Dijkstra/graph1_5x5_connected_with_cycle.txt"));
+        graphs[1] = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph1_5x5_connected_with_cycle.txt"));
         dijkstra[1] = new Dijkstra(graphs[1], startVertexNumber);
         dijkstra[1].dijkstra();
 
          // 4x7 connected
-        graphs[2] = Graph.readGraph(new File("testGraphs/Dijkstra/graph2_4x7_connected.txt"));
+        graphs[2] = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph2_4x7_connected.txt"));
         dijkstra[2] = new Dijkstra(graphs[2], startVertexNumber);
         dijkstra[2].dijkstra();
 
         // 3x5 unconnected
-        graphs[3] = Graph.readGraph(new File("testGraphs/Dijkstra/graph3_3x5_unconnected.txt"));
+        graphs[3] = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph3_3x5_unconnected.txt"));
         dijkstra[3] = new Dijkstra(graphs[3], startVertexNumber);
         dijkstra[3].dijkstra();
     }

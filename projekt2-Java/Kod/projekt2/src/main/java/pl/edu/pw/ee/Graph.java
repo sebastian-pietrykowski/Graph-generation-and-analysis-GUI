@@ -78,7 +78,6 @@ public class Graph {
         try {
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            System.out.println("ala");
             String line = bufferedReader.readLine();
 
             String[] dimensions = line.trim().split("\\s+");
