@@ -24,10 +24,8 @@ public class Dijkstra {
     PriorityQueue<VertexWithDistance> uncheckedVerticesPQ = new PriorityQueue<>();
     boolean didPerformAlgorithm = false;
 
-    public Dijkstra( Graph graph, int startVertexNumber ) {
+    public Dijkstra( Graph graph ) {
         this.graph = graph;
-        this.startVertexNumber = startVertexNumber;
-
     }
     
     public int[] getPredecessors() { return predecessors; }
@@ -54,10 +52,8 @@ public class Dijkstra {
      * @param toVertex vertex where edge ends
      */
     private void relax( int fromVertex, int toVertex ) {
-        System.out.println("relax - f: " + fromVertex + ", t: " + toVertex);
         double potenitalNewDistance = distances[fromVertex] + graph.getEdge(fromVertex, toVertex).getWeight();
         if( distances[toVertex] > potenitalNewDistance ) {
-            System.out.println("relax wew - f: " + fromVertex + ", t: " + toVertex);
             distances[toVertex] = potenitalNewDistance;
             setDistanceToVertexInUncheckedVerticesSet( toVertex, potenitalNewDistance );
             predecessors[toVertex] = fromVertex;
@@ -76,8 +72,8 @@ public class Dijkstra {
      * of vertex so that it is combined distance of the shortest path from startVertexNumber
      * to this vertex (being index).
      */
-    public void dijkstra() {
-
+    public void dijkstra( int startVertexNumber ) {
+        this.startVertexNumber = startVertexNumber;
         initiateValues();
         for( int vertex = 0; vertex < graph.getNumberOfVertices(); vertex++ )
             uncheckedVerticesPQ.add( new VertexWithDistance(vertex, distances[vertex]) );
@@ -89,10 +85,18 @@ public class Dijkstra {
         }
     }
 
-    private void setDistanceToVertexInUncheckedVerticesSet( int vertexNumber, double newDistace ) {
+    /**
+     * Changes distance of element with number <code>vertexNumber</code> in
+     * <code>uncheckedVerticesSet</code> to <code>newDistance</code>.
+     * @param vertexNumber number of vertex to change in <code>uncheckedVerticesSet</code>
+     * @param newDistance distance to be set
+     */
+    private void setDistanceToVertexInUncheckedVerticesSet( int vertexNumber, double newDistance ) {
         for( VertexWithDistance v: uncheckedVerticesPQ )
             if( v.getVertex() == vertexNumber ) {
-                v.setDistance(newDistace);
+                uncheckedVerticesPQ.remove(v);
+                v.setDistance(newDistance);
+                uncheckedVerticesPQ.add(v);
                 break;
             }
     }
@@ -109,8 +113,13 @@ public class Dijkstra {
     public LinkedList<Integer> determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
         LinkedList<Integer> path = new LinkedList<>();
 
-        if (!didPerformAlgorithm)
-            dijkstra();
+        if( startVertexNumber == endVertexNumber) {
+            path.add(startVertexNumber);
+            return path;
+        }
+
+        this.startVertexNumber = startVertexNumber;
+        dijkstra( startVertexNumber );
 
         int element = endVertexNumber;
         path.add(endVertexNumber);
@@ -149,31 +158,7 @@ public class Dijkstra {
     
         @Override
         public String toString() {
-            return "v: " + vertex + ", d: " + distance;
-        }
-    
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            long temp;
-            temp = Double.doubleToLongBits(distance);
-            result = prime * result + (int) (temp ^ (temp >>> 32));
-            return result;
-        }
-    
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            VertexWithDistance other = (VertexWithDistance) obj;
-            if (Double.doubleToLongBits(distance) != Double.doubleToLongBits(other.distance))
-                return false;
-            return true;
+            return "vertex: " + vertex + ", distance: " + distance;
         }
     }
 }
