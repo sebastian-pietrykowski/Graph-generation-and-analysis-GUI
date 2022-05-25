@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.PrimaryController">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="640.0">
+      <MenuBar prefHeight="26.0" prefWidth="720.0">
         <menus>
           <Menu mnemonicParsing="false" text="Graf">
             <items>
