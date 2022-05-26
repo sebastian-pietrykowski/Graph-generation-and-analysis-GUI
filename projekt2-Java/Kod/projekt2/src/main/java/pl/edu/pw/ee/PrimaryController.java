@@ -206,7 +206,7 @@ public class PrimaryController {
             alert.showAndWait();
 
         }
-
+        columnsTextField.setText("");
         switch (this.generatingMode) {
             case 1: {
                 Generator g1 = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
