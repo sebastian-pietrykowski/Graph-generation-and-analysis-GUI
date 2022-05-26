@@ -211,6 +211,8 @@ public class PrimaryController {
 
             }
 
+
+            columnsTextField.setText("");
             switch (this.generatingMode) {
                 case 1: {
                     Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
@@ -227,6 +229,7 @@ public class PrimaryController {
                     this.graph = generator.generate();
                     break;
                 }
+
             }
             graphPane.setGraph(graph);
         }

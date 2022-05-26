@@ -23,6 +23,7 @@ public class App extends Application {
         controller.initializeGraphPane();
 
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
