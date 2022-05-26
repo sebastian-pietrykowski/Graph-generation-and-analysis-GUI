@@ -79,45 +79,44 @@ public class Graph {
 
         try {
 
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String line = bufferedReader.readLine();
+            Graph graph;
+            try ( BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+                String line = bufferedReader.readLine();
+                String[] dimensions = line.trim().split("\\s+");
+                graph = new Graph(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
+                while ((line = bufferedReader.readLine()) != null) {
+                    temp = 1;
 
-            String[] dimensions = line.trim().split("\\s+");
+                    String[] tokens = line.split(":| ");
 
-            Graph graph = new Graph(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
+                    for (String token : tokens) {
+                        if (token.trim().length() > 0) {
 
-            while ((line = bufferedReader.readLine()) != null) {
-                temp = 1;
-
-                String[] tokens = line.split(":| ");
-
-                for (String token : tokens) {
-                    if (token.trim().length() > 0) {
-
-                        temp++;
-                        if (temp % 2 == 0) {
-                            try {
-                                toVertex = Integer.parseInt(token);
-                            } catch (NumberFormatException e) {
-
+                            temp++;
+                            if (temp % 2 == 0) {
+                                try {
+                                    toVertex = Integer.parseInt(token);
+                                } catch (NumberFormatException e) {
+                                    throw new NumberFormatException();
+                                }
+                                if (toVertex < 0) {
+                                    throw new IllegalVertexException(lineNumber + 2);
+                                }
+                            } else {
+                                weight = Double.parseDouble(token);
+                                if (weight < 0) {
+                                    throw new IllegalWeightException(lineNumber + 2);
+                                }
+                                Edge edge = new Edge(lineNumber, toVertex, weight);
+                                graph.addEdge(edge);
                             }
-                            if(toVertex < 0)
-                            throw new IllegalVertexException(lineNumber + 2);
-                        } else {
-                            weight = Double.parseDouble(token);
-                            if(weight < 0){
-                                throw new IllegalWeightException(lineNumber +2);
-                            }
-                            Edge edge = new Edge(lineNumber, toVertex, weight);
-                            graph.addEdge(edge);
+
                         }
-
                     }
-                }
 
-                lineNumber++;
+                    lineNumber++;
+                }
             }
-            bufferedReader.close();
             return graph;
         } catch (IOException e) {
             //  e.printStackTrace();
