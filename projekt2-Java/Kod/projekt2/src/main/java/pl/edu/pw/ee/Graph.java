@@ -1,5 +1,7 @@
 package pl.edu.pw.ee;
 
+import MyExceptions.IllegalVertexException;
+import MyExceptions.IllegalWeightException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -68,7 +70,7 @@ public class Graph {
         return this.getAdjacencyList().size();
     }
 
-    public static Graph readGraph(File file) throws IOException {
+    public static Graph readGraph(File file) throws IOException, IllegalVertexException, IllegalWeightException {
 
         int toVertex = 0;
         double weight;
@@ -99,11 +101,13 @@ public class Graph {
                             } catch (NumberFormatException e) {
 
                             }
-                            if (toVertex < 0) {
-                                //TODO
-                            }
+                            if(toVertex < 0)
+                            throw new IllegalVertexException(lineNumber + 2);
                         } else {
                             weight = Double.parseDouble(token);
+                            if(weight < 0){
+                                throw new IllegalWeightException(lineNumber +2);
+                            }
                             Edge edge = new Edge(lineNumber, toVertex, weight);
                             graph.addEdge(edge);
                         }
@@ -168,13 +172,15 @@ public class Graph {
         int neighbor;
         //neighbor to north
         if ((neighbor = vertex - this.getColumns()) >= 0) {
-            if(this.containsEdge(vertex, neighbor))
+            if (this.containsEdge(vertex, neighbor)) {
                 neighborsSet.add(neighbor);
+            }
         }
         //neighbor to south
         if ((neighbor = vertex + this.getColumns()) < this.getNumberOfVertices()) {
-            if(this.containsEdge(vertex, neighbor))
+            if (this.containsEdge(vertex, neighbor)) {
                 neighborsSet.add(neighbor);
+            }
         }
         //neighbors to west and east
         //find number of row containing vertex
@@ -186,14 +192,16 @@ public class Graph {
 
         //check if neighbor to east can exist
         if (startRowNumber < vertex) {
-            if(this.containsEdge(vertex, vertex-1))
+            if (this.containsEdge(vertex, vertex - 1)) {
                 neighborsSet.add(vertex - 1);
+            }
         }
 
         //check if neighbor to west can exist
         if (vertex < endRowNumber) {
-            if(this.containsEdge(vertex, vertex + 1))
+            if (this.containsEdge(vertex, vertex + 1)) {
                 neighborsSet.add(vertex + 1);
+            }
         }
 
         return neighborsSet;
@@ -233,7 +241,7 @@ public class Graph {
     }
 
     public void printEdges() {
-        for( Edge e: adjacencyList) {
+        for (Edge e : adjacencyList) {
             System.out.println("from: " + e.getFromVertex() + ", to: " + e.getToVertex() + ", weight: " + e.getWeight());
         }
     }
