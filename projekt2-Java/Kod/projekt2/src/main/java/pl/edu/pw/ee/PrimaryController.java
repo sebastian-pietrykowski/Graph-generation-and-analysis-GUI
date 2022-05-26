@@ -121,8 +121,8 @@ public class PrimaryController {
     @FXML
     private void loadGraph(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
-      //  File initialDirectory = new File(System.getProperty("user.dir") + "\\projekt2-Java\\Kod\\projekt2\\src\\graphs");
-      //  fileChooser.setInitialDirectory(initialDirectory);
+        //  File initialDirectory = new File(System.getProperty("user.dir") + "\\projekt2-Java\\Kod\\projekt2\\src\\graphs");
+        //  fileChooser.setInitialDirectory(initialDirectory);
 
         fileChooser.setTitle("Zaznacz jeden plik txt do otwarcia");
 
@@ -138,19 +138,24 @@ public class PrimaryController {
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Nie można wczytać grafu");
                 alert.showAndWait();
-            } catch(IllegalVertexException e){
-                MessageLabel.setText("Błąd, ujemny numer wierzchołka w linii nr: "+ e.getLineNumber());
-                                Alert alert = new Alert(AlertType.ERROR);
+            } catch (IllegalVertexException e) {
+                MessageLabel.setText("Błąd, ujemny numer wierzchołka w linii nr: " + e.getLineNumber());
+                Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, ujemny numer wierzchołka");
                 alert.showAndWait();
-            }catch(IllegalWeightException e){
+            } catch (IllegalWeightException e) {
                 MessageLabel.setText("Błąd, ujemna waga krawędzi w linii nr: " + e.getLineNumber());
-                                                Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, ujemny waga krawędzi");
                 alert.showAndWait();
-                
+            } catch (NumberFormatException e) {
+                MessageLabel.setText("Błąd, niepoprawny plik");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Błąd,niepoprawny plik");
+                alert.showAndWait();
             }
         }
     }
@@ -232,7 +237,6 @@ public class PrimaryController {
 
             }
 
-            columnsTextField.setText("");
             switch (this.generatingMode) {
                 case 1: {
                     Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
@@ -295,30 +299,31 @@ public class PrimaryController {
             System.out.println("Can't load a new window");
         }
     }
+
     @FXML
-    private void cleanPathParametrs(ActionEvent event){
+    private void cleanPathParametrs(ActionEvent event) {
         startTextField.setText("");
         endTextField.setText("");
         extendedResultCheckBox.setSelected(false);
-      
+
     }
-            
-            @FXML
-    private void cleanGraphParameters(ActionEvent event){
+
+    @FXML
+    private void cleanGraphParameters(ActionEvent event) {
         columnsTextField.setText("");
         rowsTextField.setText("");
         minWeightTextField.setText("");
         maxWeightTextField.setText("");
     }
-            @FXML
-    private void cleanEverything(ActionEvent event){
-                cleanGraphParameters(event);
-                cleanPathParametrs(event);
-                mode1AllVertices.setSelected(false);
-                mode2Connective.setSelected(false);
-                mode3Random.setSelected(false);
-                
+
+    @FXML
+    private void cleanEverything(ActionEvent event) {
+        cleanGraphParameters(event);
+        cleanPathParametrs(event);
+        mode1AllVertices.setSelected(false);
+        mode2Connective.setSelected(false);
+        mode3Random.setSelected(false);
+
     }
-    
 
 }
