@@ -17,7 +17,7 @@ public class DijkstraTest {
     
     @BeforeClass
     public static void initiateGraphs() throws IOException {
-        folderAbsolutePath = new File("src\\test graphs\\Dijkstra").getAbsolutePath();
+        folderAbsolutePath = new File("src\\graphs\\test graphs\\Dijkstra").getAbsolutePath();
 
         graphsPaths = new String[4];
 

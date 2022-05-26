@@ -30,6 +30,7 @@ import pl.edu.pw.ee.generator.CompleteGraphGenerator;
 import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
 import pl.edu.pw.ee.generator.RandomGraphGenerator;
+import pl.edu.pw.ee.graphGraphics.GraphPane;
 
 public class PrimaryController {
 
@@ -111,6 +112,8 @@ public class PrimaryController {
     @FXML
     private void loadGraph(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
+        File initialDirectory = new File(System.getProperty("user.dir") + "\\projekt2-Java\\Kod\\projekt2\\src\\graphs" );
+        fileChooser.setInitialDirectory(initialDirectory);
 
         fileChooser.setTitle("Zaznacz jeden plik txt do otwarcia");
 
@@ -119,6 +122,7 @@ public class PrimaryController {
         if (file != null) {
             try {
                 this.graph = Graph.readGraph(file);
+                this.graphPane.setGraph(this.graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -192,37 +196,39 @@ public class PrimaryController {
             alert.setHeaderText("Nie wybrano trybu generowania grafu");
             alert.showAndWait();
         }
+        else {
+            try {
+                this.columns = Integer.parseInt(columnsTextField.getText());
+                this.rows = Integer.parseInt(rowsTextField.getText());
+                this.fromWeight = Double.parseDouble(minWeightTextField.getText());
+                this.toWeight = Double.parseDouble(maxWeightTextField.getText());
+            } catch (NumberFormatException e) {
+                MessageLabel.setText("Podano zle parametry grafu");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Podano złe parametry grafu");
+                alert.showAndWait();
 
-        try {
-            this.columns = Integer.parseInt(columnsTextField.getText());
-            this.rows = Integer.parseInt(rowsTextField.getText());
-            this.fromWeight = Double.parseDouble(minWeightTextField.getText());
-            this.toWeight = Double.parseDouble(maxWeightTextField.getText());
-        } catch (NumberFormatException e) {
-            MessageLabel.setText("Podano zle parametry grafu");
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Błąd");
-            alert.setHeaderText("Podano złe parametry grafu");
-            alert.showAndWait();
+            }
 
-        }
-
-        switch (this.generatingMode) {
-            case 1: {
-                Generator g1 = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
-                Graph graph1 = g1.generate();
-                break;
+            switch (this.generatingMode) {
+                case 1: {
+                    Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
+                    this.graph = generator.generate();
+                    break;
+                }
+                case 2: {
+                    Generator generator = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
+                    this.graph = generator.generate();
+                    break;
+                }
+                default: {
+                    Generator generator = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
+                    this.graph = generator.generate();
+                    break;
+                }
             }
-            case 2: {
-                Generator g2 = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
-                Graph graph2 = g2.generate();
-                break;
-            }
-            default: {
-                Generator g3 = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
-                Graph graph3 = g3.generate();
-                break;
-            }
+            graphPane.setGraph(graph);
         }
     }
 
