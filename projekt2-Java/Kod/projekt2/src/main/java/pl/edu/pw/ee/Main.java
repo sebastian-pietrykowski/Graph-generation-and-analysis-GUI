@@ -91,7 +91,7 @@ public class Main {
         //System.out.println(graph7.getAdjacencyList().size());
         */
 
-
+/*
         
         Graph graph = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph2_4x7_connected.txt"));
         Dijkstra dijkstra = new Dijkstra(graph);
@@ -108,7 +108,7 @@ public class Main {
                     20, 24, 25, 26
                     };
         System.out.println(Arrays.toString(actual));
-        
+        */
         /*
         Graph graph5 = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph1_5x5_connected_with_cycle.txt"));
         Dijkstra dijkstra5 = new Dijkstra(graph5, 0);
