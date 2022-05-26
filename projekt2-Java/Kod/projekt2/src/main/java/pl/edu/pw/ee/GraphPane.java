@@ -1,10 +1,13 @@
 package pl.edu.pw.ee;
 
+import java.util.ArrayList;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -179,7 +182,14 @@ public class GraphPane extends GridPane {
         addVerticesCircles();
         
         //getEdgeCell(3,7).getChildren().add(new Label("a"));            
-        splitEdgesCells();
+        //splitEdgesCells();
+        ArrayList<ArrowPane> splitEdgesCellsHorizontally = splitEdgesCellsHorizontally(0,1);
+        splitEdgesCellsHorizontally.get(0).getChildren().add(new Circle(4));
+
+        ArrayList<ArrowPane> splitEdgesCellsVertically = splitEdgesCellsVertically(1,2);
+        splitEdgesCellsVertically.get(0).getChildren().add(new Circle(2));
+        splitEdgesCellsVertically.get(1).getChildren().add(new Circle(2));
+        //splitEdgesCellsHorizontally.get(1).getChildren().add(new Circle(4));
         
         //GridPane g = (GridPane) getEdgeCell(3,7).getChildren().get(0);
         //g.add(new Label("a"), 0, 0);
@@ -210,9 +220,68 @@ public class GraphPane extends GridPane {
             getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i));
     }
 
+    private ArrayList<ArrowPane> splitEdgesCellsHorizontally( int vertexFrom, int vertexTo ) {
+        
+        GridPane horizontalEdgesPane = new GridPane();
+
+        RowConstraints rc = new RowConstraints();
+        rc.setMinHeight((cellDimension-1)/2);
+        rc.setMaxHeight((cellDimension-1)/2);
+        for (int i = 0; i < 2; i++) {
+            horizontalEdgesPane.getRowConstraints().add(rc);
+        }
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setMinWidth((cellDimension-1));
+        cc.setMaxWidth((cellDimension-1));
+        horizontalEdgesPane.getColumnConstraints().add(cc);
+
+        ArrowPane upperPane = new ArrowPane();
+        ArrowPane lowerPane = new ArrowPane();
+        
+        getEdgeCell(vertexFrom, vertexTo).getChildren().add(horizontalEdgesPane);
+        horizontalEdgesPane.add(upperPane, 0, 0);
+        horizontalEdgesPane.add(lowerPane, 0, 1);
+
+        ArrayList<ArrowPane> splitCellsArray = new ArrayList<>();
+        splitCellsArray.add(upperPane);
+        splitCellsArray.add(lowerPane);
+
+        return splitCellsArray;
+    }
+
+    private ArrayList<ArrowPane> splitEdgesCellsVertically( int vertexFrom, int vertexTo ) {
+        
+        GridPane verticalEdgesPane = new GridPane();
+
+        RowConstraints rc = new RowConstraints();
+        rc.setMinHeight((cellDimension-1));
+        rc.setMaxHeight((cellDimension-1));
+        verticalEdgesPane.getRowConstraints().add(rc);
+        
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setMinWidth((cellDimension-1)/2);
+        cc.setMaxWidth((cellDimension-1)/2);
+        for (int i = 0; i < 2; i++) {
+            verticalEdgesPane.getColumnConstraints().add(cc);
+        }
+
+        ArrowPane leftPane = new ArrowPane();
+        ArrowPane rightPane = new ArrowPane();
+        
+        getEdgeCell(vertexFrom, vertexTo).getChildren().add(verticalEdgesPane);
+        verticalEdgesPane.add(leftPane, 0, 0);
+        verticalEdgesPane.add(rightPane, 1, 0);
+
+        ArrayList<ArrowPane> splitCellsArray = new ArrayList<>();
+        splitCellsArray.add(leftPane);
+        splitCellsArray.add(rightPane);
+
+        return splitCellsArray;
+    }
+    /*
     private void splitEdgesCells() {
-
-
         // add horizontal edges' pane
         for( int verticalCounter = 0; verticalCounter < graph.getRows(); verticalCounter++)
             for( int horizontalCounter = 1; horizontalCounter < graph.getColumns(); horizontalCounter++ ) {
@@ -270,4 +339,5 @@ public class GraphPane extends GridPane {
 
         return verticalEdgesPane;
     }
+    */
 }
