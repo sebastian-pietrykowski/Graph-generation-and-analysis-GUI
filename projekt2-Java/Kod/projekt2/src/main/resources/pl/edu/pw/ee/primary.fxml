@@ -37,7 +37,7 @@
         </menus>
       </MenuBar>
       <Pane fx:id="graphPaneParent" layoutX="14.0" layoutY="38.0" prefHeight="384.0" prefWidth="384.0" />
-      <Pane layoutX="440.0" layoutY="137.0" prefHeight="131.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
+      <Pane layoutX="440.0" layoutY="131.0" prefHeight="131.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
          <children>
             <RadioButton fx:id="mode1AllVertices" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#operatingMode" prefHeight="20.0" prefWidth="93.0" text="Tryb 1">
                <font>
