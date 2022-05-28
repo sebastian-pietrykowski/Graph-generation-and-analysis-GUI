@@ -27,6 +27,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.generator.CompleteGraphGenerator;
 import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
@@ -83,6 +84,9 @@ public class PrimaryController {
     private Button btnDefaultFill;
 
     @FXML
+    private Button btnSaveGraph;
+
+    @FXML
     private Label MessageLabel;
 
     @FXML
@@ -99,8 +103,10 @@ public class PrimaryController {
 
     @FXML
     private Button btncleanPathParameters;
+
     @FXML
     private Button btncleanGraphParameters;
+
     @FXML
     private Button btnCleanEverything;
 
@@ -158,23 +164,28 @@ public class PrimaryController {
                 alert.showAndWait();
             }
         }
+        
     }
 
     @FXML
     private void writeGraph(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
 
-        fileChooser.setTitle("\\todo");
+        fileChooser.setTitle("Zapisz plik");
 
         File file = fileChooser.showSaveDialog(null);
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
         if (file != null) {
             try {
-
+                graph.writeGraph(file);
             } catch (Exception e) {
-
+                MessageLabel.setText("Błąd, niepoprawny plik");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Błąd, nie można zapisać grafu do pliku");
+                alert.showAndWait();
             }
         }
-
     }
 
     @FXML
