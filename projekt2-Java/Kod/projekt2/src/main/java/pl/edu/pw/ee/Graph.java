@@ -3,9 +3,11 @@ package pl.edu.pw.ee;
 import MyExceptions.IllegalVertexException;
 import MyExceptions.IllegalWeightException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
+import java.io.FileWriter;
 import static java.lang.Math.abs;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -126,7 +128,30 @@ public class Graph {
     }
 
     public void writeGraph(File file) {
+        try ( FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(String.valueOf(this.getColumns()));
+            fileWriter.write(" ");
+            fileWriter.write(String.valueOf(this.getRows()));
+            fileWriter.write("\n\t");
 
+            for (int i = 0; i < this.getNumberOfVertices(); i++) {
+                for (Edge edge : this.adjacencyList) {
+                    if (edge.getFromVertex() == i) {
+                        fileWriter.write(String.valueOf(edge.getToVertex()));
+                        fileWriter.write(":");
+                        fileWriter.write(String.valueOf(edge.getWeight()));
+                        fileWriter.write(" ");
+
+                    }
+
+                }
+              
+                fileWriter.write("\n\t");
+                
+            }
+        } catch (IOException | IndexOutOfBoundsException e) {
+
+        }
     }
 
     public LinkedList<Edge> getAdjacencyList() {
