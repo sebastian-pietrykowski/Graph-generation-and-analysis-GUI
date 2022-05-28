@@ -21,10 +21,12 @@ public class App extends Application {
 
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane();
+        controller.initializeLabelText();
 
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        stage.setTitle("Program projektu 2");
     }
 
     public static void main(String[] args) {
