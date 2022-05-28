@@ -13,8 +13,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        
+        File file = new File("C:\\Users\\Paweł\\Downloads\\write.txt");
         /*
-        File file = new File("C:\\Users\\Paweł\\Downloads\\mygraph3.txt");
         try {
             Graph.readGraph(file);
             BFS bfs = new BFS(Graph.readGraph(file), 0);
@@ -58,10 +59,11 @@ public class Main {
         System.out.println(Arrays.toString(dijkstra.getPredecessors()));
 */
         // PoC
-        /*
-        Generator generator1 = new RandomGraphGenerator(4, 4, 0, 1);
+        
+        Generator generator1 = new CompleteGraphGenerator(4, 7, 0, 1);
         Graph graph1 = generator1.generate();
-        graph1.printEdges();
+        graph1.writeGraph(file);
+       /* graph1.printEdges();
         BFS bfs1 = new BFS(graph1, 0);
         System.out.println(bfs1.checkConnectivty());
 
