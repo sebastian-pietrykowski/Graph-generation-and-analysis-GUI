@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -87,7 +88,7 @@ public class PrimaryController {
     private Button btnSaveGraph;
 
     @FXML
-    private Label MessageLabel;
+    public Label MessageLabel;
 
     @FXML
     private TextField endTextField;
@@ -109,7 +110,8 @@ public class PrimaryController {
 
     @FXML
     private Button btnCleanEverything;
-
+    
+  
     public void initializeGraphPane() {
         int parentWidth = (int) graphPaneParent.getPrefWidth();
         int parentHeight = (int) graphPaneParent.getPrefHeight();
@@ -123,7 +125,10 @@ public class PrimaryController {
 
         this.graphPaneParent.getChildren().add(scrollPane);
     }
-
+    public void initializeLabelText(){
+        MessageLabel.setFont(new Font("System",14));
+         MessageLabel.setWrapText(true);
+    }
     @FXML
     private void loadGraph(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -140,31 +145,35 @@ public class PrimaryController {
                 this.graphPane.setGraph(this.graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
+  
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Nie można wczytać grafu");
                 alert.showAndWait();
             } catch (IllegalVertexException e) {
                 MessageLabel.setText("Błąd, ujemny numer wierzchołka w linii nr: " + e.getLineNumber());
+  
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, ujemny numer wierzchołka");
                 alert.showAndWait();
             } catch (IllegalWeightException e) {
                 MessageLabel.setText("Błąd, ujemna waga krawędzi w linii nr: " + e.getLineNumber());
+
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, ujemny waga krawędzi");
                 alert.showAndWait();
             } catch (NumberFormatException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
+
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
-                alert.setHeaderText("Błąd,niepoprawny plik");
+                alert.setHeaderText("Błąd, niepoprawny plik");
                 alert.showAndWait();
             }
         }
-        
+
     }
 
     @FXML
@@ -186,6 +195,7 @@ public class PrimaryController {
                 alert.showAndWait();
             }
         }
+        graphPane.setGraph(graph);
     }
 
     @FXML
@@ -203,8 +213,8 @@ public class PrimaryController {
                 alert.showAndWait();
             }
         } catch (NullPointerException e) {
-            MessageLabel.setText("Błąd, nie można sprawdzić spójności grafu,"
-                    + "\n" + " upewnij się, że wybrany plik jest poprawny.");
+            MessageLabel.setText("Błąd, nie można sprawdzić spójności grafu, upewnij się, że wybrany plik jest poprawny.");
+
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Błąd");
             alert.setHeaderText("Nie można sprawdzić spójności grafu");
@@ -228,10 +238,11 @@ public class PrimaryController {
     @FXML
     private void generateGraph(ActionEvent event) {
         if (generatingMode == -1) {
-            MessageLabel.setText("Błąd, nie wybrano trybu generowania grafu");
+            MessageLabel.setText("Błąd, nie wybrano trybu generowania grafu!");
+            MessageLabel.setWrapText(true);
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Błąd");
-            alert.setHeaderText("Nie wybrano trybu generowania grafu");
+            alert.setHeaderText("Nie wybrano trybu generowania grafu!");
             alert.showAndWait();
         } else {
             try {
@@ -239,34 +250,39 @@ public class PrimaryController {
                 this.rows = Integer.parseInt(rowsTextField.getText());
                 this.fromWeight = Double.parseDouble(minWeightTextField.getText());
                 this.toWeight = Double.parseDouble(maxWeightTextField.getText());
+                switch (this.generatingMode) {
+                    case 1: {
+                        Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
+                        this.graph = generator.generate();
+                        MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 1"));
+                       
+                        break;
+                    }
+                    case 2: {
+                        Generator generator = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
+                        this.graph = generator.generate();
+                        MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 2"));
+                        
+                        break;
+                    }
+                    default: {
+                        Generator generator = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
+                        this.graph = generator.generate();
+                        break;
+                    }
+
+                }
+                graphPane.setGraph(graph);
             } catch (NumberFormatException e) {
-                MessageLabel.setText("Podano zle parametry grafu");
+                MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu!");
+
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
-                alert.setHeaderText("Podano złe parametry grafu");
+                alert.setHeaderText("Nie podano parametrów dotyczących grafu!");
                 alert.showAndWait();
 
             }
 
-            switch (this.generatingMode) {
-                case 1: {
-                    Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
-                    this.graph = generator.generate();
-                    break;
-                }
-                case 2: {
-                    Generator generator = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
-                    this.graph = generator.generate();
-                    break;
-                }
-                default: {
-                    Generator generator = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
-                    this.graph = generator.generate();
-                    break;
-                }
-
-            }
-            graphPane.setGraph(graph);
         }
     }
 
@@ -290,7 +306,7 @@ public class PrimaryController {
         this.start = Integer.parseInt(startTextField.getText());
         this.end = Integer.parseInt(endTextField.getText());
         if (extendedResultCheckBox.isSelected()) {
-
+            
         } else {
 
         }
@@ -334,6 +350,7 @@ public class PrimaryController {
         mode1AllVertices.setSelected(false);
         mode2Connective.setSelected(false);
         mode3Random.setSelected(false);
+        
 
     }
 
