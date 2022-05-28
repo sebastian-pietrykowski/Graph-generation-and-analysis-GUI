@@ -20,8 +20,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Graf">
             <items>
-              <MenuItem fx:id="MenuItemLoadGraph" mnemonicParsing="false" text="Wczytaj graf" />
-                  <MenuItem mnemonicParsing="false" text="Zapisz graf do pliku" />
+              <MenuItem fx:id="MenuItemLoadGraph" mnemonicParsing="false" onAction="#loadGraph" text="Wczytaj graf" />
+                  <MenuItem fx:id="btnSveGraph" mnemonicParsing="false" onAction="#writeGraph" text="Zapisz graf do pliku" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Ścieżki">
