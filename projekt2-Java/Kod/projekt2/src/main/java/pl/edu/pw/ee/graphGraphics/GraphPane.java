@@ -259,9 +259,9 @@ public class GraphPane extends GridPane {
         boolean doExistEdgeFrom2To1 = graph.containsEdge(vertex2, vertex1);
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
-            SquareCell1column2rows splitCell = new SquareCell1column2rows(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getUpperPane().drawVerticalUpDirectedArrow();
-            splitCell.getLowerPane().drawVerticalDownDirectedArrow();
+            SquareCell2columns1row splitCell = new SquareCell2columns1row(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
+            splitCell.getLeftPane().drawVerticalUpDirectedArrow();
+            splitCell.getRightPane().drawVerticalDownDirectedArrow();
         }
         else if ( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);

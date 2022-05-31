@@ -122,6 +122,7 @@ public class PrimaryController {
         if (file != null) {
             try {
                 this.graph = Graph.readGraph(file);
+                this.initializeGraphPane();
                 this.graphPane.setGraph(this.graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
@@ -228,6 +229,7 @@ public class PrimaryController {
                     break;
                 }
             }
+            this.initializeGraphPane();
             graphPane.setGraph(graph);
         }
     }
