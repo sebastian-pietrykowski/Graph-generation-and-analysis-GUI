@@ -30,12 +30,12 @@ public class GraphTest {
 
         // 5x4 complete
         graphsReadGraph[1] = folderAbsolutePath + "\\completeGraphTestFile.txt";
-        /*
-         // 4x7 connected
-         graphsPaths[2] = folderAbsolutePath + "\\graph2_4x7_connected.txt";
-         System.out.println(folderAbsolutePath + "\\graph2_4x7_connected.txt");
 
-        // 3x5 unconnected
+        // 7x7 connected
+        graphsReadGraph[2] = folderAbsolutePath + "\\connectedGraphTestFile.txt";
+
+
+        /*  // 3x5 unconnected
         graphsPaths[3] = folderAbsolutePath + "\\graph3_3x5_unconnected.txt";*/
     }
 
@@ -60,8 +60,8 @@ public class GraphTest {
             File testFile = new File(graphsReadGraph[0]);
 
             Graph graph = Graph.readGraph(testFile);
-            assertEquals(graph.columns, 9);
-            assertEquals(graph.rows, 12);
+            assertEquals(graph.columns, 9, graph.getColumns());
+            assertEquals(graph.rows, 12 , graph.getRows());
             int i = 0;
             for (Edge e : graph.getAdjacencyList()) {
                 assertEquals(e.getFromVertex(), expectedFromVertex[i]);
@@ -79,7 +79,7 @@ public class GraphTest {
     public void testReadGraph_forGraph5x4() {
         int[] expectedFromVertex = {0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5,
             5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11,
-            11, 11,  12, 12, 12, 13, 13, 13,13, 14, 14, 14,14, 15, 15,15, 16, 16,
+            11, 11, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 16, 16,
             17, 17, 17, 18, 18, 18, 19, 19};
         int[] expectedToVertex = {1, 4, 0, 2, 5, 1, 3, 6, 2, 7, 5, 0, 8, 4, 6,
             1, 9, 5, 7, 2, 10, 6, 3, 11, 9, 4, 12, 8, 10, 5, 13, 9, 11, 6, 14,
@@ -109,13 +109,60 @@ public class GraphTest {
         try {
             File testFile = new File(graphsReadGraph[1]);
             Graph graph = Graph.readGraph(testFile);
-            assertEquals(graph.columns, 4);
-            assertEquals(graph.rows, 5);
+            assertEquals(graph.columns, 4 , graph.getColumns());
+            assertEquals(graph.rows, 5 , graph.getRows());
             int i = 0;
             for (Edge e : graph.getAdjacencyList()) {
                 assertEquals(e.getFromVertex(), expectedFromVertex[i]);
                 assertEquals(e.getToVertex(), expectedToVertex[i]);
-               assertEquals(e.getWeight(), expectedWeights[i], 0.0);
+                assertEquals(e.getWeight(), expectedWeights[i], 0.0);
+                i++;
+            }
+        } catch (IllegalVertexException | IOException | IllegalWeightException e) {
+            System.out.println("Niepoprawny plik");
+        }
+
+    }
+
+    @Test
+    public void testReadGraph_forGraph7x7() {
+        int[] expectedFromVertex = {0,0, 3, 4, 5, 5, 7, 8, 8, 9, 9, 10, 12,
+            15, 15, 15, 16, 17, 17, 20, 22, 22, 24, 24, 25, 25, 26, 26,
+            27, 29, 29, 29, 30, 30, 33, 35, 36, 37, 37, 38, 39, 39,
+            40, 40, 44, 46, 46, 47};
+        int[] expectedToVertex = {1, 7, 4, 5, 12, 6, 8, 15, 9, 10, 2, 3,
+            11, 22, 16, 14, 17, 24, 18, 13, 21, 29, 23, 25, 32, 26,
+            27, 19, 20, 30, 36, 28, 37, 31, 34, 42, 35, 38, 44, 39,
+            40, 46, 41, 33, 43, 47, 45, 48};
+
+        double[] expectedWeights = {5.6897337056849375, 2.1932643331435324,
+            7.094083995155011, 5.192534332617934,
+            2.6160408959140127, 3.9468864581487018, 5.906239242352141,
+            4.1496854216123715, 2.9868860600701628,
+            2.057245789056103, 4.045821097358582, 7.201428644604222,
+            5.6827519419315555, 3.924640565892675, 3.8590370158436835,
+            7.597259028767761, 2.3639147099362647, 2.183072974174279,
+            2.1978644165745145, 7.09607894461081, 5.078594624793879,
+            7.929975581011772, 4.164465615545361, 2.960270845939295, 2.694306917993601,
+            7.844705857029277, 5.690534384186208, 3.9842405803009155,
+            4.422318619880091, 6.1390711303225505, 7.034289790787052,
+            2.896594155956267, 7.105557954237528, 3.370807878881018,
+            2.359088939084743, 3.0902236186877188, 6.557482357364184,
+            2.9675728871590747, 2.786774271412667, 2.441013809868459,
+            2.9643500682335446, 4.194745485236132, 3.8274055021402686,
+            6.55263695125928, 5.885477899430782, 5.074525668907899,
+            2.2620683443539864, 5.529080154859274,};
+        try {
+            File testFile = new File(graphsReadGraph[2]);
+
+            Graph graph = Graph.readGraph(testFile);
+            assertEquals(graph.getColumns(), 7 , graph.columns);
+            assertEquals(graph.getRows(), 7, graph.rows);
+            int i = 0;
+            for (Edge e : graph.getAdjacencyList()) {
+                assertEquals(e.getFromVertex(), expectedFromVertex[i]);
+                assertEquals(e.getToVertex(), expectedToVertex[i]);
+                assertEquals(e.getWeight(), expectedWeights[i], 0.0);
                 i++;
             }
         } catch (IllegalVertexException | IOException | IllegalWeightException e) {
