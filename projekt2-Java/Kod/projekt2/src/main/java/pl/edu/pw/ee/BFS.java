@@ -29,9 +29,7 @@ public class BFS {
 
         while (!fifo.isEmpty()) {
             int currentVertex = fifo.poll();
-
             for (int i = 0; i < graph.getAdjacencyList().size(); i++) {
-
                 if (currentVertex == graph.getAdjacencyList().get(i).getFromVertex()) {
                     int neighbourVertex = graph.getAdjacencyList().get(i).getToVertex();
 
@@ -42,13 +40,10 @@ public class BFS {
                 }
             }
         }
-
         for (int i = 0; i < visited.length; i++) {
             if (!visited[i]) {
-
                 return false;
             }
-
         }
         return true;
     }
