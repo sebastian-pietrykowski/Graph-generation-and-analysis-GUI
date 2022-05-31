@@ -234,21 +234,21 @@ public class GraphPane extends GridPane {
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
             ArrowCellsCoupleSplitVertically splitCell = new ArrowCellsCoupleSplitVertically(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getUpperPane().drawHorizontalRightDirectedArrow(Color.BLACK);
-            splitCell.getLowerPane().drawHorizontalLeftDirectedArrow(Color.BLACK);
+            splitCell.getUpperPane().drawArrow(Color.BLACK, false);
+            splitCell.getLowerPane().drawArrow(Color.BLACK, false);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getUpperPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getLowerPane());
         }
-        else if ( doExistEdgeFrom1To2 ) {
-            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
+        else if( doExistEdgeFrom1To2 ) {
+            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.HORIZONTAL_TO_RIGHT);
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawHorizontalRightDirectedArrow(Color.BLACK);
+            arrowPane.drawArrow(Color.BLACK, false);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
-        else if ( doExistEdgeFrom2To1 ) {
-            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
+        else if( doExistEdgeFrom2To1 ) {
+            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.HORIZONTAL_TO_LEFT);
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawHorizontalLeftDirectedArrow(Color.BLACK);
+            arrowPane.drawArrow(Color.BLACK, false);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
@@ -259,27 +259,30 @@ public class GraphPane extends GridPane {
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
             ArrowCellsCoupleSplitHorizontally splitCell = new ArrowCellsCoupleSplitHorizontally(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getLeftPane().drawVerticalUpDirectedArrow(Color.BLACK);
-            splitCell.getRightPane().drawVerticalDownDirectedArrow(Color.BLACK);
+            splitCell.getLeftPane().drawArrow(Color.BLACK, false);
+            splitCell.getRightPane().drawArrow(Color.BLACK, false);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getLeftPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getRightPane());
         }
-        else if ( doExistEdgeFrom1To2 ) {
-            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
+        else if( doExistEdgeFrom1To2 ) {
+            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawVerticalDownDirectedArrow(Color.BLACK);
+            arrowPane.drawArrow(Color.BLACK, false);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
-        else if ( doExistEdgeFrom2To1 ) {
-            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
+        else if( doExistEdgeFrom2To1 ) {
+            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawVerticalUpDirectedArrow(Color.BLACK);
+            arrowPane.drawArrow(Color.BLACK, false);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
 
     public void markPath() {
+        //horizontal line
+        for( int vertex = 0; vertex < graph.getColumns(); vertex++ ) {
 
+        }
     }
     
 }

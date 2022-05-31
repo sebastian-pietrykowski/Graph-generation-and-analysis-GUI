@@ -34,8 +34,8 @@ public class ArrowCellsCoupleSplitHorizontally {
             verticalEdgesPane.getColumnConstraints().add(cc);
         }
 
-        this.leftPane = new ArrowPane(cellDimension/2, cellDimension);
-        this.rightPane = new ArrowPane(cellDimension/2, cellDimension);
+        this.leftPane = new ArrowPane(cellDimension/2-2, cellDimension-2, ArrowDirections.VERTICAL_TO_UP);
+        this.rightPane = new ArrowPane(cellDimension/2-2, cellDimension-2, ArrowDirections.VERTICAL_TO_DOWN);
         
         parentCell.getChildren().add(verticalEdgesPane);
         verticalEdgesPane.add(leftPane, 0, 0);

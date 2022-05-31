@@ -33,8 +33,8 @@ public class ArrowCellsCoupleSplitVertically {
         cc.setMaxWidth((cellDimension-1));
         horizontalEdgesPane.getColumnConstraints().add(cc);
 
-        this.upperPane = new ArrowPane(cellDimension, cellDimension/2);
-        this.lowerPane = new ArrowPane(cellDimension, cellDimension/2);
+        this.upperPane = new ArrowPane(cellDimension-2, cellDimension/2-2, ArrowDirections.HORIZONTAL_TO_RIGHT);
+        this.lowerPane = new ArrowPane(cellDimension-2, cellDimension/2-2, ArrowDirections.HORIZONTAL_TO_LEFT);
         
         parentCell.getChildren().add(horizontalEdgesPane);
         horizontalEdgesPane.add(upperPane, 0, 0);

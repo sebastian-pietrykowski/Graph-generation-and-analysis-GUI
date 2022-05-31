@@ -14,30 +14,46 @@ import javafx.scene.shape.Polygon;
 public class ArrowPane extends Pane {
 
     private int width, height;
-    private int spacingLength = 4;
+    private final int standardSpacingLength = 4;
+    private final int smallerSpacingLength = 1;
+    private int arrowDirection; //specified in ArrowDirections class
 
-    public ArrowPane(int width, int height) {
+    public ArrowPane(int width, int height, int arrowDirection ) {
         this.setMinWidth(width);
         this.setMinHeight(height);
         this.width = width;
         this.height = height;
+        this.arrowDirection = arrowDirection;
         this.setBackground(new Background(new BackgroundFill(GraphPane.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
      }
 
-     public ArrowPane(int width, int height, int spacingLenght) {
-         this(width, height);
-         this.spacingLength = spacingLenght;
-     }
+    public void drawArrow( Color arrowColor, boolean doDrawOutline ) {
 
+        switch(arrowDirection) {
+            case ArrowDirections.HORIZONTAL_TO_RIGHT:
+                drawHorizontalRightDirectedArrow(arrowColor);
+                break;
+            case ArrowDirections.HORIZONTAL_TO_LEFT:
+                drawHorizontalLeftDirectedArrow(arrowColor);
+                break;
+            case ArrowDirections.VERTICAL_TO_UP:
+                drawVerticalUpDirectedArrow(arrowColor);
+                break;
+            case ArrowDirections.VERTICAL_TO_DOWN:
+                drawVerticalDownDirectedArrow(arrowColor);
+                break;
+        }
 
-    public void drawHorizontalRightDirectedArrow( Color color ) {
-        int arrowStartX = spacingLength;
-        int arrowEndX = width - spacingLength;
+    }
+
+    private void drawHorizontalRightDirectedArrow( Color arrowColor ) {
+        int arrowStartX = standardSpacingLength;
+        int arrowEndX = width - standardSpacingLength;
         int arrowLength = arrowEndX - arrowStartX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
-        line.setStroke(color);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX - arrowLength/3;
@@ -54,14 +70,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawHorizontalLeftDirectedArrow( Color color ) {
-        int arrowStartX = width - spacingLength;
-        int arrowEndX = spacingLength;
+    private void drawHorizontalLeftDirectedArrow( Color arrowColor ) {
+        int arrowStartX = width - standardSpacingLength;
+        int arrowEndX = standardSpacingLength;
         int arrowLength = arrowStartX - arrowEndX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
-        line.setStroke(color);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX + arrowLength/3;
@@ -78,14 +94,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalUpDirectedArrow( Color color ) {
-        int arrowStartY = height-spacingLength;
-        int arrowEndY = spacingLength;
+    private void drawVerticalUpDirectedArrow( Color arrowColor ) {
+        int arrowStartY = height-standardSpacingLength;
+        int arrowEndY = standardSpacingLength;
         int arrowLength = arrowStartY - arrowEndY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
-        line.setStroke(color);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY + arrowLength/3;
@@ -102,14 +118,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalDownDirectedArrow( Color color ) {
-        int arrowStartY = spacingLength;
-        int arrowEndY = height-spacingLength;
+    private void drawVerticalDownDirectedArrow( Color arrowColor ) {
+        int arrowStartY = standardSpacingLength;
+        int arrowEndY = height-standardSpacingLength;
         int arrowLength = arrowEndY - arrowStartY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
-        line.setStroke(color);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY - arrowLength/3;
