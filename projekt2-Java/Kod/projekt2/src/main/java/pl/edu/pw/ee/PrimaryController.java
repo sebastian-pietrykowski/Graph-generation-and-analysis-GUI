@@ -110,8 +110,7 @@ public class PrimaryController {
 
     @FXML
     private Button btnCleanEverything;
-    
-  
+
     public void initializeGraphPane() {
         int parentWidth = (int) graphPaneParent.getPrefWidth();
         int parentHeight = (int) graphPaneParent.getPrefHeight();
@@ -125,10 +124,12 @@ public class PrimaryController {
 
         this.graphPaneParent.getChildren().add(scrollPane);
     }
-    public void initializeLabelText(){
-        MessageLabel.setFont(new Font("System",14));
-         MessageLabel.setWrapText(true);
+
+    public void initializeLabelText() {
+        MessageLabel.setFont(new Font("System", 14));
+        MessageLabel.setWrapText(true);
     }
+
     @FXML
     private void loadGraph(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -145,57 +146,58 @@ public class PrimaryController {
                 this.graphPane.setGraph(this.graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
-  
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Nie można wczytać grafu");
                 alert.showAndWait();
             } catch (IllegalVertexException e) {
                 MessageLabel.setText("Błąd, ujemny numer wierzchołka w linii nr: " + e.getLineNumber());
-  
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, ujemny numer wierzchołka");
                 alert.showAndWait();
             } catch (IllegalWeightException e) {
                 MessageLabel.setText("Błąd, ujemna waga krawędzi w linii nr: " + e.getLineNumber());
-
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
-                alert.setHeaderText("Błąd, ujemny waga krawędzi");
+                alert.setHeaderText("Błąd, ujemna waga krawędzi");
                 alert.showAndWait();
             } catch (NumberFormatException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
-
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, niepoprawny plik");
                 alert.showAndWait();
             }
         }
-
     }
 
     @FXML
     private void writeGraph(ActionEvent event) {
+
         FileChooser fileChooser = new FileChooser();
-
         fileChooser.setTitle("Zapisz plik");
-
         File file = fileChooser.showSaveDialog(null);
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+
         if (file != null) {
             try {
                 graph.writeGraph(file);
-            } catch (Exception e) {
+                graphPane.setGraph(graph);
+            } catch (IOException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd, nie można zapisać grafu do pliku");
                 alert.showAndWait();
             }
+        } else {
+            MessageLabel.setText("Błąd, niepoprawny plik");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText("Błąd, nie można zapisać grafu do pliku");
+            alert.showAndWait();
         }
-        graphPane.setGraph(graph);
     }
 
     @FXML
@@ -214,7 +216,6 @@ public class PrimaryController {
             }
         } catch (NullPointerException e) {
             MessageLabel.setText("Błąd, nie można sprawdzić spójności grafu, upewnij się, że wybrany plik jest poprawny.");
-
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Błąd");
             alert.setHeaderText("Nie można sprawdzić spójności grafu");
@@ -255,14 +256,12 @@ public class PrimaryController {
                         Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
                         this.graph = generator.generate();
                         MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 1"));
-                       
                         break;
                     }
                     case 2: {
                         Generator generator = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
                         this.graph = generator.generate();
                         MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 2"));
-                        
                         break;
                     }
                     default: {
@@ -274,15 +273,12 @@ public class PrimaryController {
                 }
                 graphPane.setGraph(graph);
             } catch (NumberFormatException e) {
-                MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu!");
-
+                MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Błąd");
-                alert.setHeaderText("Nie podano parametrów dotyczących grafu!");
+                alert.setHeaderText("Nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
                 alert.showAndWait();
-
             }
-
         }
     }
 
@@ -293,11 +289,8 @@ public class PrimaryController {
         this.fromWeight = 0;
         this.toWeight = 1;
         columnsTextField.setText("5");
-
         maxWeightTextField.setText("5");
-
         minWeightTextField.setText("0");
-
         rowsTextField.setText("1");
     }
 
@@ -306,7 +299,7 @@ public class PrimaryController {
         this.start = Integer.parseInt(startTextField.getText());
         this.end = Integer.parseInt(endTextField.getText());
         if (extendedResultCheckBox.isSelected()) {
-            
+
         } else {
 
         }
@@ -350,7 +343,6 @@ public class PrimaryController {
         mode1AllVertices.setSelected(false);
         mode2Connective.setSelected(false);
         mode3Random.setSelected(false);
-        
 
     }
 
