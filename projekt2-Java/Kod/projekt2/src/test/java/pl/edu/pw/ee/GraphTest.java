@@ -61,7 +61,7 @@ public class GraphTest {
 
             Graph graph = Graph.readGraph(testFile);
             assertEquals(graph.columns, 9, graph.getColumns());
-            assertEquals(graph.rows, 12 , graph.getRows());
+            assertEquals(graph.rows, 12, graph.getRows());
             int i = 0;
             for (Edge e : graph.getAdjacencyList()) {
                 assertEquals(e.getFromVertex(), expectedFromVertex[i]);
@@ -109,8 +109,8 @@ public class GraphTest {
         try {
             File testFile = new File(graphsReadGraph[1]);
             Graph graph = Graph.readGraph(testFile);
-            assertEquals(graph.columns, 4 , graph.getColumns());
-            assertEquals(graph.rows, 5 , graph.getRows());
+            assertEquals(graph.columns, 4, graph.getColumns());
+            assertEquals(graph.rows, 5, graph.getRows());
             int i = 0;
             for (Edge e : graph.getAdjacencyList()) {
                 assertEquals(e.getFromVertex(), expectedFromVertex[i]);
@@ -126,7 +126,7 @@ public class GraphTest {
 
     @Test
     public void testReadGraph_forGraph7x7() {
-        int[] expectedFromVertex = {0,0, 3, 4, 5, 5, 7, 8, 8, 9, 9, 10, 12,
+        int[] expectedFromVertex = {0, 0, 3, 4, 5, 5, 7, 8, 8, 9, 9, 10, 12,
             15, 15, 15, 16, 17, 17, 20, 22, 22, 24, 24, 25, 25, 26, 26,
             27, 29, 29, 29, 30, 30, 33, 35, 36, 37, 37, 38, 39, 39,
             40, 40, 44, 46, 46, 47};
@@ -156,7 +156,7 @@ public class GraphTest {
             File testFile = new File(graphsReadGraph[2]);
 
             Graph graph = Graph.readGraph(testFile);
-            assertEquals(graph.getColumns(), 7 , graph.columns);
+            assertEquals(graph.getColumns(), 7, graph.columns);
             assertEquals(graph.getRows(), 7, graph.rows);
             int i = 0;
             for (Edge e : graph.getAdjacencyList()) {
@@ -165,6 +165,32 @@ public class GraphTest {
                 assertEquals(e.getWeight(), expectedWeights[i], 0.0);
                 i++;
             }
+        } catch (IllegalVertexException | IOException | IllegalWeightException e) {
+            System.out.println("Niepoprawny plik");
+        }
+
+    }
+
+    @Test
+    public void TestGetEdge() {
+        try {
+            File testFile = new File(graphsReadGraph[0]);
+            Graph graph = Graph.readGraph(testFile);
+            assertEquals(graph.containsEdge(6, 7), true);
+            assertEquals(graph.containsEdge(80, 79), true);
+            assertEquals(graph.containsEdge(40, 49), false);
+            assertEquals(graph.containsEdge(76, 77), true);
+            assertEquals(graph.containsEdge(63, 64), true);
+            assertEquals(graph.containsEdge(64, 63), false);
+            assertEquals(graph.containsEdge(93, 92), false);
+            assertEquals(graph.containsEdge(88, 89), true);
+            assertEquals(graph.containsEdge(61, 70), false);
+            assertEquals(graph.containsEdge(32, 31), true);
+            assertEquals(graph.containsEdge(52, 51), false);
+            assertEquals(graph.containsEdge(53, 41), true);
+            assertEquals(graph.containsEdge(61, 59), false);
+            assertEquals(graph.containsEdge(107, 106), true);
+            assertEquals(graph.containsEdge(100, 102), false);
         } catch (IllegalVertexException | IOException | IllegalWeightException e) {
             System.out.println("Niepoprawny plik");
         }
