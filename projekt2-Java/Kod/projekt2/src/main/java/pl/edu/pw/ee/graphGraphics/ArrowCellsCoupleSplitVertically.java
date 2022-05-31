@@ -5,19 +5,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
-public class SquareCell1column2rows {
+public class ArrowCellsCoupleSplitVertically {
 
     StackPane parentCell;
     int cellDimension;
     ArrowPane upperPane;
     ArrowPane lowerPane;
 
-    public SquareCell1column2rows( StackPane parentCell, int cellDimension ) {
+    public ArrowCellsCoupleSplitVertically( StackPane parentCell, int cellDimension ) {
         this.parentCell = parentCell;
         this.cellDimension = cellDimension;
     }
 
-    public SquareCell1column2rows splitParent() {
+    public ArrowCellsCoupleSplitVertically splitParent() {
 
         GridPane horizontalEdgesPane = new GridPane();
 

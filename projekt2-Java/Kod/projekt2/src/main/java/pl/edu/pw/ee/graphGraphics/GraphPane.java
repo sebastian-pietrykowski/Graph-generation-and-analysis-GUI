@@ -3,6 +3,8 @@ package pl.edu.pw.ee.graphGraphics;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -22,6 +24,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
+import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
 public class GraphPane extends GridPane {
@@ -29,8 +32,8 @@ public class GraphPane extends GridPane {
     int parentHeight;
     int cellDimension;
     StackPane[][] cells;
+    Map<Edge,ArrowPane> arrows;
 
-    
     Graph graph;
     int numberOfRowsInGraph;
     int numberOfColumnsInGraph;
@@ -39,39 +42,31 @@ public class GraphPane extends GridPane {
     static final int defaultNumberOfVerticesDimension = 5;
     static final int defaultNumberOfCellsDimension = 11;
 
+    public static final Color paneBackgroundColor = Color.SILVER;
+    public static final Color cellFillColor = Color.WHITESMOKE;
+    public static final Color circleStrokeColor = Color.BLACK;
+    public static final Color circleFillColor = Color.LIGHTGRAY;
+
     public GraphPane(int parentWidht, int parentHeight) {
         this.parentWidth = parentWidht;
         this.parentHeight = parentHeight;
         this.cellDimension = parentWidth / defaultNumberOfCellsDimension;
+        this.arrows = new HashMap<>();
 
         this.setMinSize(parentWidht, parentHeight);
-        // this.setPrefSize(parentWidht, parentHeight);
 
         this.setPadding(new Insets(1, 1, 1, 1));
         this.setVgap(1);
         this.setHgap(1);
-        // this.setAlignment(Pos.TOP_LEFT);
 
         setDimensionsSizes(defaultNumberOfVerticesDimension, defaultNumberOfVerticesDimension);
         setSizeOfCellsIdentical();
 
-        // this.setAlignment(Pos.CENTER);
-
-        this.setBackground(new Background(new BackgroundFill(Color.SILVER, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setBackground(new Background(new BackgroundFill(paneBackgroundColor, CornerRadii.EMPTY, Insets.EMPTY)));
         createCells();
         
         createColumnNumbersLabels();
         createRowNumbersLabels();
-
-        /*
-        try {
-            Graph graph1 = Graph.readGraph(new File("projekt2-Java\\Kod\\projekt2\\src\\test graphs\\Dijkstra\\graph1_5x5_connected_with_cycle.txt"));
-            setGraph(graph1);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        */
 
         
     }
@@ -111,7 +106,7 @@ public class GraphPane extends GridPane {
             for (int columnIndex = 0; columnIndex < numberOfGridColumns; columnIndex++) {
                 cells[rowIndex][columnIndex] = new StackPane();
                 cells[rowIndex][columnIndex].setBackground(
-                        new Background(new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY)));
+                        new Background(new BackgroundFill(cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
                 this.add(cells[rowIndex][columnIndex], columnIndex, rowIndex);
             }
     }
@@ -171,10 +166,10 @@ public class GraphPane extends GridPane {
 
     private Circle createVertexCircle() {
         Circle circle = new Circle(cellDimension/2 *0.8);
-        circle.setStroke(Color.BLACK);
+        circle.setStroke(circleStrokeColor);
         circle.setStrokeWidth(2);
         circle.setStrokeType(StrokeType.CENTERED);
-        circle.setFill(Color.LIGHTGRAY);
+        circle.setFill(circleFillColor);
         circle.relocate(0,0);
         
         return circle;
@@ -238,18 +233,22 @@ public class GraphPane extends GridPane {
         boolean doExistEdgeFrom2To1 = graph.containsEdge(vertex2, vertex1);
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
-            SquareCell1column2rows splitCell = new SquareCell1column2rows(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getUpperPane().drawHorizontalRightDirectedArrow();
-            splitCell.getLowerPane().drawHorizontalLeftDirectedArrow();
+            ArrowCellsCoupleSplitVertically splitCell = new ArrowCellsCoupleSplitVertically(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
+            splitCell.getUpperPane().drawHorizontalRightDirectedArrow(Color.BLACK);
+            splitCell.getLowerPane().drawHorizontalLeftDirectedArrow(Color.BLACK);
+            arrows.put(new Edge(vertex1, vertex2), splitCell.getUpperPane());
+            arrows.put(new Edge(vertex2, vertex1), splitCell.getLowerPane());
         }
         else if ( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
-            arrowPane.drawHorizontalRightDirectedArrow();
+            arrows.put(new Edge(vertex1, vertex2), arrowPane);
+            arrowPane.drawHorizontalRightDirectedArrow(Color.BLACK);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if ( doExistEdgeFrom2To1 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
-            arrowPane.drawHorizontalLeftDirectedArrow();
+            arrows.put(new Edge(vertex2, vertex1), arrowPane);
+            arrowPane.drawHorizontalLeftDirectedArrow(Color.BLACK);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
@@ -259,20 +258,28 @@ public class GraphPane extends GridPane {
         boolean doExistEdgeFrom2To1 = graph.containsEdge(vertex2, vertex1);
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
-            SquareCell2columns1row splitCell = new SquareCell2columns1row(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getLeftPane().drawVerticalUpDirectedArrow();
-            splitCell.getRightPane().drawVerticalDownDirectedArrow();
+            ArrowCellsCoupleSplitHorizontally splitCell = new ArrowCellsCoupleSplitHorizontally(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
+            splitCell.getLeftPane().drawVerticalUpDirectedArrow(Color.BLACK);
+            splitCell.getRightPane().drawVerticalDownDirectedArrow(Color.BLACK);
+            arrows.put(new Edge(vertex1, vertex2), splitCell.getLeftPane());
+            arrows.put(new Edge(vertex2, vertex1), splitCell.getRightPane());
         }
         else if ( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
-            arrowPane.drawVerticalDownDirectedArrow();
+            arrows.put(new Edge(vertex1, vertex2), arrowPane);
+            arrowPane.drawVerticalDownDirectedArrow(Color.BLACK);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if ( doExistEdgeFrom2To1 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension);
-            arrowPane.drawVerticalUpDirectedArrow();
+            arrows.put(new Edge(vertex2, vertex1), arrowPane);
+            arrowPane.drawVerticalUpDirectedArrow(Color.BLACK);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
+    }
+
+    public void markPath() {
+
     }
     
 }

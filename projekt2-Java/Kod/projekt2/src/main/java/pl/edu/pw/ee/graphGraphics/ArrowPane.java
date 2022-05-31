@@ -2,54 +2,42 @@ package pl.edu.pw.ee.graphGraphics;
 
 
 
-import javafx.scene.Group;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
 import javafx.scene.shape.Polygon;
-import pl.edu.pw.ee.generator.Direction;
 
 public class ArrowPane extends Pane {
 
-    int width, height;
-
-    private static final int spacingLength = 4;
+    private int width, height;
+    private int spacingLength = 4;
 
     public ArrowPane(int width, int height) {
         this.setMinWidth(width);
         this.setMinHeight(height);
         this.width = width;
         this.height = height;
+        this.setBackground(new Background(new BackgroundFill(GraphPane.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
      }
 
-/*
-    public void drawArrow( int longerCellDimension, int direction ) {
+     public ArrowPane(int width, int height, int spacingLenght) {
+         this(width, height);
+         this.spacingLength = spacingLenght;
+     }
 
-        switch( direction ) {
-            case Direction.HORIZONTAL_LEFT:
-                //drawHorizontalLeftDirectedArrow(longerCellDimension);
-                break;
-            case Direction.HORIZONTAL_RIGHT:
-                drawHorizontalRightDirectedArrow(longerCellDimension);
-                break;
-            case Direction.VERTICAL_UP:
-                drawVerticalUpDirectedArrow(longerCellDimension);
-                break;
-            case Direction.VERTICAL_DOWN:
-                drawVerticalDownDirectedArrow(longerCellDimension);
-                break; 
-        }
-    }
-*/
 
-    public void drawHorizontalRightDirectedArrow() {
+    public void drawHorizontalRightDirectedArrow( Color color ) {
         int arrowStartX = spacingLength;
         int arrowEndX = width - spacingLength;
         int arrowLength = arrowEndX - arrowStartX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
+        line.setStroke(color);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX - arrowLength/3;
@@ -66,13 +54,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawHorizontalLeftDirectedArrow() {
+    public void drawHorizontalLeftDirectedArrow( Color color ) {
         int arrowStartX = width - spacingLength;
         int arrowEndX = spacingLength;
         int arrowLength = arrowStartX - arrowEndX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
+        line.setStroke(color);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX + arrowLength/3;
@@ -89,13 +78,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalUpDirectedArrow() {
+    public void drawVerticalUpDirectedArrow( Color color ) {
         int arrowStartY = height-spacingLength;
         int arrowEndY = spacingLength;
         int arrowLength = arrowStartY - arrowEndY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
+        line.setStroke(color);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY + arrowLength/3;
@@ -112,13 +102,14 @@ public class ArrowPane extends Pane {
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalDownDirectedArrow() {
+    public void drawVerticalDownDirectedArrow( Color color ) {
         int arrowStartY = spacingLength;
         int arrowEndY = height-spacingLength;
         int arrowLength = arrowEndY - arrowStartY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
+        line.setStroke(color);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY - arrowLength/3;
