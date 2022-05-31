@@ -90,13 +90,16 @@ public class Graph {
                 graph = new Graph(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
                 while ((line = bufferedReader.readLine()) != null) {
                     temp = 1;
+                     
                     String[] tokens = line.split(":| ");
                     for (String token : tokens) {
                         if (token.trim().length() > 0) {
+                            
                             temp++;
                             if (temp % 2 == 0) {
                                 try {
                                     toVertex = Integer.parseInt(token);
+                                   
                                 } catch (NumberFormatException e) {
                                     throw new NumberFormatException();
                                 }
@@ -118,7 +121,7 @@ public class Graph {
                 }
             }
             return graph;
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             return null;
         }
     }
@@ -129,7 +132,7 @@ public class Graph {
             fileWriter.write(String.valueOf(this.getColumns()));
             fileWriter.write(" ");
             fileWriter.write(String.valueOf(this.getRows()));
-            fileWriter.write("\n\t");
+            fileWriter.write("\n\t ");
             
             for (int i = 0; i < this.getNumberOfVertices(); i++) {
                 for (Edge edge : this.adjacencyList) {
@@ -140,7 +143,7 @@ public class Graph {
                         fileWriter.write(" ");
                     }
                 }
-                fileWriter.write("\n\t");
+                fileWriter.write("\n\t ");
             }
         } catch (IOException e) {
            throw new IOException();
