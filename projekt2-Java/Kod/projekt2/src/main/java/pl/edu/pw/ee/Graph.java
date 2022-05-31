@@ -114,7 +114,6 @@ public class Graph {
 
                         }
                     }
-
                     lineNumber++;
                 }
             }
