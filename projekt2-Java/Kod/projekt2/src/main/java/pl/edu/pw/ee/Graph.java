@@ -3,7 +3,6 @@ package pl.edu.pw.ee;
 import MyExceptions.IllegalVertexException;
 import MyExceptions.IllegalWeightException;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
@@ -48,6 +47,14 @@ public class Graph {
         return this.getAdjacencyList().get(index);
     }
 
+    public int getNumberOfEdges() {
+        return this.getAdjacencyList().size();
+    }
+
+    public LinkedList<Edge> getAdjacencyList() {
+        return adjacencyList;
+    }
+
     public Edge getEdge(int startVertexNumber, int endVertexNumber) {
         for (int i = 0; i < this.getAdjacencyList().size(); i++) {
             if (this.getAdjacencyList().get(i).getFromVertex() == startVertexNumber
@@ -68,10 +75,6 @@ public class Graph {
         return false;
     }
 
-    public int getNumberOfEdges() {
-        return this.getAdjacencyList().size();
-    }
-
     public static Graph readGraph(File file) throws IOException, IllegalVertexException, IllegalWeightException {
 
         int toVertex = 0;
@@ -80,20 +83,16 @@ public class Graph {
         int lineNumber = 0;
 
         try {
-
             Graph graph;
             try ( BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                 String line = bufferedReader.readLine();
-                String[] dimensions = line.trim().split("\\s+");
+                String[] dimensions = line.trim().split("\\s+"); 
                 graph = new Graph(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
                 while ((line = bufferedReader.readLine()) != null) {
                     temp = 1;
-
                     String[] tokens = line.split(":| ");
-
                     for (String token : tokens) {
                         if (token.trim().length() > 0) {
-
                             temp++;
                             if (temp % 2 == 0) {
                                 try {
@@ -121,19 +120,18 @@ public class Graph {
             }
             return graph;
         } catch (IOException e) {
-            //  e.printStackTrace();
-            System.exit(1);
+            return null;
         }
-        return null;
     }
 
-    public void writeGraph(File file) {
+    public void writeGraph(File file) throws IOException {
         try ( FileWriter fileWriter = new FileWriter(file)) {
+            
             fileWriter.write(String.valueOf(this.getColumns()));
             fileWriter.write(" ");
             fileWriter.write(String.valueOf(this.getRows()));
             fileWriter.write("\n\t");
-
+            
             for (int i = 0; i < this.getNumberOfVertices(); i++) {
                 for (Edge edge : this.adjacencyList) {
                     if (edge.getFromVertex() == i) {
@@ -141,21 +139,13 @@ public class Graph {
                         fileWriter.write(":");
                         fileWriter.write(String.valueOf(edge.getWeight()));
                         fileWriter.write(" ");
-
                     }
-
                 }
-              
                 fileWriter.write("\n\t");
-                
             }
-        } catch (IOException | IndexOutOfBoundsException e) {
-
+        } catch (IOException e) {
+           throw new IOException();
         }
-    }
-
-    public LinkedList<Edge> getAdjacencyList() {
-        return adjacencyList;
     }
 
     public Set<Integer> potenialNeighbors(int vertex) {
