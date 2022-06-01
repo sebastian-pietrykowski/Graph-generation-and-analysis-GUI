@@ -14,7 +14,7 @@ public class BFSTest {
     static String[] bfsTestFiles;
 
     @BeforeClass
-    public static void initiateBFS() throws IOException {
+    public static void initiateGraphs() throws IOException {
         folderAbsolutePath = new File("src\\graphs\\test graphs\\BFS").getAbsolutePath();
 
         bfsTestFiles = new String[4];
@@ -35,7 +35,7 @@ public class BFSTest {
             File testFile = new File(bfsTestFiles[0]);
             Graph graph = Graph.readGraph(testFile);
             BFS bfs = new BFS(graph, 0);
-            assertEquals(bfs.getStartVertexNumber(), 0); 
+            assertEquals(bfs.getStartVertexNumber(), 0);
             assertEquals(bfs.checkConnectivty(), false);
         } catch (IOException | IllegalVertexException | IllegalWeightException e) {
             System.out.println("Niepoprawny plik");
@@ -48,7 +48,7 @@ public class BFSTest {
             File testFile = new File(bfsTestFiles[1]);
             Graph graph = Graph.readGraph(testFile);
             BFS bfs = new BFS(graph, 0);
-            assertEquals(bfs.getStartVertexNumber(), 0); 
+            assertEquals(bfs.getStartVertexNumber(), 0);
             assertEquals(bfs.checkConnectivty(), true);
         } catch (IOException | IllegalVertexException | IllegalWeightException e) {
             System.out.println("Niepoprawny plik");
@@ -61,7 +61,7 @@ public class BFSTest {
             File testFile = new File(bfsTestFiles[2]);
             Graph graph = Graph.readGraph(testFile);
             BFS bfs = new BFS(graph, 0);
-            assertEquals(bfs.checkConnectivty(), true); 
+            assertEquals(bfs.checkConnectivty(), true);
         } catch (IOException | IllegalVertexException | IllegalWeightException e) {
             System.out.println("Niepoprawny plik");
         }
@@ -73,10 +73,10 @@ public class BFSTest {
             File testFile = new File(bfsTestFiles[3]);
             Graph graph = Graph.readGraph(testFile);
             BFS bfs = new BFS(graph, 0);
-            assertEquals(bfs.getStartVertexNumber(), 0); 
+            assertEquals(bfs.getStartVertexNumber(), 0);
             assertEquals(bfs.checkConnectivty(), false);
         } catch (IOException | IllegalVertexException | IllegalWeightException e) {
             System.out.println("Niepoprawny plik");
         }
-    } 
+    }
 }
