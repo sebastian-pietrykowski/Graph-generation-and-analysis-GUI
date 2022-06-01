@@ -255,18 +255,19 @@ public class PrimaryController {
                     case 1: {
                         Generator generator = new CompleteGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
                         this.graph = generator.generate();
-                        MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 1"));
+                        MessageLabel.setText(("Wygenerowano graf kompletny, zgodnie z trybem 1"));
                         break;
                     }
                     case 2: {
                         Generator generator = new ConnectedGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight, 0);
                         this.graph = generator.generate();
-                        MessageLabel.setText(("Wygenerowano graf zgodnie z trybem 2"));
+                        MessageLabel.setText(("Wygenerowano graf spójny, zgodnie z trybem 2"));
                         break;
                     }
                     default: {
                         Generator generator = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
                         this.graph = generator.generate();
+                           MessageLabel.setText(("Wygenerowano graf losowy, zgodnie z trybem 3"));
                         break;
                     }
 
@@ -343,6 +344,9 @@ public class PrimaryController {
         mode1AllVertices.setSelected(false);
         mode2Connective.setSelected(false);
         mode3Random.setSelected(false);
+        Graph cleanGraph = new Graph(0,0);
+        graphPane.setGraph(cleanGraph);
+        MessageLabel.setText("");
 
     }
 
