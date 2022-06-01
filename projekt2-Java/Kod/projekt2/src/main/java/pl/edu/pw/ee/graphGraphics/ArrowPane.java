@@ -67,6 +67,7 @@ public class ArrowPane extends Pane {
             (double) polygonBaseX, (double) upperPolygonVertexY,
             (double) polygonBaseX, (double) lowerPolygonVertexY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
@@ -91,6 +92,7 @@ public class ArrowPane extends Pane {
             (double) polygonBaseX, (double) upperPolygonVertexY,
             (double) polygonBaseX, (double) lowerPolygonVertexY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
@@ -115,6 +117,7 @@ public class ArrowPane extends Pane {
             (double) leftPolygonVertexX, (double) polygonBaseY,
             (double) rightPolygonVertexX, (double) polygonBaseY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
@@ -139,6 +142,7 @@ public class ArrowPane extends Pane {
             (double) leftPolygonVertexX, (double) polygonBaseY,
             (double) rightPolygonVertexX, (double) polygonBaseY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }    
 }

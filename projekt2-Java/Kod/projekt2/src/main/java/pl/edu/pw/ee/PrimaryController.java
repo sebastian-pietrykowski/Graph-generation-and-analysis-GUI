@@ -3,6 +3,7 @@ package pl.edu.pw.ee;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -95,7 +96,7 @@ public class PrimaryController {
     @FXML
     private MenuItem HelpMenuItem;
 
-    public void initializeGraphPane() {
+    public void initializeGraphPane() { 
         int parentWidth = (int) graphPaneParent.getPrefWidth();
         int parentHeight = (int) graphPaneParent.getPrefHeight();
 
