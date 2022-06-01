@@ -21,7 +21,7 @@ public class App extends Application {
 
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane();
-        controller.initializeLabelText();
+        controller.setWeightGradientPane();
 
         stage.setScene(scene);
         stage.setResizable(false);

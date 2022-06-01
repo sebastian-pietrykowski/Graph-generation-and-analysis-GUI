@@ -2,54 +2,58 @@ package pl.edu.pw.ee.graphGraphics;
 
 
 
-import javafx.scene.Group;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
 import javafx.scene.shape.Polygon;
-import pl.edu.pw.ee.generator.Direction;
 
 public class ArrowPane extends Pane {
 
-    int width, height;
+    private int width, height;
+    private final int standardSpacingLength = 4;
+    private final int smallerSpacingLength = 1;
+    private int arrowDirection; //specified in ArrowDirections class
 
-    private static final int spacingLength = 4;
-
-    public ArrowPane(int width, int height) {
+    public ArrowPane(int width, int height, int arrowDirection ) {
         this.setMinWidth(width);
         this.setMinHeight(height);
         this.width = width;
         this.height = height;
+        this.arrowDirection = arrowDirection;
+        this.setBackground(new Background(new BackgroundFill(GraphPane.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
      }
 
-/*
-    public void drawArrow( int longerCellDimension, int direction ) {
+    public void drawArrow( Color arrowColor, boolean doDrawOutline ) {
 
-        switch( direction ) {
-            case Direction.HORIZONTAL_LEFT:
-                //drawHorizontalLeftDirectedArrow(longerCellDimension);
+        switch(arrowDirection) {
+            case ArrowDirections.HORIZONTAL_TO_RIGHT:
+                drawHorizontalRightDirectedArrow(arrowColor);
                 break;
-            case Direction.HORIZONTAL_RIGHT:
-                drawHorizontalRightDirectedArrow(longerCellDimension);
+            case ArrowDirections.HORIZONTAL_TO_LEFT:
+                drawHorizontalLeftDirectedArrow(arrowColor);
                 break;
-            case Direction.VERTICAL_UP:
-                drawVerticalUpDirectedArrow(longerCellDimension);
+            case ArrowDirections.VERTICAL_TO_UP:
+                drawVerticalUpDirectedArrow(arrowColor);
                 break;
-            case Direction.VERTICAL_DOWN:
-                drawVerticalDownDirectedArrow(longerCellDimension);
-                break; 
+            case ArrowDirections.VERTICAL_TO_DOWN:
+                drawVerticalDownDirectedArrow(arrowColor);
+                break;
         }
-    }
-*/
 
-    public void drawHorizontalRightDirectedArrow() {
-        int arrowStartX = spacingLength;
-        int arrowEndX = width - spacingLength;
+    }
+
+    private void drawHorizontalRightDirectedArrow( Color arrowColor ) {
+        int arrowStartX = standardSpacingLength;
+        int arrowEndX = width - standardSpacingLength;
         int arrowLength = arrowEndX - arrowStartX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX - arrowLength/3;
@@ -63,16 +67,18 @@ public class ArrowPane extends Pane {
             (double) polygonBaseX, (double) upperPolygonVertexY,
             (double) polygonBaseX, (double) lowerPolygonVertexY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
-    public void drawHorizontalLeftDirectedArrow() {
-        int arrowStartX = width - spacingLength;
-        int arrowEndX = spacingLength;
+    private void drawHorizontalLeftDirectedArrow( Color arrowColor ) {
+        int arrowStartX = width - standardSpacingLength;
+        int arrowEndX = standardSpacingLength;
         int arrowLength = arrowStartX - arrowEndX;
         int arrowY = height/2;
 
         Line line = new Line(arrowStartX, arrowY, arrowEndX, arrowY);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseX = arrowEndX + arrowLength/3;
@@ -86,16 +92,18 @@ public class ArrowPane extends Pane {
             (double) polygonBaseX, (double) upperPolygonVertexY,
             (double) polygonBaseX, (double) lowerPolygonVertexY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalUpDirectedArrow() {
-        int arrowStartY = height-spacingLength;
-        int arrowEndY = spacingLength;
+    private void drawVerticalUpDirectedArrow( Color arrowColor ) {
+        int arrowStartY = height-standardSpacingLength;
+        int arrowEndY = standardSpacingLength;
         int arrowLength = arrowStartY - arrowEndY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY + arrowLength/3;
@@ -109,16 +117,18 @@ public class ArrowPane extends Pane {
             (double) leftPolygonVertexX, (double) polygonBaseY,
             (double) rightPolygonVertexX, (double) polygonBaseY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }
 
-    public void drawVerticalDownDirectedArrow() {
-        int arrowStartY = spacingLength;
-        int arrowEndY = height-spacingLength;
+    private void drawVerticalDownDirectedArrow( Color arrowColor ) {
+        int arrowStartY = standardSpacingLength;
+        int arrowEndY = height-standardSpacingLength;
         int arrowLength = arrowEndY - arrowStartY;
         int arrowX = width/2;
 
         Line line = new Line(arrowX, arrowStartY, arrowX, arrowEndY);
+        line.setStroke(arrowColor);
         this.getChildren().add(line);
 
         int polygonBaseY = arrowEndY - arrowLength/3;
@@ -132,6 +142,7 @@ public class ArrowPane extends Pane {
             (double) leftPolygonVertexX, (double) polygonBaseY,
             (double) rightPolygonVertexX, (double) polygonBaseY
         });
+        polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
     }    
 }
