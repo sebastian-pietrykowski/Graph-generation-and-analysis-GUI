@@ -15,6 +15,10 @@ public class ArrowWeightColorPicker {
     private LinearGradient linearGradient;
     private WritableImage gradientSnapshot;
 
+    public ArrowWeightColorPicker() {
+        createGradient();
+    }
+
     public ArrowWeightColorPicker( double maxWeight ) {
 
         this.maxWeight = maxWeight;
@@ -42,7 +46,7 @@ public class ArrowWeightColorPicker {
         gradientSnapshot = tmpScene.snapshot(null);
     }
 
-    public Color determineWeightArrowColor( double weight ) {
+    public Color determineArrowColor( double weight ) {
         int weightFactor = (int) (weight/maxWeight *100);
         Color weightColor = gradientSnapshot.getPixelReader().getColor(weightFactor, 0);
         return weightColor;

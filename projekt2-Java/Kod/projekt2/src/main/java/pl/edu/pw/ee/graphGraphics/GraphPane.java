@@ -24,21 +24,24 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
+import pl.edu.pw.ee.App;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
+import pl.edu.pw.ee.PrimaryController;
 
 public class GraphPane extends GridPane {
-    int parentWidth;
-    int parentHeight;
-    int cellDimension;
-    StackPane[][] cells;
-    Map<Edge,ArrowPane> arrows;
+    private int parentWidth;
+    private int parentHeight;
+    private int cellDimension;
+    private StackPane[][] cells;
+    private Map<Edge,ArrowPane> arrows;
+    private ArrowWeightColorPicker arrowWeightColorPicker;
 
-    Graph graph;
-    int numberOfRowsInGraph;
-    int numberOfColumnsInGraph;
-    int numberOfGridRows;
-    int numberOfGridColumns;
+    private Graph graph;
+    private int numberOfRowsInGraph;
+    private int numberOfColumnsInGraph;
+    private int numberOfGridRows;
+    private int numberOfGridColumns;
     static final int defaultNumberOfVerticesDimension = 5;
     static final int defaultNumberOfCellsDimension = 11;
 
@@ -175,7 +178,7 @@ public class GraphPane extends GridPane {
         return circle;
     }
 
-    public void setGraph( Graph graph ) {
+    public void setGraph( Graph graph, Label maxWeightLabel ) {
         this.graph = graph;
         setDimensionsSizes(graph.getRows(), graph.getColumns());
         setSizeOfCellsIdentical();
@@ -185,7 +188,12 @@ public class GraphPane extends GridPane {
         createRowNumbersLabels();
         
         addVerticesCircles();
+        double maxWeight = graph.getMaxWeight();
+        arrowWeightColorPicker = new ArrowWeightColorPicker(maxWeight);
         drawEdges();
+        String trimmedMaxWeight = (""+maxWeight).substring(0,6);
+        maxWeightLabel.setText(""+trimmedMaxWeight);
+        maxWeightLabel.setAlignment(Pos.CENTER);
     }
 
     private StackPane createCircleWithVertexNumber( int vertexNumber ) {
@@ -234,21 +242,35 @@ public class GraphPane extends GridPane {
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
             ArrowCellsCoupleSplitVertically splitCell = new ArrowCellsCoupleSplitVertically(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getUpperPane().drawArrow(Color.BLACK, false);
-            splitCell.getLowerPane().drawArrow(Color.BLACK, false);
+            
+            Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
+            Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
+            Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
+            Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
+            
+            splitCell.getUpperPane().drawArrow(edgeFrom1To2ArrowColor, false);
+            splitCell.getLowerPane().drawArrow(edgeFrom2To1ArrowColor, false);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getUpperPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getLowerPane());
         }
         else if( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.HORIZONTAL_TO_RIGHT);
+
+            Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
+            Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
+
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawArrow(Color.BLACK, false);
+            arrowPane.drawArrow(edgeFrom1To2ArrowColor, false);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if( doExistEdgeFrom2To1 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.HORIZONTAL_TO_LEFT);
+
+            Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
+            Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
+
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawArrow(Color.BLACK, false);
+            arrowPane.drawArrow(edgeFrom2To1ArrowColor, false);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
@@ -259,21 +281,35 @@ public class GraphPane extends GridPane {
 
         if( doExistEdgeFrom1To2 && doExistEdgeFrom2To1 ) {
             ArrowCellsCoupleSplitHorizontally splitCell = new ArrowCellsCoupleSplitHorizontally(getEdgeCell(vertex1, vertex2), cellDimension).splitParent();
-            splitCell.getLeftPane().drawArrow(Color.BLACK, false);
-            splitCell.getRightPane().drawArrow(Color.BLACK, false);
+
+            Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
+            Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
+            Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
+            Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
+
+            splitCell.getLeftPane().drawArrow(edgeFrom1To2ArrowColor, false);
+            splitCell.getRightPane().drawArrow(edgeFrom2To1ArrowColor, false);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getLeftPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getRightPane());
         }
         else if( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
+
+            Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
+            Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
+
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawArrow(Color.BLACK, false);
+            arrowPane.drawArrow(edgeFrom1To2ArrowColor, false);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if( doExistEdgeFrom2To1 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
+
+            Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
+            Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
+
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawArrow(Color.BLACK, false);
+            arrowPane.drawArrow(edgeFrom2To1ArrowColor, false);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }

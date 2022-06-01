@@ -11,7 +11,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="710.0" style="-fx-background-color: gainsboro; -fx-border-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.PrimaryController">
@@ -37,7 +41,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Pane fx:id="graphPaneParent" layoutX="5.0" layoutY="30.0" prefHeight="384.0" prefWidth="384.0" />
+      <Pane fx:id="graphPaneParent" layoutX="5.0" layoutY="30.0" prefHeight="384.0" prefWidth="384.0" style="-fx-border-color: SILVER;" />
       <Pane layoutX="454.0" layoutY="39.0" prefHeight="137.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
          <children>
             <RadioButton fx:id="mode1AllVertices" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#operatingMode" prefHeight="20.0" prefWidth="93.0" text="Tryb 1">
@@ -88,7 +92,7 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <Pane layoutX="488.0" layoutY="403.0" prefHeight="86.0" prefWidth="166.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
+      <Pane layoutX="488.0" layoutY="403.0" prefHeight="86.0" prefWidth="196.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
          <children>
             <Button fx:id="btnLoadGraph" alignment="TOP_LEFT" layoutX="42.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadGraph" text="Wczytaj graf" />
             <Button fx:id="btnCheckConnectivity" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" onAction="#checkGraphConnectivity" text="Sprawdź spójność grafu" />
@@ -120,5 +124,44 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
+      <GridPane layoutX="5.0" layoutY="415.0" prefHeight="34.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane style="-fx-background-color: WHITESMOKE;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="214.0" text="Skala wag krawędzi" />
+                     </children>
+                  </StackPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="21.0" text="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label fx:id="maxWeightLabel" alignment="CENTER" layoutX="61.0" prefHeight="18.0" prefWidth="47.0" text="1.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+            <Pane fx:id="weightGradientPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

@@ -21,6 +21,7 @@ public class App extends Application {
 
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane();
+        controller.setWeightGradientPane();
 
         stage.setScene(scene);
         stage.show();
