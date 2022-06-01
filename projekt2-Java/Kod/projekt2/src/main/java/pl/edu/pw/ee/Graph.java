@@ -17,6 +17,10 @@ public class Graph {
     int columns, rows;
     private LinkedList<Edge> adjacencyList;
 
+    public Graph() {
+        adjacencyList = new LinkedList<>();
+    }
+
     public Graph(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
@@ -86,20 +90,20 @@ public class Graph {
             Graph graph;
             try ( BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                 String line = bufferedReader.readLine();
-                String[] dimensions = line.trim().split("\\s+"); 
+                String[] dimensions = line.trim().split("\\s+");
                 graph = new Graph(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
                 while ((line = bufferedReader.readLine()) != null) {
                     temp = 1;
-                     
+
                     String[] tokens = line.split(":| ");
                     for (String token : tokens) {
                         if (token.trim().length() > 0) {
-                            
+
                             temp++;
                             if (temp % 2 == 0) {
                                 try {
                                     toVertex = Integer.parseInt(token);
-                                   
+
                                 } catch (NumberFormatException e) {
                                     throw new NumberFormatException();
                                 }
@@ -128,12 +132,12 @@ public class Graph {
 
     public void writeGraph(File file) throws IOException {
         try ( FileWriter fileWriter = new FileWriter(file)) {
-            
+
             fileWriter.write(String.valueOf(this.getColumns()));
             fileWriter.write(" ");
             fileWriter.write(String.valueOf(this.getRows()));
             fileWriter.write("\n\t ");
-            
+
             for (int i = 0; i < this.getNumberOfVertices(); i++) {
                 for (Edge edge : this.adjacencyList) {
                     if (edge.getFromVertex() == i) {
@@ -146,7 +150,7 @@ public class Graph {
                 fileWriter.write("\n\t ");
             }
         } catch (IOException e) {
-           throw new IOException();
+            throw new IOException();
         }
     }
 
