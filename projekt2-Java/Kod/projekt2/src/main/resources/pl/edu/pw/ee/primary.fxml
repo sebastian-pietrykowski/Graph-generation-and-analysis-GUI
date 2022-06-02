@@ -33,11 +33,6 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Pomoc">
-            <items>
-              <MenuItem fx:id="HelpMenuItem" mnemonicParsing="false" onAction="#HelpWindow" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
 
@@ -100,9 +95,9 @@
             <Button fx:id="btnCleanEverything" alignment="CENTER" layoutX="45.0" layoutY="79.0" mnemonicParsing="false" onAction="#cleanEverything" prefHeight="25.0" prefWidth="142.0" text="Wyczysc wszystko" />
          </children>
       </Pane>
-      <Label fx:id="MessageLabel" alignment="TOP_LEFT" layoutX="40.0" layoutY="528.0" prefHeight="185.0" prefWidth="384.0" style="-fx-background-color: Whitesmoke; -fx-border-color: silver;" />
+      <Label fx:id="MessageLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="528.0" prefHeight="185.0" prefWidth="384.0" style="-fx-background-color: Whitesmoke; -fx-border-color: silver;" />
       <Pane layoutX="454.0" layoutY="489.0" style="-fx-background-color: white;" />
-      <Label layoutX="40.0" layoutY="501.0" prefHeight="25.0" prefWidth="384.0" style="-fx-background-color: palevioletred; -fx-border-color: silver;" text="                                  Komunikaty">
+      <Label layoutX="14.0" layoutY="500.0" prefHeight="25.0" prefWidth="384.0" style="-fx-background-color: palevioletred; -fx-border-color: silver;" text="                                  Komunikaty">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -122,7 +117,7 @@
             <TextField fx:id="endTextField" layoutX="120.0" layoutY="73.0" prefHeight="25.0" prefWidth="81.0" />
             <CheckBox fx:id="extendedResultCheckBox" layoutX="152.0" layoutY="112.0" mnemonicParsing="false" />
             <Button fx:id="btncleanPathParameters" layoutX="130.0" layoutY="138.0" mnemonicParsing="false" onAction="#cleanPathParametrs" text="Wyczyść" />
-            <Button layoutX="8.0" layoutY="174.0" mnemonicParsing="false" text="Wyznaczone ścieżki" />
+            <Button fx:id="btnDeterminedPaths" layoutX="8.0" layoutY="174.0" mnemonicParsing="false" onAction="#determinedPathsWindow" text="Wyznaczone ścieżki" />
          </children>
       </AnchorPane>
       <GridPane layoutX="5.0" layoutY="415.0" prefHeight="34.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
