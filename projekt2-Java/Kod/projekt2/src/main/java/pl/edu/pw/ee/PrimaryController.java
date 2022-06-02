@@ -59,7 +59,7 @@ public class PrimaryController {
     public double toWeight;
     public int start;
     public int end;
-    
+
     @FXML
     public Pane graphPaneParent;
 
@@ -148,11 +148,11 @@ public class PrimaryController {
         this.graphPaneParent.getChildren().add(scrollPane);
     }
 
-    public void setGraph( Graph graph ) {
+    public void setGraph(Graph graph) {
         initializeGraphPane();
         this.pathInfoContainer = new PathOnGraphInfoContainer();
         graphPane.setGraph(graph, maxWeightLabel, maxDistanceLabel, pathInfoContainer);
-        
+
     }
 
     public void initializeLabelText() {
@@ -318,6 +318,12 @@ public class PrimaryController {
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
                 alert.showAndWait();
+            } catch (IllegalArgumentException e) {
+                MessageLabel.setText("Błąd, minimalna waga jest większa niż maksymalna waga !");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Minimalna waga jest większa niż maksymalna waga!");
+                alert.showAndWait();
             }
         }
     }
@@ -336,31 +342,50 @@ public class PrimaryController {
 
     @FXML
     private void determinePath(ActionEvent event) {
-        this.start = Integer.parseInt(startTextField.getText());
-        this.end = Integer.parseInt(endTextField.getText());
 
-        Dijkstra dijkstra = new Dijkstra(graph);
-        PathOnGraph pathOnGraph = dijkstra.determineShortestPath(start, end);
+        try {
+            this.start = Integer.parseInt(startTextField.getText());
+            this.end = Integer.parseInt(endTextField.getText());
 
-        // print message
-        if( pathOnGraph == null )
-            MessageLabel.setText("Nie istenieje droga z wierzchołka nr " + start + " do wierzchołka nr " + end);
-        else {
-            if (extendedResultCheckBox.isSelected()) {
-                String path = pathOnGraph.getPathToStringExtendedVariant();
-                MessageLabel.setText( "Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path );
+            Dijkstra dijkstra = new Dijkstra(graph);
+            PathOnGraph pathOnGraph = dijkstra.determineShortestPath(start, end);
+
+            // print message
+            if (pathOnGraph == null) {
+                MessageLabel.setText("Nie istenieje droga z wierzchołka nr " + start + " do wierzchołka nr " + end);
+            } else {
+                if (extendedResultCheckBox.isSelected()) {
+                    String path = pathOnGraph.getPathToStringExtendedVariant();
+                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
+                } else {
+                    String path = pathOnGraph.getPathToStringStandardVariant();
+                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
+                }
+                PathOnGraphInfo pathInfo = new PathOnGraphInfo(pathOnGraph);
+                pathInfoContainer.addPath(pathInfo);
             }
-            else {
-                String path = pathOnGraph.getPathToStringStandardVariant();
-                MessageLabel.setText( "Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path );
-            }
-            PathOnGraphInfo pathInfo = new PathOnGraphInfo(pathOnGraph);
-            pathInfoContainer.addPath(pathInfo);
+        } catch (NumberFormatException e) {
+            MessageLabel.setText("Błąd, nie podano wierzchołków dla których ma być szukana ścieżka!");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText("Nie podano wierzchołków dla których ma być szukana ścieżka!");
+            alert.showAndWait();
+        } catch (NullPointerException e) {
+            MessageLabel.setText("Błąd, brak grafu dla którego ma być szukana ścieżka!");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText("Brak grafu dla którego ma być szukana ścieżka!");
+            alert.showAndWait();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            MessageLabel.setText("Błąd, podano niewłasciwe numery wierzchołków!");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Błąd");
+            alert.setHeaderText("Podano niewłasciwe numery wierzchołków!");
+            alert.showAndWait();
         }
     }
-    
 
-      @FXML
+    @FXML
     private void HelpWindow(ActionEvent event) {
         /*
         try {
@@ -374,8 +399,9 @@ public class PrimaryController {
         } catch (Exception e) {
             System.out.println("Can't load a new window");
         }
-        */
+         */
     }
+
     @FXML
     private void cleanPathParametrs(ActionEvent event) {
         startTextField.setText("");
