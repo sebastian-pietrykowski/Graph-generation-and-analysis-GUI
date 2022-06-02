@@ -1,5 +1,8 @@
 package pl.edu.pw.ee.pathsOnGraph;
 
+import java.util.ArrayList;
+
+import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 
 public class PathOnGraph {
@@ -46,4 +49,10 @@ public class PathOnGraph {
         return pahtToString;
     }
     
+    public ArrayList<Edge> getEdgesWithoutWeight() {
+        ArrayList<Edge> list = new ArrayList<>();
+        for( int vertexIndex = 1; vertexIndex < path.length; vertexIndex++ )
+            list.add(new Edge(path[vertexIndex-1], vertexIndex));
+        return list;
+    }
 }

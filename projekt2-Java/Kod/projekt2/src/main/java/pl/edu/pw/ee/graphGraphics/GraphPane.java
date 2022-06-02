@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -25,19 +26,25 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
 import pl.edu.pw.ee.App;
+import pl.edu.pw.ee.Dijkstra;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.Graph;
 import pl.edu.pw.ee.PrimaryController;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
 public class GraphPane extends GridPane {
     private int parentWidth;
     private int parentHeight;
     private int cellDimension;
+
+    private Graph graph;
     private StackPane[][] cells;
     private Map<Edge,ArrowPane> arrows;
     private ArrowWeightColorPicker arrowWeightColorPicker;
+    private PathOnGraphInfoContainer pathInfoContainer;
 
-    private Graph graph;
     private int numberOfRowsInGraph;
     private int numberOfColumnsInGraph;
     private int numberOfGridRows;
@@ -178,8 +185,9 @@ public class GraphPane extends GridPane {
         return circle;
     }
 
-    public void setGraph( Graph graph, Label maxWeightLabel ) {
+    public void setGraph( Graph graph, Label maxWeightLabel, PathOnGraphInfoContainer pathInfoContainer ) {
         this.graph = graph;
+        this.pathInfoContainer = pathInfoContainer;
         setDimensionsSizes(graph.getRows(), graph.getColumns());
         setSizeOfCellsIdentical();
         createCells();
@@ -194,6 +202,13 @@ public class GraphPane extends GridPane {
         String trimmedMaxWeight = (""+maxWeight).substring(0,6);
         maxWeightLabel.setText(""+trimmedMaxWeight);
         maxWeightLabel.setAlignment(Pos.CENTER);
+
+        PathOnGraph path =  new Dijkstra(graph).determineShortestPath(0, 1);
+        PathOnGraphInfo pathInfo = new PathOnGraphInfo(path);
+        pathInfoContainer.addPath(pathInfo);
+
+        //disableAllArrows();
+
     }
 
     private StackPane createCircleWithVertexNumber( int vertexNumber ) {
@@ -248,8 +263,8 @@ public class GraphPane extends GridPane {
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
             
-            splitCell.getUpperPane().drawArrow(edgeFrom1To2ArrowColor, false);
-            splitCell.getLowerPane().drawArrow(edgeFrom2To1ArrowColor, false);
+            splitCell.getUpperPane().drawArrow(edgeFrom1To2ArrowColor);
+            splitCell.getLowerPane().drawArrow(edgeFrom2To1ArrowColor);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getUpperPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getLowerPane());
         }
@@ -260,7 +275,7 @@ public class GraphPane extends GridPane {
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
 
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawArrow(edgeFrom1To2ArrowColor, false);
+            arrowPane.drawArrow(edgeFrom1To2ArrowColor);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if( doExistEdgeFrom2To1 ) {
@@ -270,7 +285,7 @@ public class GraphPane extends GridPane {
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
 
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawArrow(edgeFrom2To1ArrowColor, false);
+            arrowPane.drawArrow(edgeFrom2To1ArrowColor);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
@@ -287,8 +302,8 @@ public class GraphPane extends GridPane {
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
 
-            splitCell.getLeftPane().drawArrow(edgeFrom1To2ArrowColor, false);
-            splitCell.getRightPane().drawArrow(edgeFrom2To1ArrowColor, false);
+            splitCell.getLeftPane().drawArrow(edgeFrom1To2ArrowColor);
+            splitCell.getRightPane().drawArrow(edgeFrom2To1ArrowColor);
             arrows.put(new Edge(vertex1, vertex2), splitCell.getLeftPane());
             arrows.put(new Edge(vertex2, vertex1), splitCell.getRightPane());
         }
@@ -299,7 +314,7 @@ public class GraphPane extends GridPane {
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
 
             arrows.put(new Edge(vertex1, vertex2), arrowPane);
-            arrowPane.drawArrow(edgeFrom1To2ArrowColor, false);
+            arrowPane.drawArrow(edgeFrom1To2ArrowColor);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if( doExistEdgeFrom2To1 ) {
@@ -309,10 +324,21 @@ public class GraphPane extends GridPane {
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
 
             arrows.put(new Edge(vertex2, vertex1), arrowPane);
-            arrowPane.drawArrow(edgeFrom2To1ArrowColor, false);
+            arrowPane.drawArrow(edgeFrom2To1ArrowColor);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
+
+    public void disableAllArrows() {
+        for (Entry<Edge, ArrowPane> entry : arrows.entrySet())
+            entry.getValue().disableArrow();
+    }
+/* 
+    public void temporarilyDisableArrows() {
+        for( PathOnGraphInfo pathInfo: pathInfoContainer.)
+    }
+*/
+
 
     public void markPath() {
         //horizontal line

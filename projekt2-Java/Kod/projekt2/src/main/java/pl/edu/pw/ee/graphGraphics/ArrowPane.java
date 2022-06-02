@@ -18,6 +18,9 @@ public class ArrowPane extends Pane {
     private final int smallerSpacingLength = 1;
     private int arrowDirection; //specified in ArrowDirections class
 
+    public static final Color disabledArrowColor = Color.BLACK;
+    public static final Color temporarilyDisabledArrowColor = Color.GREY;
+
     public ArrowPane(int width, int height, int arrowDirection ) {
         this.setMinWidth(width);
         this.setMinHeight(height);
@@ -27,7 +30,7 @@ public class ArrowPane extends Pane {
         this.setBackground(new Background(new BackgroundFill(GraphPane.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
      }
 
-    public void drawArrow( Color arrowColor, boolean doDrawOutline ) {
+    public void drawArrow( Color arrowColor ) {
 
         switch(arrowDirection) {
             case ArrowDirections.HORIZONTAL_TO_RIGHT:
@@ -144,5 +147,26 @@ public class ArrowPane extends Pane {
         });
         polygon.setFill(arrowColor);
         this.getChildren().add(polygon);
-    }    
+    }
+
+    public void clearPane() {
+        this.getChildren().clear();
+    }
+
+    /**
+     * Used to mark edge not contained in any path in PathOnGraphInfoContainer object.
+     */
+    public void disableArrow() {
+        this.clearPane();
+        this.drawArrow(disabledArrowColor);
+    }
+
+    /**
+     * Used to mark edge contained in any path in PathOnGraphInfoContainer object,
+     * but not the actual path.
+     */
+    public void temporarilyDisableArrow() {
+        this.clearPane();
+        this.drawArrow(temporarilyDisabledArrowColor);
+    }
 }
