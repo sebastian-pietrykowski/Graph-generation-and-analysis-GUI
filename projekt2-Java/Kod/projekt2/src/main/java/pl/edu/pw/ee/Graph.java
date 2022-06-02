@@ -1,7 +1,5 @@
 package pl.edu.pw.ee;
 
-import MyExceptions.IllegalVertexException;
-import MyExceptions.IllegalWeightException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +9,9 @@ import static java.lang.Math.abs;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+
+import pl.edu.pw.ee.MyExceptions.IllegalVertexException;
+import pl.edu.pw.ee.MyExceptions.IllegalWeightException;
 
 public class Graph {
 

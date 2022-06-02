@@ -11,8 +11,8 @@ import java.util.LinkedList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import MyExceptions.IllegalVertexException;
-import MyExceptions.IllegalWeightException;
+import pl.edu.pw.ee.MyExceptions.IllegalVertexException;
+import pl.edu.pw.ee.MyExceptions.IllegalWeightException;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
 
 public class DijkstraTest {

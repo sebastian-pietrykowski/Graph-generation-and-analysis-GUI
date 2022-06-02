@@ -1,7 +1,5 @@
 package pl.edu.pw.ee;
 
-import MyExceptions.IllegalVertexException;
-import MyExceptions.IllegalWeightException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,12 +34,16 @@ import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import pl.edu.pw.ee.MyExceptions.IllegalVertexException;
+import pl.edu.pw.ee.MyExceptions.IllegalWeightException;
 import pl.edu.pw.ee.generator.CompleteGraphGenerator;
 import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
 import pl.edu.pw.ee.generator.RandomGraphGenerator;
 import pl.edu.pw.ee.graphGraphics.ArrowWeightColorPicker;
 import pl.edu.pw.ee.graphGraphics.GraphPane;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
 public class PrimaryController {
@@ -336,29 +338,24 @@ public class PrimaryController {
     private void determinePath(ActionEvent event) {
         this.start = Integer.parseInt(startTextField.getText());
         this.end = Integer.parseInt(endTextField.getText());
-        if (extendedResultCheckBox.isSelected()) {
 
-        } else {
-            Dijkstra dijkstra = new Dijkstra(graph);
+        Dijkstra dijkstra = new Dijkstra(graph);
+        PathOnGraph pathOnGraph = dijkstra.determineShortestPath(start, end);
 
-            LinkedList<String> path = new LinkedList<>();
-            LinkedList<Integer> TemporaryPath = new LinkedList<>();
-            //TemporaryPath =dijkstra.determineShortestPath(start, end);
-            int i =0;
-            for(Integer item : TemporaryPath){
-                if(i < TemporaryPath.size() - 1){
-                path.add(Integer.toString(item));
-                path.add("->");
-                } else {
-                    path.add(Integer.toString(item));
-                }
-                i++;
+        // print message
+        if( pathOnGraph == null )
+            MessageLabel.setText("Nie istenieje droga z wierzchołka nr " + start + " do wierzchołka nr " + end);
+        else {
+            if (extendedResultCheckBox.isSelected()) {
+                String path = pathOnGraph.getPathToStringExtendedVariant();
+                MessageLabel.setText( "Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path );
             }
-           Arrays.toString(path.toArray());
-           System.out.println(path.size());
-            MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
-            
-        
+            else {
+                String path = pathOnGraph.getPathToStringStandardVariant();
+                MessageLabel.setText( "Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path );
+            }
+            PathOnGraphInfo pathInfo = new PathOnGraphInfo(pathOnGraph);
+            pathInfoContainer.addPath(pathInfo);
         }
     }
     
@@ -411,11 +408,12 @@ public class PrimaryController {
     void determinedPathsWindow(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(determinedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
+            fxmlLoader.setLocation(DeterminedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
-            determinedPathsWindow controller = fxmlLoader.getController();
-            controller.setText("ala ma kota");
-            controller.addLabel();
+
+            DeterminedPathsWindow controller = fxmlLoader.getController();
+            controller.initialize(pathInfoContainer);
+
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
             stage.setScene(new Scene(root1));

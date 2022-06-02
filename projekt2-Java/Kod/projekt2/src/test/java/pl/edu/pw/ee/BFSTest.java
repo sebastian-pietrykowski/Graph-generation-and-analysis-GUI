@@ -1,12 +1,13 @@
 package pl.edu.pw.ee;
 
-import MyExceptions.IllegalVertexException;
-import MyExceptions.IllegalWeightException;
 import java.io.File;
 import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import pl.edu.pw.ee.MyExceptions.IllegalVertexException;
+import pl.edu.pw.ee.MyExceptions.IllegalWeightException;
 
 public class BFSTest {
 

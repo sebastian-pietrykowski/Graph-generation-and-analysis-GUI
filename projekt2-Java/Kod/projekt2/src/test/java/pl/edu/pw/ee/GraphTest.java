@@ -1,7 +1,5 @@
 package pl.edu.pw.ee;
 
-import MyExceptions.IllegalVertexException;
-import MyExceptions.IllegalWeightException;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -9,6 +7,9 @@ import java.io.IOException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import pl.edu.pw.ee.MyExceptions.IllegalVertexException;
+import pl.edu.pw.ee.MyExceptions.IllegalWeightException;
 
 /**
  *

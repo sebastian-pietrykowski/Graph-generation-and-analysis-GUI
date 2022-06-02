@@ -4,21 +4,49 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.determinedPathsWindow">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.DeterminedPathsWindow">
    <children>
-      <AnchorPane prefHeight="82.0" prefWidth="600.0" style="-fx-background-color: DIMGREY;">
+      <Pane layoutX="500.0" layoutY="-1.0" prefHeight="40.0" prefWidth="16.0" style="-fx-background-color: DIMGREY;" />
+      <AnchorPane prefHeight="40.0" prefWidth="500.0" style="-fx-background-color: DIMGREY;">
          <children>
-            <Button layoutX="489.0" layoutY="23.0" mnemonicParsing="false" text="Usuń" />
+            <GridPane prefHeight="40.0" prefWidth="585.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Etykieta" textFill="WHITE" GridPane.halignment="CENTER" />
+                  <Label text="Kolor" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label text="Start" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Label text="Koniec" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                  <Label text="Widocznność wag" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                  <Button fx:id="deleteButton" lineSpacing="1.0" mnemonicParsing="false" style="-fx-background-color: DIMGREY;" text="Usuń" textFill="#b10808" underline="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
          </children>
       </AnchorPane>
-      <ScrollPane layoutY="82.0" prefHeight="146.0" prefWidth="600.0">
-        <content>
-          <AnchorPane fx:id="pathsPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="pathNumberLabel" layoutX="55.0" layoutY="40.0" text="Label" />
-               </children></AnchorPane>
-        </content>
+      <ScrollPane layoutY="38.0" prefHeight="190.0" prefWidth="600.0">
+         <content>
+            <StackPane fx:id="pathsPaneParent" prefHeight="186.0" prefWidth="585.0" />
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>
