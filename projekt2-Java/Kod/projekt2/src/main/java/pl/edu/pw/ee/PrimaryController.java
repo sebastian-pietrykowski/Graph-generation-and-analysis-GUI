@@ -47,6 +47,9 @@ import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 public class PrimaryController {
 
     public Graph graph;
+    public GraphPane graphPane;
+    private PathOnGraphInfoContainer pathInfoContainer;
+
     public int generatingMode = -1;
     public int columns;
     public int rows;
@@ -54,9 +57,7 @@ public class PrimaryController {
     public double toWeight;
     public int start;
     public int end;
-    public GraphPane graphPane;
-    private PathOnGraphInfoContainer pathInfoContainer;
-
+    
     @FXML
     public Pane graphPaneParent;
 
@@ -142,6 +143,13 @@ public class PrimaryController {
         this.graphPaneParent.getChildren().add(scrollPane);
     }
 
+    public void setGraph( Graph graph ) {
+        initializeGraphPane();
+        this.pathInfoContainer = new PathOnGraphInfoContainer();
+        graphPane.setGraph(graph, maxWeightLabel, pathInfoContainer);
+        
+    }
+
     public void initializeLabelText() {
         MessageLabel.setFont(new Font("System", 14));
         MessageLabel.setWrapText(true);
@@ -167,7 +175,7 @@ public class PrimaryController {
             try {
                 this.graph = Graph.readGraph(file);
                 this.initializeGraphPane();
-                this.graphPane.setGraph(this.graph, this.maxWeightLabel);
+                this.setGraph(graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -208,7 +216,7 @@ public class PrimaryController {
             try {
                 graph.writeGraph(file);
                 this.initializeGraphPane();
-                graphPane.setGraph(graph, maxWeightLabel);
+                this.setGraph(graph);
             } catch (IOException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -298,7 +306,7 @@ public class PrimaryController {
 
                 }
                 this.initializeGraphPane();
-                graphPane.setGraph(graph, maxWeightLabel);
+                this.setGraph(graph);
             } catch (NumberFormatException e) {
                 MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -402,6 +410,8 @@ public class PrimaryController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(determinedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
+            determinedPathsWindow controller = fxmlLoader.getController();
+            controller.setText("ala ma kota");
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
             stage.setScene(new Scene(root1));

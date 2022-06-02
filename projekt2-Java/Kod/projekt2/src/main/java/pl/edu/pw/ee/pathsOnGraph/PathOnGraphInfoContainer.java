@@ -28,4 +28,6 @@ public class PathOnGraphInfoContainer {
     }
 
     public int getPathsNumber() { return pathsInfos.size(); }
+
+    public ArrayList<PathOnGraphInfo> getElements() { return pathsInfos; }
 }

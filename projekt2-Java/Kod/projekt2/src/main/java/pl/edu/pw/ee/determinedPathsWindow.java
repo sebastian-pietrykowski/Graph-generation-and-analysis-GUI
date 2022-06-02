@@ -4,10 +4,19 @@
  */
 package pl.edu.pw.ee;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
 /**
  *
  * @author Paweł
  */
+
 public class determinedPathsWindow {
-    
+    @FXML
+    private Label pathNumberLabel;
+
+    public void setText( String text ) {
+        this.pathNumberLabel.setText(text);
+    }
 }
