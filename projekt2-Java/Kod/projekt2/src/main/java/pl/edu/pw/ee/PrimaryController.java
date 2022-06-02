@@ -5,6 +5,8 @@ import MyExceptions.IllegalWeightException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +19,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -111,9 +112,8 @@ public class PrimaryController {
     @FXML
     private CheckBox extendedResultCheckBox;
 
-    @FXML
-    private MenuItem HelpMenuItem;
-
+    // @FXML
+    //private MenuItem HelpMenuItem;
     @FXML
     private Button btncleanPathParameters;
 
@@ -122,6 +122,9 @@ public class PrimaryController {
 
     @FXML
     private Button btnCleanEverything;
+
+    @FXML
+    private Button btnDeterminedPaths;
 
     public void initializeGraphPane() {
         int parentWidth = (int) graphPaneParent.getPrefWidth();
@@ -287,7 +290,7 @@ public class PrimaryController {
                     default: {
                         Generator generator = new RandomGraphGenerator(this.columns, this.rows, this.fromWeight, this.toWeight);
                         this.graph = generator.generate();
-                           MessageLabel.setText(("Wygenerowano graf losowy, zgodnie z trybem 3"));
+                        MessageLabel.setText(("Wygenerowano graf losowy, zgodnie z trybem 3"));
                         break;
                     }
 
@@ -311,9 +314,9 @@ public class PrimaryController {
         this.fromWeight = 0;
         this.toWeight = 1;
         columnsTextField.setText("5");
-        maxWeightTextField.setText("5");
+        maxWeightTextField.setText("1");
         minWeightTextField.setText("0");
-        rowsTextField.setText("1");
+        rowsTextField.setText("5");
     }
 
     @FXML
@@ -323,11 +326,31 @@ public class PrimaryController {
         if (extendedResultCheckBox.isSelected()) {
 
         } else {
+            Dijkstra dijkstra = new Dijkstra(graph);
 
+            LinkedList<String> path = new LinkedList<>();
+            LinkedList<Integer> TemporaryPath = new LinkedList<>();
+            TemporaryPath =dijkstra.determineShortestPath(start, end);
+            int i =0;
+            for(Integer item : TemporaryPath){
+                if(i < TemporaryPath.size() - 1){
+                path.add(Integer.toString(item));
+                path.add("->");
+                } else {
+                    path.add(Integer.toString(item));
+                }
+                i++;
+            }
+           Arrays.toString(path.toArray());
+           System.out.println(path.size());
+            MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
+            
+        
         }
     }
+    
 
-    @FXML
+    /*  @FXML
     private void HelpWindow(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -340,8 +363,7 @@ public class PrimaryController {
         } catch (Exception e) {
             System.out.println("Can't load a new window");
         }
-    }
-
+    }*/
     @FXML
     private void cleanPathParametrs(ActionEvent event) {
         startTextField.setText("");
@@ -368,6 +390,21 @@ public class PrimaryController {
         this.initializeGraphPane();
         MessageLabel.setText("");
 
+    }
+
+    @FXML
+    void determinedPathsWindow(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(determinedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Pomoc");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Can't load a new window");
+        }
     }
 
 }
