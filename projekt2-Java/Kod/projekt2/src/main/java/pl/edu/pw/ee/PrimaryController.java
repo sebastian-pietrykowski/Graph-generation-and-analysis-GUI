@@ -408,7 +408,7 @@ public class PrimaryController {
     void determinedPathsWindow(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(DeterminedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
+            fxmlLoader.setLocation(determinedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             determinedPathsWindow controller = fxmlLoader.getController();
             controller.setText("ala ma kota");
