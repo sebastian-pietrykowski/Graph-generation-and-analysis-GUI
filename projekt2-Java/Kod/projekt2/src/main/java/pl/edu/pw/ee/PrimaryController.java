@@ -400,7 +400,7 @@ public class PrimaryController {
     void determinedPathsWindow(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(determinedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
+            fxmlLoader.setLocation(DeterminedPathsWindow.class.getResource("determinedPathsWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
