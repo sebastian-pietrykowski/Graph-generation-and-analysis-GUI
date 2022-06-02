@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import static java.lang.Math.abs;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.OptionalDouble;
 import java.util.Set;
 
 public class Graph {
