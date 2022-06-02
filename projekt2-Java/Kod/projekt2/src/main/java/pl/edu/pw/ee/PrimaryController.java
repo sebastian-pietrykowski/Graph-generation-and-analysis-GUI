@@ -42,6 +42,7 @@ import pl.edu.pw.ee.generator.Generator;
 import pl.edu.pw.ee.generator.RandomGraphGenerator;
 import pl.edu.pw.ee.graphGraphics.ArrowWeightColorPicker;
 import pl.edu.pw.ee.graphGraphics.GraphPane;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
 public class PrimaryController {
 
@@ -54,6 +55,7 @@ public class PrimaryController {
     public int start;
     public int end;
     public GraphPane graphPane;
+    private PathOnGraphInfoContainer pathInfoContainer;
 
     @FXML
     public Pane graphPaneParent;
@@ -330,7 +332,7 @@ public class PrimaryController {
 
             LinkedList<String> path = new LinkedList<>();
             LinkedList<Integer> TemporaryPath = new LinkedList<>();
-            TemporaryPath =dijkstra.determineShortestPath(start, end);
+            //TemporaryPath =dijkstra.determineShortestPath(start, end);
             int i =0;
             for(Integer item : TemporaryPath){
                 if(i < TemporaryPath.size() - 1){
@@ -350,8 +352,9 @@ public class PrimaryController {
     }
     
 
-    /*  @FXML
+      @FXML
     private void HelpWindow(ActionEvent event) {
+        /*
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(HelpWindowController.class.getResource("HelpWindow.fxml"));
@@ -363,7 +366,8 @@ public class PrimaryController {
         } catch (Exception e) {
             System.out.println("Can't load a new window");
         }
-    }*/
+        */
+    }
     @FXML
     private void cleanPathParametrs(ActionEvent event) {
         startTextField.setText("");

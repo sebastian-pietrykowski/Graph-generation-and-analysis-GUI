@@ -1,10 +1,13 @@
 package pl.edu.pw.ee;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Set;
+
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
 
 /**
  * It is used to find the shortest possible path between 2 vertices.
@@ -110,12 +113,12 @@ public class Dijkstra {
      * @return array of vertices creating path if the path exists, <br>
      *         <code>null</code> if such path doesn't exist
      */
-    public LinkedList<Integer> determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
-        LinkedList<Integer> path = new LinkedList<>();
+    public PathOnGraph determineShortestPath ( int startVertexNumber, int endVertexNumber ) {
+        ArrayList<Integer> path = new ArrayList<>();
 
         if( startVertexNumber == endVertexNumber) {
             path.add(startVertexNumber);
-            return path;
+            return null;
         }
 
         this.startVertexNumber = startVertexNumber;
@@ -130,7 +133,8 @@ public class Dijkstra {
             path.add(element);
             if( element == startVertexNumber ) {
                 Collections.reverse(path);
-                return path;
+                int[] pathToArray = path.stream().mapToInt(v -> v).toArray();
+                return new PathOnGraph(startVertexNumber, endVertexNumber, pathToArray, graph);
             }
         }
     }

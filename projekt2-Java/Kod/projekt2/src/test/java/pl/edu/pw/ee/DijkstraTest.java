@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import MyExceptions.IllegalVertexException;
 import MyExceptions.IllegalWeightException;
+import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
 
 public class DijkstraTest {
     
@@ -59,8 +60,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
         
-        int[] actual = dijkstra.determineShortestPath(0, 0)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 0).getPath();
         int[] expected = {0};
         assertArrayEquals(expected, actual);
     }
@@ -70,8 +70,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(5, 5)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(5, 5).getPath();
         int[] expected = {5};
         assertArrayEquals(expected, actual);
     }
@@ -81,8 +80,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(2, 4)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(2, 4).getPath();
         int[] expected = { 2, 3, 4 };
         assertArrayEquals(expected, actual);
     }
@@ -92,8 +90,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 13)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 13).getPath();
         int[] expected = { 0, 5, 6, 7, 8, 13 };
         assertArrayEquals(expected, actual);
     }
@@ -103,8 +100,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 24)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 24).getPath();
         int[] expected = { 0, 5, 10, 15, 20, 21, 22, 23, 24 };
         assertArrayEquals(expected, actual);
     }
@@ -134,8 +130,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 1)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 1).getPath();
         int[] expected = {0,1};
         assertArrayEquals(expected, actual);
     }
@@ -145,8 +140,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(1, 0)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(1, 0).getPath();
         int[] expected = {1,0};
         assertArrayEquals(expected, actual);
     }
@@ -156,8 +150,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
         
-        int[] actual = dijkstra.determineShortestPath(0, 3)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 3).getPath();
         int[] expected = {0,1,2,3};
         assertArrayEquals(expected, actual);
     }
@@ -167,8 +160,8 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        LinkedList<Integer> actual = dijkstra.determineShortestPath(10, 8);
-        assertTrue(actual == null);
+        PathOnGraph actualPath = dijkstra.determineShortestPath(10, 8);
+        assertTrue(actualPath == null);
     }
 
     @Test
@@ -176,8 +169,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 24)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 24).getPath();
         int[] expected = { 0, 1, 2, 7, 6, 5, 10, 15, 20, 21, 22, 23, 24 };
         assertArrayEquals(expected, actual);
     }
@@ -209,8 +201,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[2]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 9)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 9).getPath();
         int[] expected = { 0, 1, 2, 6, 10, 9 };
         assertArrayEquals(expected, actual);
     }
@@ -220,8 +211,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[2]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(10, 16)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(10, 16).getPath();
         int[] expected = { 10, 9, 13, 12, 16 };
         assertArrayEquals(expected, actual);
     }
@@ -251,8 +241,8 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        LinkedList<Integer> actual = dijkstra.determineShortestPath(5, 3);
-        assertTrue(actual==null);
+        PathOnGraph actualPath = dijkstra.determineShortestPath(5, 3);
+        assertTrue(actualPath == null);
     }
 
     @Test
@@ -260,8 +250,8 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        LinkedList<Integer> actual = dijkstra.determineShortestPath(4, 9);
-        assertTrue(actual==null);
+        PathOnGraph actualPath = dijkstra.determineShortestPath(4, 9);
+        assertTrue(actualPath == null);
     }
 
     @Test
@@ -269,8 +259,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(0, 14)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(0, 14).getPath();
         int[] expected = { 0, 1, 4, 7, 8, 11, 14 };
         assertArrayEquals(expected, actual);
     }
@@ -280,8 +269,7 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(4, 11)
-                        .stream().mapToInt(i -> i).toArray();
+        int[] actual = dijkstra.determineShortestPath(4, 11).getPath();
         int[] expected = { 4, 7, 8, 11 };
         assertArrayEquals(expected, actual);
     }
