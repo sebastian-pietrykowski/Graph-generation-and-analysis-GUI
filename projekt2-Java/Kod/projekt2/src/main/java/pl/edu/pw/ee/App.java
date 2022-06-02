@@ -22,7 +22,7 @@ public class App extends Application {
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane();
         controller.setWeightGradientPane();
-
+        controller.initializeLabelText();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
