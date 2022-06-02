@@ -6,6 +6,7 @@ package pl.edu.pw.ee;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -16,7 +17,14 @@ public class determinedPathsWindow {
     @FXML
     private Label pathNumberLabel;
 
+    @FXML
+    private AnchorPane pathsPane;
+
     public void setText( String text ) {
         this.pathNumberLabel.setText(text);
+    }
+
+    public void addLabel() {
+        this.pathsPane.getChildren().add(new Label("Ala ma 2 koty"));
     }
 }

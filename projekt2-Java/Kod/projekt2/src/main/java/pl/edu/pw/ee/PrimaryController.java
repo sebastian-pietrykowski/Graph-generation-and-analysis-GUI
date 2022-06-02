@@ -412,6 +412,7 @@ public class PrimaryController {
             Parent root1 = (Parent) fxmlLoader.load();
             determinedPathsWindow controller = fxmlLoader.getController();
             controller.setText("ala ma kota");
+            controller.addLabel();
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
             stage.setScene(new Scene(root1));
