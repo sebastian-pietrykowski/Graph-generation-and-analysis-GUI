@@ -190,8 +190,7 @@ public class GraphPane extends GridPane {
         createColumnNumbersLabels();
         createRowNumbersLabels();
         
-        performDijkstraForVertices(maxDistanceLabel);
-        addVerticesCircles();
+        addVerticesCirclesMarkDistances(0, maxDistanceLabel);
 
         determineMaxWeight(maxWeightLabel);
 
@@ -231,10 +230,22 @@ public class GraphPane extends GridPane {
         return pane;
     }
 
-    private void addVerticesCircles() {
+    public void addVerticesCirclesMarkDistances( int startVertexNumber, Label maxDistanceLabel ) {
+        performDijkstraForVertices(startVertexNumber, maxDistanceLabel);
         for( int i = 0; i < graph.getNumberOfVertices(); i++) {
             double distanceToVertex = distances[i];
-            Color filColor = verticesColorPicker.determineArrowColor(distanceToVertex);
+            Color filColor;
+            if( distances[i] == Double.POSITIVE_INFINITY)
+                filColor = Color.RED;
+            else
+                filColor = verticesColorPicker.determineArrowColor(distanceToVertex);
+            getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i, filColor));
+        }
+    }
+
+    public void addVerticesCirclesWithoutDistances() {
+        for( int i = 0; i < graph.getNumberOfVertices(); i++) {
+            Color filColor = circleFillColor;
             getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i, filColor));
         }
     }
@@ -325,7 +336,7 @@ public class GraphPane extends GridPane {
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
         else if( doExistEdgeFrom2To1 ) {
-            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
+            ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_UP);
 
             Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
@@ -372,17 +383,17 @@ public class GraphPane extends GridPane {
         }
     }
 
-    private void performDijkstraForVertices( Label maxDistanceLabel ) {
+    private void performDijkstraForVertices( int startVertexNumber, Label maxDistanceLabel ) {
         Dijkstra distancesDijkstra = new Dijkstra(graph);
-        distancesDijkstra.dijkstra(0);
+        distancesDijkstra.dijkstra(startVertexNumber);
         distances = distancesDijkstra.getDistances();
         double maxDistance = -1;
         for( double distance: distances)
-            if( distance > maxDistance )
+            if( (distance > maxDistance) && (distance < Double.POSITIVE_INFINITY) )
                 maxDistance = distance;
         verticesColorPicker = new ArrowWeightColorPicker(maxDistance);
         
-        String trimmedMaxDistance = (""+maxDistance).substring(0,6);
+        String trimmedMaxDistance = maxDistance == 0 ? maxDistance+"" : (""+maxDistance).substring(0,6);
         maxDistanceLabel.setText(""+trimmedMaxDistance);
         maxDistanceLabel.setAlignment(Pos.CENTER);
     }

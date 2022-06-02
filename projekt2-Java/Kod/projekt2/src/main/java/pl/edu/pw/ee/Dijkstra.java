@@ -85,7 +85,8 @@ public class Dijkstra {
                 int fromVertex = uncheckedVerticesPQ.remove().getVertex();
                 checkedVerticesSet.add( fromVertex );
                 for( int toVertex: graph.getNeighbors(fromVertex) )
-                    relax(fromVertex, toVertex);
+                    if( graph.containsEdge(fromVertex, toVertex))
+                        relax(fromVertex, toVertex);
         }
     }
 
