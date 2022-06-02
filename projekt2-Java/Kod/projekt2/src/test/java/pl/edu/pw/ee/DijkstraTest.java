@@ -10,6 +10,9 @@ import java.util.LinkedList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import MyExceptions.IllegalVertexException;
+import MyExceptions.IllegalWeightException;
+
 public class DijkstraTest {
     
     static String folderAbsolutePath;
@@ -35,7 +38,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void dijkstra_graph0_5x5_connected_isPredecessorsArrayProper() throws IOException {
+    public void dijkstra_graph0_5x5_connected_isPredecessorsArrayProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.dijkstra(0);
@@ -52,7 +55,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph0_5x5_connected_0to0_isProper() throws IOException {
+    public void determineShortestPath_graph0_5x5_connected_0to0_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
         
@@ -63,7 +66,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph0_5x5_connected_5to5_isProper() throws IOException {
+    public void determineShortestPath_graph0_5x5_connected_5to5_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -74,7 +77,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph0_5x5_connected_2to4_isProper() throws IOException {
+    public void determineShortestPath_graph0_5x5_connected_2to4_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -85,7 +88,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph0_5x5_connected_0to13_isProper() throws IOException {
+    public void determineShortestPath_graph0_5x5_connected_0to13_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -96,7 +99,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph0_5x5_connected_0to24_isProper() throws IOException {
+    public void determineShortestPath_graph0_5x5_connected_0to24_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -110,7 +113,7 @@ public class DijkstraTest {
 
 
     @Test
-    public void dijkstra_graph1_5x5_connected_with_cycle_isPredecessorsArrayProper() throws IOException {
+    public void dijkstra_graph1_5x5_connected_with_cycle_isPredecessorsArrayProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.dijkstra(0);
@@ -127,7 +130,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to1_isProper() throws IOException {
+    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to1_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -138,7 +141,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph1_5x5_connected_with_cycle_1to0_isProper() throws IOException {
+    public void determineShortestPath_graph1_5x5_connected_with_cycle_1to0_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -149,7 +152,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to3_isProper() throws IOException {
+    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to3_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
         
@@ -160,7 +163,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph1_5x5_connected_with_cycle_10to8_isProper() throws IOException {
+    public void determineShortestPath_graph1_5x5_connected_with_cycle_10to8_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -169,7 +172,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to24_isProper() throws IOException {
+    public void determineShortestPath_graph1_5x5_connected_with_cycle_0to24_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[1]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -183,7 +186,7 @@ public class DijkstraTest {
 
 
     @Test
-    public void dijkstra_graph2_4x7_connected_isPredecessorsArrayProper() throws IOException {
+    public void dijkstra_graph2_4x7_connected_isPredecessorsArrayProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[2]));
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.dijkstra(0);
@@ -202,7 +205,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph2_4x7_connected_0to9_isProper() throws IOException {
+    public void determineShortestPath_graph2_4x7_connected_0to9_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[2]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -213,7 +216,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph2_4x7_connected_10to16_isProper() throws IOException {
+    public void determineShortestPath_graph2_4x7_connected_10to16_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[2]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -227,7 +230,7 @@ public class DijkstraTest {
 
 
     @Test
-    public void dijkstra_graph3_3x5_unconnected_isPredecessorsArrayProper() throws IOException {
+    public void dijkstra_graph3_3x5_unconnected_isPredecessorsArrayProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.dijkstra(0);
@@ -244,7 +247,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph3_3x5_unconnected_5to3_isProper() throws IOException {
+    public void determineShortestPath_graph3_3x5_unconnected_5to3_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -253,7 +256,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph3_3x5_unconnected_4to9_isProper() throws IOException {
+    public void determineShortestPath_graph3_3x5_unconnected_4to9_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -262,7 +265,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph3_3x5_unconnected_0to14_isProper() throws IOException {
+    public void determineShortestPath_graph3_3x5_unconnected_0to14_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -273,7 +276,7 @@ public class DijkstraTest {
     }
 
     @Test
-    public void determineShortestPath_graph3_3x5_unconnected_4to11_isProper() throws IOException {
+    public void determineShortestPath_graph3_3x5_unconnected_4to11_isProper() throws IOException, IllegalVertexException, IllegalWeightException {
         Graph graph = Graph.readGraph(new File(graphsPaths[3]));
         Dijkstra dijkstra = new Dijkstra(graph);
 

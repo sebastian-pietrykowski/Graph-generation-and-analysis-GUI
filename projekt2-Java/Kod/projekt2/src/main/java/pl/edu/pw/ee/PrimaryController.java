@@ -5,9 +5,11 @@ import MyExceptions.IllegalWeightException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,6 +21,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -27,6 +31,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -34,6 +39,7 @@ import pl.edu.pw.ee.generator.CompleteGraphGenerator;
 import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
 import pl.edu.pw.ee.generator.RandomGraphGenerator;
+import pl.edu.pw.ee.graphGraphics.ArrowWeightColorPicker;
 import pl.edu.pw.ee.graphGraphics.GraphPane;
 
 public class PrimaryController {
@@ -50,6 +56,12 @@ public class PrimaryController {
 
     @FXML
     public Pane graphPaneParent;
+
+    @FXML
+    private Pane weightGradientPane;
+
+    @FXML
+    private Label maxWeightLabel;
 
     @FXML
     private Button btnLoadGraph;
@@ -130,6 +142,12 @@ public class PrimaryController {
         MessageLabel.setWrapText(true);
     }
 
+    public void setWeightGradientPane() {
+        ArrowWeightColorPicker arrowWeightColorPicker = new ArrowWeightColorPicker();
+        Paint weightGradient = arrowWeightColorPicker.getGradient();
+        this.weightGradientPane.setBackground(new Background(new BackgroundFill(weightGradient, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
     @FXML
     private void loadGraph(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -143,7 +161,8 @@ public class PrimaryController {
         if (file != null) {
             try {
                 this.graph = Graph.readGraph(file);
-                this.graphPane.setGraph(this.graph);
+                this.initializeGraphPane();
+                this.graphPane.setGraph(this.graph, this.maxWeightLabel);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -183,7 +202,8 @@ public class PrimaryController {
         if (file != null) {
             try {
                 graph.writeGraph(file);
-                graphPane.setGraph(graph);
+                this.initializeGraphPane();
+                graphPane.setGraph(graph, maxWeightLabel);
             } catch (IOException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -272,7 +292,8 @@ public class PrimaryController {
                     }
 
                 }
-                graphPane.setGraph(graph);
+                this.initializeGraphPane();
+                graphPane.setGraph(graph, maxWeightLabel);
             } catch (NumberFormatException e) {
                 MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
                 Alert alert = new Alert(AlertType.ERROR);
@@ -344,8 +365,7 @@ public class PrimaryController {
         mode1AllVertices.setSelected(false);
         mode2Connective.setSelected(false);
         mode3Random.setSelected(false);
-        Graph cleanGraph = new Graph(0,0);
-        graphPane.setGraph(cleanGraph);
+        this.initializeGraphPane();
         MessageLabel.setText("");
 
     }
