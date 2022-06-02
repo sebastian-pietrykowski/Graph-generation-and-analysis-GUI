@@ -1,9 +1,5 @@
 package pl.edu.pw.ee.graphGraphics;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,7 +8,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -27,13 +22,10 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
-import pl.edu.pw.ee.App;
 import pl.edu.pw.ee.Dijkstra;
 import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.EdgeWithoutWeight;
 import pl.edu.pw.ee.Graph;
-import pl.edu.pw.ee.PrimaryController;
-import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
@@ -43,9 +35,11 @@ public class GraphPane extends GridPane {
     private int cellDimension;
 
     private Graph graph;
+    private double[] distances;
     private StackPane[][] cells;
     private Map<EdgeWithoutWeight,ArrowPane> arrows;
     private ArrowWeightColorPicker arrowWeightColorPicker;
+    private ArrowWeightColorPicker verticesColorPicker;
     private PathOnGraphInfoContainer pathInfoContainer;
 
     private int numberOfRowsInGraph;
@@ -175,18 +169,18 @@ public class GraphPane extends GridPane {
         return cells[edgeRowInGridNumber][edgeColumnInGridNumber];
     }
 
-    private Circle createVertexCircle() {
+    private Circle createVertexCircle(Color fillColor) {
         Circle circle = new Circle(cellDimension/2 *0.8);
         circle.setStroke(circleStrokeColor);
         circle.setStrokeWidth(2);
         circle.setStrokeType(StrokeType.CENTERED);
-        circle.setFill(circleFillColor);
+        circle.setFill(fillColor);
         circle.relocate(0,0);
         
         return circle;
     }
 
-    public void setGraph( Graph graph, Label maxWeightLabel, PathOnGraphInfoContainer pathInfoContainer ) {
+    public void setGraph( Graph graph, Label maxWeightLabel, Label maxDistanceLabel, PathOnGraphInfoContainer pathInfoContainer ) {
         this.graph = graph;
         this.pathInfoContainer = pathInfoContainer;
         setDimensionsSizes(graph.getRows(), graph.getColumns());
@@ -196,14 +190,10 @@ public class GraphPane extends GridPane {
         createColumnNumbersLabels();
         createRowNumbersLabels();
         
+        performDijkstraForVertices(maxDistanceLabel);
         addVerticesCircles();
-        double maxWeight = graph.getMaxWeight();
-        arrowWeightColorPicker = new ArrowWeightColorPicker(maxWeight);
-        drawEdgesWeightColors();
-        String trimmedMaxWeight = (""+maxWeight).substring(0,6);
-        maxWeightLabel.setText(""+trimmedMaxWeight);
-        maxWeightLabel.setAlignment(Pos.CENTER);
- 
+
+        determineMaxWeight(maxWeightLabel);
 
         /*
         // graf 5x5 spójny
@@ -224,8 +214,8 @@ public class GraphPane extends GridPane {
         */
     }
 
-    private StackPane createCircleWithVertexNumber( int vertexNumber ) {
-        Circle vertexCircle = createVertexCircle();
+    private StackPane createCircleWithVertexNumber( int vertexNumber, Color fillColor ) {
+        Circle vertexCircle = createVertexCircle(fillColor);
         Text vertexNumberText = new Text(""+vertexNumber);
         //vertexNumberText.setFont(new Font(30));
         vertexNumberText.setBoundsType(TextBoundsType.VISUAL);
@@ -242,8 +232,11 @@ public class GraphPane extends GridPane {
     }
 
     private void addVerticesCircles() {
-        for( int i = 0; i < graph.getNumberOfVertices(); i++)
-            getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i));
+        for( int i = 0; i < graph.getNumberOfVertices(); i++) {
+            double distanceToVertex = distances[i];
+            Color filColor = verticesColorPicker.determineArrowColor(distanceToVertex);
+            getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i, filColor));
+        }
     }
 
     private void drawEdgesWeightColors() {
@@ -377,6 +370,30 @@ public class GraphPane extends GridPane {
                 Color edgeColor = arrowWeightColorPicker.determineArrowColor(edgeWithWeight.getWeight());
                 arrowPane.drawArrow(edgeColor);
         }
+    }
+
+    private void performDijkstraForVertices( Label maxDistanceLabel ) {
+        Dijkstra distancesDijkstra = new Dijkstra(graph);
+        distancesDijkstra.dijkstra(0);
+        distances = distancesDijkstra.getDistances();
+        double maxDistance = -1;
+        for( double distance: distances)
+            if( distance > maxDistance )
+                maxDistance = distance;
+        verticesColorPicker = new ArrowWeightColorPicker(maxDistance);
+        
+        String trimmedMaxDistance = (""+maxDistance).substring(0,6);
+        maxDistanceLabel.setText(""+trimmedMaxDistance);
+        maxDistanceLabel.setAlignment(Pos.CENTER);
+    }
+
+    private void determineMaxWeight( Label maxWeightLabel ) {
+        double maxWeight = graph.getMaxWeight();
+        arrowWeightColorPicker = new ArrowWeightColorPicker(maxWeight);
+        drawEdgesWeightColors();
+        String trimmedMaxWeight = (""+maxWeight).substring(0,6);
+        maxWeightLabel.setText(""+trimmedMaxWeight);
+        maxWeightLabel.setAlignment(Pos.CENTER);
     }
     
 }

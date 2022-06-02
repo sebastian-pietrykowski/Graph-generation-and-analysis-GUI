@@ -68,6 +68,9 @@ public class PrimaryController {
     private Label maxWeightLabel;
 
     @FXML
+    private Label maxDistanceLabel;
+
+    @FXML
     private Button btnLoadGraph;
 
     @FXML
@@ -146,7 +149,7 @@ public class PrimaryController {
     public void setGraph( Graph graph ) {
         initializeGraphPane();
         this.pathInfoContainer = new PathOnGraphInfoContainer();
-        graphPane.setGraph(graph, maxWeightLabel, pathInfoContainer);
+        graphPane.setGraph(graph, maxWeightLabel, maxDistanceLabel, pathInfoContainer);
         
     }
 

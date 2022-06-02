@@ -32,6 +32,7 @@ public class Dijkstra {
     }
     
     public int[] getPredecessors() { return predecessors; }
+    public double[] getDistances() { return distances; }
 
     /**
      * Initiates values according to Dijkstra's Algorithm.

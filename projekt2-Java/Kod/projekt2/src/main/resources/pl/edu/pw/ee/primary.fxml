@@ -120,13 +120,14 @@
             <Button fx:id="btnDeterminedPaths" layoutX="8.0" layoutY="174.0" mnemonicParsing="false" onAction="#determinedPathsWindow" text="Wyznaczone ścieżki" />
          </children>
       </AnchorPane>
-      <GridPane layoutX="5.0" layoutY="415.0" prefHeight="34.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
+      <GridPane layoutX="5.0" layoutY="415.0" prefHeight="51.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <GridPane style="-fx-background-color: WHITESMOKE;">
@@ -157,6 +158,29 @@
                </children>
             </GridPane>
             <Pane fx:id="weightGradientPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <GridPane style="-fx-background-color: WHITESMOKE;" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="214.0" text="Skala wag węzłów" GridPane.columnIndex="1" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label fx:id="maxDistanceLabel" alignment="CENTER" layoutX="61.0" prefHeight="18.0" prefWidth="47.0" text="1.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="21.0" text="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>
