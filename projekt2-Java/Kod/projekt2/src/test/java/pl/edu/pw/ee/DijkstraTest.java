@@ -1,6 +1,7 @@
 package pl.edu.pw.ee;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -60,9 +61,9 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
         
-        int[] actual = dijkstra.determineShortestPath(0, 0).getPath();
-        int[] expected = {0};
-        assertArrayEquals(expected, actual);
+        PathOnGraph actual = dijkstra.determineShortestPath(0, 0);
+        PathOnGraph expected = null;
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -70,9 +71,9 @@ public class DijkstraTest {
         Graph graph = Graph.readGraph(new File(graphsPaths[0]));
         Dijkstra dijkstra = new Dijkstra(graph);
 
-        int[] actual = dijkstra.determineShortestPath(5, 5).getPath();
-        int[] expected = {5};
-        assertArrayEquals(expected, actual);
+        PathOnGraph actual = dijkstra.determineShortestPath(5, 5);
+        PathOnGraph expected = null;
+        assertEquals(expected, actual);
     }
 
     @Test

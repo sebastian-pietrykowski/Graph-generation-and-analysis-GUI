@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.GeneratorTest;
+package pl.edu.pw.ee;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;

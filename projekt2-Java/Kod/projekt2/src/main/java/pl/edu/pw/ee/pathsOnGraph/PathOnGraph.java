@@ -3,6 +3,7 @@ package pl.edu.pw.ee.pathsOnGraph;
 import java.util.ArrayList;
 
 import pl.edu.pw.ee.Edge;
+import pl.edu.pw.ee.EdgeWithoutWeight;
 import pl.edu.pw.ee.Graph;
 
 public class PathOnGraph {
@@ -34,7 +35,7 @@ public class PathOnGraph {
     public String getPathToStringStandardVariant() {
         String pathToString = "";
         for( int vertexNumber = 0; vertexNumber < path.length-1; vertexNumber++)
-            pathToString += vertexNumber + " -> ";
+            pathToString += path[vertexNumber] + " -> ";
         pathToString += path[path.length-1];
         return pathToString;
     }
@@ -49,10 +50,10 @@ public class PathOnGraph {
         return pahtToString;
     }
     
-    public ArrayList<Edge> getEdgesWithoutWeight() {
-        ArrayList<Edge> list = new ArrayList<>();
+    public ArrayList<EdgeWithoutWeight> getEdgesWithoutWeight() {
+        ArrayList<EdgeWithoutWeight> list = new ArrayList<>();
         for( int vertexIndex = 1; vertexIndex < path.length; vertexIndex++ )
-            list.add(new Edge(path[vertexIndex-1], vertexIndex));
+            list.add(new EdgeWithoutWeight(path[vertexIndex-1], path[vertexIndex]));
         return list;
     }
 }

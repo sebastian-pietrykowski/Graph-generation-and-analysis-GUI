@@ -1,25 +1,22 @@
 package pl.edu.pw.ee;
 
-public class Edge {
+public class Edge extends EdgeWithoutWeight {
 
-    private int fromVertex;
-    private int toVertex;
     private double weight;
 
-    public Edge(int fromVertex, int toVertex ) {
-        this.fromVertex = fromVertex;
-        this.toVertex = toVertex;
+    public Edge(int fromVertex, int toVertex) {
+        super( fromVertex, toVertex );
     }
+
     public Edge(int fromVertex, int toVertex, double weight) {
-        this( fromVertex, toVertex );
+        super( fromVertex, toVertex );
         this.weight = weight;
     }
 
-    public int getFromVertex() { return fromVertex; }
-    public int getToVertex() { return toVertex; }
+    public int getFromVertex() { return super.getFromVertex(); }
+    public int getToVertex() { return super.getToVertex(); }
     public void setWeight( double weight ) {
-
+        this.weight = weight;
     }
-
     public double getWeight() { return weight; }
 }

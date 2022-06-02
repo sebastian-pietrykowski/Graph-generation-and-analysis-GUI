@@ -3,6 +3,7 @@ package pl.edu.pw.ee.graphGraphics;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -28,6 +30,7 @@ import javafx.scene.text.TextBoundsType;
 import pl.edu.pw.ee.App;
 import pl.edu.pw.ee.Dijkstra;
 import pl.edu.pw.ee.Edge;
+import pl.edu.pw.ee.EdgeWithoutWeight;
 import pl.edu.pw.ee.Graph;
 import pl.edu.pw.ee.PrimaryController;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
@@ -41,7 +44,7 @@ public class GraphPane extends GridPane {
 
     private Graph graph;
     private StackPane[][] cells;
-    private Map<Edge,ArrowPane> arrows;
+    private Map<EdgeWithoutWeight,ArrowPane> arrows;
     private ArrowWeightColorPicker arrowWeightColorPicker;
     private PathOnGraphInfoContainer pathInfoContainer;
 
@@ -77,8 +80,6 @@ public class GraphPane extends GridPane {
         
         createColumnNumbersLabels();
         createRowNumbersLabels();
-
-        
     }
 
     private void setDimensionsSizes( int numberOfRowsInGraph, int numberOfColumnsInGraph ) {
@@ -198,17 +199,29 @@ public class GraphPane extends GridPane {
         addVerticesCircles();
         double maxWeight = graph.getMaxWeight();
         arrowWeightColorPicker = new ArrowWeightColorPicker(maxWeight);
-        drawEdges();
+        drawEdgesWeightColors();
         String trimmedMaxWeight = (""+maxWeight).substring(0,6);
         maxWeightLabel.setText(""+trimmedMaxWeight);
         maxWeightLabel.setAlignment(Pos.CENTER);
+ 
 
-        PathOnGraph path =  new Dijkstra(graph).determineShortestPath(0, 1);
+        /*
+        // graf 5x5 spójny
+        PathOnGraph path =  new Dijkstra(graph).determineShortestPath(0, 13);
         PathOnGraphInfo pathInfo = new PathOnGraphInfo(path);
         pathInfoContainer.addPath(pathInfo);
 
-        //disableAllArrows();
+        PathOnGraph path2 =  new Dijkstra(graph).determineShortestPath(3, 8);
+        PathOnGraphInfo pathInfo2 = new PathOnGraphInfo(path2);
+        pathInfoContainer.addPath(pathInfo2);
 
+        markSelectedPaths();
+
+        markPathAsActual(2);
+        markPathAsActual(1);
+
+        drawEdgesWeightColors();
+        */
     }
 
     private StackPane createCircleWithVertexNumber( int vertexNumber ) {
@@ -233,7 +246,8 @@ public class GraphPane extends GridPane {
             getVertexCell(i).getChildren().add(createCircleWithVertexNumber(i));
     }
 
-    private void drawEdges() {
+    private void drawEdgesWeightColors() {
+        arrows.clear();
         // add horizontal edges
         for( int verticalCounter = 0; verticalCounter < graph.getRows(); verticalCounter++)
             for( int horizontalCounter = 1; horizontalCounter < graph.getColumns(); horizontalCounter++ ) {
@@ -265,8 +279,8 @@ public class GraphPane extends GridPane {
             
             splitCell.getUpperPane().drawArrow(edgeFrom1To2ArrowColor);
             splitCell.getLowerPane().drawArrow(edgeFrom2To1ArrowColor);
-            arrows.put(new Edge(vertex1, vertex2), splitCell.getUpperPane());
-            arrows.put(new Edge(vertex2, vertex1), splitCell.getLowerPane());
+            arrows.put(new EdgeWithoutWeight(vertex1, vertex2), splitCell.getUpperPane());
+            arrows.put(new EdgeWithoutWeight(vertex2, vertex1), splitCell.getLowerPane());
         }
         else if( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.HORIZONTAL_TO_RIGHT);
@@ -274,7 +288,7 @@ public class GraphPane extends GridPane {
             Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
 
-            arrows.put(new Edge(vertex1, vertex2), arrowPane);
+            arrows.put(new EdgeWithoutWeight(vertex1, vertex2), arrowPane);
             arrowPane.drawArrow(edgeFrom1To2ArrowColor);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
@@ -284,7 +298,7 @@ public class GraphPane extends GridPane {
             Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
 
-            arrows.put(new Edge(vertex2, vertex1), arrowPane);
+            arrows.put(new EdgeWithoutWeight(vertex2, vertex1), arrowPane);
             arrowPane.drawArrow(edgeFrom2To1ArrowColor);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
@@ -304,8 +318,8 @@ public class GraphPane extends GridPane {
 
             splitCell.getLeftPane().drawArrow(edgeFrom1To2ArrowColor);
             splitCell.getRightPane().drawArrow(edgeFrom2To1ArrowColor);
-            arrows.put(new Edge(vertex1, vertex2), splitCell.getLeftPane());
-            arrows.put(new Edge(vertex2, vertex1), splitCell.getRightPane());
+            arrows.put(new EdgeWithoutWeight(vertex1, vertex2), splitCell.getLeftPane());
+            arrows.put(new EdgeWithoutWeight(vertex2, vertex1), splitCell.getRightPane());
         }
         else if( doExistEdgeFrom1To2 ) {
             ArrowPane arrowPane = new ArrowPane(cellDimension, cellDimension, ArrowDirections.VERTICAL_TO_DOWN);
@@ -313,7 +327,7 @@ public class GraphPane extends GridPane {
             Edge edgeFrom1To2 = graph.getEdge(vertex1, vertex2);
             Color edgeFrom1To2ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom1To2.getWeight());
 
-            arrows.put(new Edge(vertex1, vertex2), arrowPane);
+            arrows.put(new EdgeWithoutWeight(vertex1, vertex2), arrowPane);
             arrowPane.drawArrow(edgeFrom1To2ArrowColor);
             getEdgeCell(vertex1, vertex2).getChildren().add(arrowPane);
         }
@@ -323,27 +337,45 @@ public class GraphPane extends GridPane {
             Edge edgeFrom2To1 = graph.getEdge(vertex2, vertex1);
             Color edgeFrom2To1ArrowColor = arrowWeightColorPicker.determineArrowColor(edgeFrom2To1.getWeight());
 
-            arrows.put(new Edge(vertex2, vertex1), arrowPane);
+            arrows.put(new EdgeWithoutWeight(vertex2, vertex1), arrowPane);
             arrowPane.drawArrow(edgeFrom2To1ArrowColor);
             getEdgeCell(vertex2, vertex1).getChildren().add(arrowPane);
         }
     }
 
     public void disableAllArrows() {
-        for (Entry<Edge, ArrowPane> entry : arrows.entrySet())
+        for (Entry<EdgeWithoutWeight, ArrowPane> entry : arrows.entrySet())
             entry.getValue().disableArrow();
     }
-/* 
-    public void temporarilyDisableArrows() {
-        for( PathOnGraphInfo pathInfo: pathInfoContainer.)
+ 
+    public void markSelectedPaths() {
+        disableAllArrows();
+        for( PathOnGraphInfo pathInfo: pathInfoContainer.getElements() ) {
+            for( EdgeWithoutWeight edge: pathInfo.getPathOnGraph().getEdgesWithoutWeight() ) {
+                ArrowPane arrowPane = arrows.get(edge);
+                arrowPane.clearPane();
+                arrowPane.drawArrow(pathInfo.getPathColor());
+            }
+        }
     }
-*/
 
-
-    public void markPath() {
-        //horizontal line
-        for( int vertex = 0; vertex < graph.getColumns(); vertex++ ) {
-
+    public void markPathAsActual( int pathNumber ) {
+        // temporarily disable arrows
+        for( PathOnGraphInfo pathInfo: pathInfoContainer.getElements() ) {
+            for( EdgeWithoutWeight edge: pathInfo.getPathOnGraph().getEdgesWithoutWeight() ) {
+                ArrowPane arrowPane = arrows.get(edge);
+                arrowPane.clearPane();
+                arrowPane.temporarilyDisableArrow();
+            }
+        }
+        //mark current path
+        PathOnGraphInfo actualPath = pathInfoContainer.getPathOnGraphInfoByPathNumber(pathNumber);
+        for( EdgeWithoutWeight edge: actualPath.getPathOnGraph().getEdgesWithoutWeight() ) {
+                ArrowPane arrowPane = arrows.get(edge);
+                arrowPane.clearPane();
+                Edge edgeWithWeight = graph.getEdge(edge.getFromVertex(), edge.getToVertex());
+                Color edgeColor = arrowWeightColorPicker.determineArrowColor(edgeWithWeight.getWeight());
+                arrowPane.drawArrow(edgeColor);
         }
     }
     

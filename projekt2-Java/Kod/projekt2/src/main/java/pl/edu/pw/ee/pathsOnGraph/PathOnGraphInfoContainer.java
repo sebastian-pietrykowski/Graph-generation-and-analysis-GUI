@@ -27,6 +27,17 @@ public class PathOnGraphInfoContainer {
         pathsInfos.remove(arrayIndex);
     }
 
+    public PathOnGraphInfo getPathOnGraphInfoByPathNumber( int pathNumber ) {
+        for( PathOnGraphInfo pathInfo: pathsInfos)
+            if( pathInfo.getPathNumber() == pathNumber )
+                return pathInfo;
+        return null;
+    }
+
+    public PathOnGraphInfo getPathOnGraphInfoByArrayIndex( int arrayIndex ) {
+        return pathsInfos.get(arrayIndex);
+    }
+
     public int getPathsNumber() { return pathsInfos.size(); }
 
     public ArrayList<PathOnGraphInfo> getElements() { return pathsInfos; }

@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.graphGraphics;
 
+import java.util.Random;
+
 import javafx.scene.Scene;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
@@ -53,4 +55,10 @@ public class ArrowWeightColorPicker {
     }
 
     public LinearGradient getGradient() { return linearGradient; }
+
+    public Color getRandomColor() {
+        int number = new Random().nextInt(100);
+        Color color = gradientSnapshot.getPixelReader().getColor(number, 0);
+        return color;
+    }
 }

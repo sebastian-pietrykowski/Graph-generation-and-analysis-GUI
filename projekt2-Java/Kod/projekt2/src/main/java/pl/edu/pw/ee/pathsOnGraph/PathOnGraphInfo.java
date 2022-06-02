@@ -1,5 +1,8 @@
 package pl.edu.pw.ee.pathsOnGraph;
 
+import javafx.scene.paint.Color;
+import pl.edu.pw.ee.graphGraphics.ArrowWeightColorPicker;
+
 public class PathOnGraphInfo {
 
     private PathOnGraph pathOnGraph;
@@ -7,12 +10,16 @@ public class PathOnGraphInfo {
     private boolean visibilityOnGraph;
     private boolean weightVisibilityOnGraph;
     private boolean markedToDelete;
+    private Color pathColor;
     
     public PathOnGraphInfo( PathOnGraph pathOnGraph) {
         this.pathOnGraph = pathOnGraph;
         this.visibilityOnGraph = true;
         this.weightVisibilityOnGraph = false;
         this.markedToDelete = false;
+
+        ArrowWeightColorPicker colorPicker = new ArrowWeightColorPicker();
+        this.pathColor =  colorPicker.getRandomColor();
     }
 
     public PathOnGraph getPathOnGraph() {
@@ -51,5 +58,5 @@ public class PathOnGraphInfo {
         this.markedToDelete = markedToDelete;
     }
 
-    
+    public Color getPathColor() { return this.pathColor; }
 }

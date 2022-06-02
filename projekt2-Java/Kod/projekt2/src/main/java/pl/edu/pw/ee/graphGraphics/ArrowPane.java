@@ -19,7 +19,7 @@ public class ArrowPane extends Pane {
     private int arrowDirection; //specified in ArrowDirections class
 
     public static final Color disabledArrowColor = Color.BLACK;
-    public static final Color temporarilyDisabledArrowColor = Color.GREY;
+    public static final Color temporarilyDisabledArrowColor = Color.DARKGREY;
 
     public ArrowPane(int width, int height, int arrowDirection ) {
         this.setMinWidth(width);

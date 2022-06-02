@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.GeneratorTest;
+package pl.edu.pw.ee;
 
 import pl.edu.pw.ee.BFS;
 import pl.edu.pw.ee.Edge;
