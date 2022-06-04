@@ -4,19 +4,13 @@
  */
 package pl.edu.pw.ee;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
+import pl.edu.pw.ee.graphGraphics.GraphPane;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
@@ -28,70 +22,90 @@ public class DeterminedPathsWindow {
     @FXML
     private Button removeButton;
 
+    @FXML
+    private Button markPathsButton;
+
+    @FXML
+    private Button unmarkPathsButton;
+
+    @FXML
+    private Button unmarkNodesButton;
+
+    @FXML
+    private Button removeAllButton;
+
     private PathOnGraphInfoContainer pathInfoContainer;
     private GridPane pathsPane;
-    private static final int rowHeight = 35;
-    final ToggleGroup weightVisibilityGroup = new ToggleGroup();
+    private GraphPane graphPane;
+    private Graph graph;
 
-    public void initialize( PathOnGraphInfoContainer pathInfoContainer ) {
+    private static final int rowHeight = 35;
+
+    public void initialize( PathOnGraphInfoContainer pathInfoContainer, GraphPane graphPane, Graph graph ) {
         this.pathInfoContainer = pathInfoContainer;
-        
+        this.graphPane = graphPane;
+        this.graph = graph;
+
         pathsPane = new GridPane();
         
         int rowCounter = 0;
         for( PathOnGraphInfo pathInfo: pathInfoContainer.getElements() ) {
-            GridPane rowPane = createPathRow(pathInfo);
+            DeterminedPathsRowPane rowPane = new DeterminedPathsRowPane().createPathRow(pathInfo, graphPane);
             pathsPane.add(rowPane, 0, rowCounter++);
         }
         
+        pathsPaneParent.getChildren().clear();
         pathsPaneParent.getChildren().add(pathsPane);
+        
+        addActionToButtons();
+        
     }
 
-    private GridPane createPathRow( PathOnGraphInfo pathInfo) {
-        GridPane pane = new GridPane();
-        pane.setMinWidth(585);
-        pane.setMinHeight(rowHeight);
-        setSizeOfColumnsAndRowsIdentical(pane);
-
-        Label pathNumberLabel = new Label( pathInfo.getPathNumber() +"" );
-        pane.add(pathNumberLabel, 0, 0);
+    private void addActionToButtons() {
         
+        markPathsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(graph!= null)
+                    graphPane.markSelectedPaths();
+            }
+        });
+        unmarkPathsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(graph!= null)
+                    graphPane.drawEdgesWeightColors();
+            }
+        });
+        unmarkNodesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(graph!= null)
+                    graphPane.addVerticesCirclesWithoutDistances();
+            }
+        });
 
-        Rectangle colorRectangle = new Rectangle(30, 30);
-        colorRectangle.setFill( pathInfo.getPathColor() );
-        pane.add(colorRectangle, 1, 0);
-
-        Label startVertexLabel = new Label( pathInfo.getPathOnGraph().getFromVertex() +"" );
-        pane.add(startVertexLabel, 2, 0);
-
-        Label endVertexLabel = new Label( pathInfo.getPathOnGraph().getToVertex() +"" );
-        pane.add(endVertexLabel, 3, 0);
-
-        RadioButton weightVisibilityRadioButton = new RadioButton();
-        weightVisibilityRadioButton.setToggleGroup(weightVisibilityGroup);
-        pane.add(weightVisibilityRadioButton, 4, 0);
-
-        CheckBox deleteCheckBox = new CheckBox();
-        pane.add(deleteCheckBox, 5, 0);
-        
-        return pane;
+        removeAllButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(graph!= null) {
+                    pathInfoContainer.clearPathsInfos();
+                    graphPane.drawEdgesWeightColors();
+                    graphPane.addVerticesCirclesWithoutDistances();
+                    initialize(pathInfoContainer, graphPane, graph);
+                }
+            }
+        });
     }
 
-    private void setSizeOfColumnsAndRowsIdentical( GridPane pane ) {
-        ColumnConstraints cc = new ColumnConstraints();
-        cc.setMinWidth(100);
-        cc.setMaxWidth(rowHeight);
-        cc.setHalignment(HPos.CENTER);
-
-        for (int i = 0; i < 6; i++) {
-            pane.getColumnConstraints().add(cc);
+    public void clickedRemoveButton(ActionEvent event) {
+        for( int index = 0; index < pathInfoContainer.getPathsNumber(); index++ ) {
+            PathOnGraphInfo pathInfo = pathInfoContainer.getPathOnGraphInfoByArrayIndex(index);
+            if( pathInfo.isMarkedToDelete() ) {
+                pathInfoContainer.removePathByArrayIndex(index);
+                index--;
+            }
         }
-
-        RowConstraints rc = new RowConstraints();
-        rc.setPercentHeight(100d);
-        rc.setValignment(VPos.CENTER);
-        pane.getRowConstraints().add(rc);
-        
+        initialize(pathInfoContainer, graphPane, graph);
     }
-
 }

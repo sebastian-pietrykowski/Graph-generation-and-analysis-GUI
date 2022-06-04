@@ -190,7 +190,8 @@ public class GraphPane extends GridPane {
         createColumnNumbersLabels();
         createRowNumbersLabels();
         
-        addVerticesCirclesMarkDistances(0, maxDistanceLabel);
+        addVerticesCirclesWithoutDistances();
+        //addVerticesCirclesMarkDistances(0, maxDistanceLabel);
 
         determineMaxWeight(maxWeightLabel);
 
@@ -250,7 +251,7 @@ public class GraphPane extends GridPane {
         }
     }
 
-    private void drawEdgesWeightColors() {
+    public void drawEdgesWeightColors() {
         arrows.clear();
         // add horizontal edges
         for( int verticalCounter = 0; verticalCounter < graph.getRows(); verticalCounter++)
@@ -364,6 +365,7 @@ public class GraphPane extends GridPane {
     }
 
     public void markPathAsActual( int pathNumber ) {
+        disableAllArrows();
         // temporarily disable arrows
         for( PathOnGraphInfo pathInfo: pathInfoContainer.getElements() ) {
             for( EdgeWithoutWeight edge: pathInfo.getPathOnGraph().getEdgesWithoutWeight() ) {

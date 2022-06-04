@@ -3,8 +3,6 @@ package pl.edu.pw.ee;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -164,6 +162,10 @@ public class PrimaryController {
         ArrowWeightColorPicker arrowWeightColorPicker = new ArrowWeightColorPicker();
         Paint weightGradient = arrowWeightColorPicker.getGradient();
         this.weightGradientPane.setBackground(new Background(new BackgroundFill(weightGradient, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    public void initializePathInfoContainer() {
+        this.pathInfoContainer = new PathOnGraphInfoContainer();
     }
 
     @FXML
@@ -356,13 +358,14 @@ public class PrimaryController {
             } else {
                 if (extendedResultCheckBox.isSelected()) {
                     String path = pathOnGraph.getPathToStringExtendedVariant();
-                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
+                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka " + start + " do wierzchołka " + end + " to :\n" + path);
                 } else {
                     String path = pathOnGraph.getPathToStringStandardVariant();
-                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka" + start + " do wierzchołka " + end + " to :\n" + path);
+                    MessageLabel.setText("Najkrótsza ścieżka z wierzchołka " + start + " do wierzchołka " + end + " to :\n" + path);
                 }
                 PathOnGraphInfo pathInfo = new PathOnGraphInfo(pathOnGraph);
                 pathInfoContainer.addPath(pathInfo);
+                graphPane.markSelectedPaths();
             }
         } catch (NumberFormatException e) {
             MessageLabel.setText("Błąd, nie podano wierzchołków dla których ma być szukana ścieżka!");
@@ -408,6 +411,11 @@ public class PrimaryController {
         endTextField.setText("");
         extendedResultCheckBox.setSelected(false);
 
+        if( graph!= null) {
+            graphPane.addVerticesCirclesWithoutDistances();
+            graphPane.drawEdgesWeightColors();
+            pathInfoContainer.clearPathsInfos();
+        }
     }
 
     @FXML
@@ -438,7 +446,7 @@ public class PrimaryController {
             Parent root1 = (Parent) fxmlLoader.load();
 
             DeterminedPathsWindow controller = fxmlLoader.getController();
-            controller.initialize(pathInfoContainer);
+            controller.initialize(pathInfoContainer, graphPane, graph );
 
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
@@ -449,4 +457,13 @@ public class PrimaryController {
         }
     }
 
+    public void markNodes() {
+        if( graph != null )
+            graphPane.addVerticesCirclesMarkDistances(0, new Label());
+    }
+
+    public void unmarkNodes() {
+        if( graph != null )
+            graphPane.addVerticesCirclesWithoutDistances();
+    }
 }

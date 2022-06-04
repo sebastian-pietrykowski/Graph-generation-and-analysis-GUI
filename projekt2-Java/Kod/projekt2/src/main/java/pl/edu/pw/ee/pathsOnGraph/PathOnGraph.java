@@ -2,7 +2,6 @@ package pl.edu.pw.ee.pathsOnGraph;
 
 import java.util.ArrayList;
 
-import pl.edu.pw.ee.Edge;
 import pl.edu.pw.ee.EdgeWithoutWeight;
 import pl.edu.pw.ee.Graph;
 

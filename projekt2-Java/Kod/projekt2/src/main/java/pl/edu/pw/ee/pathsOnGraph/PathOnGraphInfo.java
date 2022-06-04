@@ -8,14 +8,12 @@ public class PathOnGraphInfo {
     private PathOnGraph pathOnGraph;
     private int pathNumber;
     private boolean visibilityOnGraph;
-    private boolean weightVisibilityOnGraph;
     private boolean markedToDelete;
     private Color pathColor;
     
     public PathOnGraphInfo( PathOnGraph pathOnGraph) {
         this.pathOnGraph = pathOnGraph;
         this.visibilityOnGraph = true;
-        this.weightVisibilityOnGraph = false;
         this.markedToDelete = false;
 
         ArrowWeightColorPicker colorPicker = new ArrowWeightColorPicker();
@@ -40,14 +38,6 @@ public class PathOnGraphInfo {
 
     public void setVisibilityOnGraph(boolean visibilityOnGraph) {
         this.visibilityOnGraph = visibilityOnGraph;
-    }
-
-    public boolean getWeightVisibilityOnGraph() {
-        return weightVisibilityOnGraph;
-    }
-
-    public void setWeightVisibilityOnGraph(boolean weightVisibilityOnGraph) {
-        this.weightVisibilityOnGraph = weightVisibilityOnGraph;
     }
 
     public boolean isMarkedToDelete() {

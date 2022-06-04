@@ -3,7 +3,6 @@ package pl.edu.pw.ee;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Set;
 

@@ -92,7 +92,7 @@
          <children>
             <Button fx:id="btnLoadGraph" alignment="CENTER" layoutX="46.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadGraph" prefHeight="25.0" prefWidth="142.0" text="Wczytaj graf" />
             <Button fx:id="btnCheckConnectivity" alignment="CENTER" layoutX="46.0" layoutY="47.0" mnemonicParsing="false" onAction="#checkGraphConnectivity" prefHeight="25.0" prefWidth="142.0" text="Sprawdź spójność grafu" />
-            <Button fx:id="btnCleanEverything" alignment="CENTER" layoutX="45.0" layoutY="79.0" mnemonicParsing="false" onAction="#cleanEverything" prefHeight="25.0" prefWidth="142.0" text="Wyczysc wszystko" />
+            <Button fx:id="btnCleanEverything" alignment="CENTER" layoutX="45.0" layoutY="79.0" mnemonicParsing="false" onAction="#cleanEverything" prefHeight="25.0" prefWidth="142.0" text="Wyczyść wszystko" />
          </children>
       </Pane>
       <Label fx:id="MessageLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="528.0" prefHeight="185.0" prefWidth="384.0" style="-fx-background-color: Whitesmoke; -fx-border-color: silver;" />
@@ -102,24 +102,6 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-    <AnchorPane layoutX="483.0" layoutY="500.0" minHeight="0.0" minWidth="0.0" prefHeight="213.0" prefWidth="234.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
-         <children>
-            <Label prefHeight="28.0" prefWidth="234.0" style="-fx-background-color: lightgreen; -fx-border-color: silver;" text="        Odnajdywanie ścieżki">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="8.0" layoutY="42.0" text="Start" />
-            <Label layoutX="8.0" layoutY="77.0" text="Koniec" />
-            <Label layoutX="8.0" layoutY="112.0" text="Wynik rozszerzony" />
-            <Button fx:id="btnDetermine" layoutX="8.0" layoutY="138.0" mnemonicParsing="false" onAction="#determinePath" text="Wyznacz" />
-            <TextField fx:id="startTextField" layoutX="120.0" layoutY="38.0" prefHeight="25.0" prefWidth="81.0" />
-            <TextField fx:id="endTextField" layoutX="120.0" layoutY="73.0" prefHeight="25.0" prefWidth="81.0" />
-            <CheckBox fx:id="extendedResultCheckBox" layoutX="152.0" layoutY="112.0" mnemonicParsing="false" />
-            <Button fx:id="btncleanPathParameters" layoutX="130.0" layoutY="138.0" mnemonicParsing="false" onAction="#cleanPathParametrs" text="Wyczyść" />
-            <Button fx:id="btnDeterminedPaths" layoutX="8.0" layoutY="174.0" mnemonicParsing="false" onAction="#determinedPathsWindow" text="Wyznaczone ścieżki" />
-         </children>
-      </AnchorPane>
       <GridPane layoutX="5.0" layoutY="415.0" prefHeight="51.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -183,5 +165,44 @@
             </GridPane>
          </children>
       </GridPane>
+      <ScrollPane layoutX="483.0" layoutY="495.0" prefHeight="176.0" prefWidth="234.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="221.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="234.0" style="-fx-background-color: lightgreen; -fx-border-color: silver;" text="        Odnajdywanie ścieżki">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="8.0" layoutY="42.0" text="Start" />
+                  <Label layoutX="8.0" layoutY="77.0" text="Koniec" />
+                  <Label layoutX="8.0" layoutY="112.0" text="Wynik rozszerzony" />
+                  <Button fx:id="btnDetermine" layoutX="8.0" layoutY="138.0" mnemonicParsing="false" onAction="#determinePath" text="Wyznacz" />
+                  <TextField fx:id="startTextField" layoutX="120.0" layoutY="38.0" prefHeight="25.0" prefWidth="81.0" />
+                  <TextField fx:id="endTextField" layoutX="120.0" layoutY="73.0" prefHeight="25.0" prefWidth="81.0" />
+                  <CheckBox fx:id="extendedResultCheckBox" layoutX="152.0" layoutY="112.0" mnemonicParsing="false" />
+                  <Button fx:id="btncleanPathParameters" layoutX="130.0" layoutY="138.0" mnemonicParsing="false" onAction="#cleanPathParametrs" text="Wyczyść" />
+                  <Button fx:id="btnDeterminedPaths" layoutX="8.0" layoutY="174.0" mnemonicParsing="false" onAction="#determinedPathsWindow" text="Wyznaczone ścieżki" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <AnchorPane layoutX="484.0" layoutY="681.0" prefHeight="42.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
+         <children>
+            <GridPane layoutX="7.0" layoutY="6.0" prefHeight="30.0" prefWidth="222.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#markNodes" text="Zaznacz węzły" GridPane.halignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#unmarkNodes" text="Odznacz węzły" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

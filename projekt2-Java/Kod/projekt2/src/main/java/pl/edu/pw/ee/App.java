@@ -23,6 +23,8 @@ public class App extends Application {
         controller.initializeGraphPane();
         controller.setWeightGradientPane();
         controller.initializeLabelText();
+        controller.initializePathInfoContainer();
+
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

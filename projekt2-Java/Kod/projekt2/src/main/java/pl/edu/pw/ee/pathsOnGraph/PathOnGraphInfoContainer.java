@@ -38,6 +38,8 @@ public class PathOnGraphInfoContainer {
         return pathsInfos.get(arrayIndex);
     }
 
+    public void clearPathsInfos() { pathsInfos.clear(); }
+
     public int getPathsNumber() { return pathsInfos.size(); }
 
     public ArrayList<PathOnGraphInfo> getElements() { return pathsInfos; }
