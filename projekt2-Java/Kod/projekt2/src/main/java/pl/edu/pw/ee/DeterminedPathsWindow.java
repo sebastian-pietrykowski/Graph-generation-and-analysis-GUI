@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import pl.edu.pw.ee.graphGraphics.GraphPane;
+import pl.edu.pw.ee.graphGraphics.GraphPaneController;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 
@@ -36,21 +36,21 @@ public class DeterminedPathsWindow {
 
     private PathOnGraphInfoContainer pathInfoContainer;
     private GridPane pathsPane;
-    private GraphPane graphPane;
+    private GraphPaneController graphPaneController;
     private Graph graph;
 
     private static final int rowHeight = 35;
 
-    public void initialize( PathOnGraphInfoContainer pathInfoContainer, GraphPane graphPane, Graph graph ) {
+    public void initialize( PathOnGraphInfoContainer pathInfoContainer, GraphPaneController graphPaneController, Graph graph ) {
         this.pathInfoContainer = pathInfoContainer;
-        this.graphPane = graphPane;
+        this.graphPaneController = graphPaneController;
         this.graph = graph;
 
         pathsPane = new GridPane();
         
         int rowCounter = 0;
         for( PathOnGraphInfo pathInfo: pathInfoContainer.getElements() ) {
-            DeterminedPathsRowPane rowPane = new DeterminedPathsRowPane().createPathRow(pathInfo, graphPane);
+            DeterminedPathsRowPane rowPane = new DeterminedPathsRowPane().createPathRow(pathInfo, graphPaneController);
             pathsPane.add(rowPane, 0, rowCounter++);
         }
         
@@ -67,21 +67,21 @@ public class DeterminedPathsWindow {
             @Override
             public void handle(ActionEvent event) {
                 if(graph!= null)
-                    graphPane.markSelectedPaths();
+                    graphPaneController.markSelectedPaths();
             }
         });
         unmarkPathsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(graph!= null)
-                    graphPane.drawEdgesWeightColors();
+                    graphPaneController.drawEdgesWeightColors();
             }
         });
         unmarkNodesButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(graph!= null)
-                    graphPane.addVerticesCirclesWithoutDistances();
+                    graphPaneController.addVerticesCirclesWithoutDistances();
             }
         });
 
@@ -90,9 +90,9 @@ public class DeterminedPathsWindow {
             public void handle(ActionEvent event) {
                 if(graph!= null) {
                     pathInfoContainer.clearPathsInfos();
-                    graphPane.drawEdgesWeightColors();
-                    graphPane.addVerticesCirclesWithoutDistances();
-                    initialize(pathInfoContainer, graphPane, graph);
+                    graphPaneController.drawEdgesWeightColors();
+                    graphPaneController.addVerticesCirclesWithoutDistances();
+                    initialize(pathInfoContainer, graphPaneController, graph);
                 }
             }
         });
@@ -106,6 +106,6 @@ public class DeterminedPathsWindow {
                 index--;
             }
         }
-        initialize(pathInfoContainer, graphPane, graph);
+        initialize(pathInfoContainer, graphPaneController, graph);
     }
 }

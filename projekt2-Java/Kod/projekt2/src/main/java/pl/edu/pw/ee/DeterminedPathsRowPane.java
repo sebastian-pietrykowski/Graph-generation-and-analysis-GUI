@@ -11,19 +11,19 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
-import pl.edu.pw.ee.graphGraphics.GraphPane;
+import pl.edu.pw.ee.graphGraphics.GraphPaneController;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 
 public class DeterminedPathsRowPane extends GridPane{
     
     public static final int rowHeight = 35;
     private PathOnGraphInfo pathInfo;
-    private GraphPane graphPane;
+    private GraphPaneController graphPaneController;
 
-    public DeterminedPathsRowPane createPathRow( PathOnGraphInfo pathInfo, GraphPane graphPane ) {
+    public DeterminedPathsRowPane createPathRow( PathOnGraphInfo pathInfo, GraphPaneController graphPaneController ) {
 
         this.pathInfo = pathInfo;
-        this.graphPane = graphPane;
+        this.graphPaneController = graphPaneController;
 
         this.setMinWidth(585);
         this.setMinHeight(rowHeight);
@@ -105,8 +105,8 @@ public class DeterminedPathsRowPane extends GridPane{
 
             @Override
             public void handle(MouseEvent event) {
-                graphPane.markPathAsActual(pathInfo.getPathNumber());
-                graphPane.addVerticesCirclesMarkDistances(pathInfo.getPathOnGraph().getFromVertex(), new Label());
+                graphPaneController.markPathAsActual(pathInfo.getPathNumber());
+                graphPaneController.addVerticesCirclesMarkDistances(pathInfo.getPathOnGraph().getFromVertex(), new Label());
             }
             
         };

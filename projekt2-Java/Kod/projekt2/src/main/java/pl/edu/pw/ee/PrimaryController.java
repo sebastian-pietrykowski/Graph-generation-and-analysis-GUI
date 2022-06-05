@@ -39,7 +39,7 @@ import pl.edu.pw.ee.generator.ConnectedGraphGenerator;
 import pl.edu.pw.ee.generator.Generator;
 import pl.edu.pw.ee.generator.RandomGraphGenerator;
 import pl.edu.pw.ee.graphGraphics.ArrowWeightColorPicker;
-import pl.edu.pw.ee.graphGraphics.GraphPane;
+import pl.edu.pw.ee.graphGraphics.GraphPaneController;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraph;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfo;
 import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
@@ -47,7 +47,7 @@ import pl.edu.pw.ee.pathsOnGraph.PathOnGraphInfoContainer;
 public class PrimaryController {
 
     public Graph graph;
-    public GraphPane graphPane;
+    public GraphPaneController graphPaneController;
     private PathOnGraphInfoContainer pathInfoContainer;
 
     public int generatingMode = -1;
@@ -136,21 +136,23 @@ public class PrimaryController {
         int parentWidth = (int) graphPaneParent.getPrefWidth();
         int parentHeight = (int) graphPaneParent.getPrefHeight();
 
-        graphPane = new GraphPane(parentWidth, parentHeight);
+        if( graphPaneController == null )
+            graphPaneController = new GraphPaneController(parentWidth, parentHeight);
         graphPaneParent.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        ScrollPane scrollPane = new ScrollPane(graphPane);
+        ScrollPane scrollPane = new ScrollPane( graphPaneController.getGraphPane() );
         scrollPane.setMinSize(parentWidth, parentHeight);
         scrollPane.setMaxSize(parentWidth, parentHeight);
 
+        this.graphPaneParent.getChildren().clear();
         this.graphPaneParent.getChildren().add(scrollPane);
     }
 
     public void setGraph(Graph graph) {
-        initializeGraphPane();
+        
         this.pathInfoContainer = new PathOnGraphInfoContainer();
-        graphPane.setGraph(graph, maxWeightLabel, maxDistanceLabel, pathInfoContainer);
-
+        graphPaneController.setGraph(graph, maxWeightLabel, maxDistanceLabel, pathInfoContainer);
+        initializeGraphPane();
     }
 
     public void initializeLabelText() {
@@ -365,7 +367,7 @@ public class PrimaryController {
                 }
                 PathOnGraphInfo pathInfo = new PathOnGraphInfo(pathOnGraph);
                 pathInfoContainer.addPath(pathInfo);
-                graphPane.markSelectedPaths();
+                graphPaneController.markSelectedPaths();
             }
         } catch (NumberFormatException e) {
             MessageLabel.setText("Błąd, nie podano wierzchołków dla których ma być szukana ścieżka!");
@@ -412,8 +414,8 @@ public class PrimaryController {
         extendedResultCheckBox.setSelected(false);
 
         if( graph!= null) {
-            graphPane.addVerticesCirclesWithoutDistances();
-            graphPane.drawEdgesWeightColors();
+            graphPaneController.addVerticesCirclesWithoutDistances();
+            graphPaneController.drawEdgesWeightColors();
             pathInfoContainer.clearPathsInfos();
         }
     }
@@ -446,7 +448,7 @@ public class PrimaryController {
             Parent root1 = (Parent) fxmlLoader.load();
 
             DeterminedPathsWindow controller = fxmlLoader.getController();
-            controller.initialize(pathInfoContainer, graphPane, graph );
+            controller.initialize(pathInfoContainer, graphPaneController, graph );
 
             Stage stage = new Stage();
             stage.setTitle("Pomoc");
@@ -459,11 +461,11 @@ public class PrimaryController {
 
     public void markNodes() {
         if( graph != null )
-            graphPane.addVerticesCirclesMarkDistances(0, new Label());
+            graphPaneController.addVerticesCirclesMarkDistances(0, new Label());
     }
 
     public void unmarkNodes() {
         if( graph != null )
-            graphPane.addVerticesCirclesWithoutDistances();
+            graphPaneController.addVerticesCirclesWithoutDistances();
     }
 }

@@ -27,7 +27,7 @@ public class ArrowPane extends Pane {
         this.width = width;
         this.height = height;
         this.arrowDirection = arrowDirection;
-        this.setBackground(new Background(new BackgroundFill(GraphPane.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setBackground(new Background(new BackgroundFill(GraphPaneGridDrawer.cellFillColor, CornerRadii.EMPTY, Insets.EMPTY)));
      }
 
     public void drawArrow( Color arrowColor ) {
