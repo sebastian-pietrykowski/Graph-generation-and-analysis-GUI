@@ -417,6 +417,7 @@ public class PrimaryController {
             graphPaneController.addVerticesCirclesWithoutDistances();
             graphPaneController.drawEdgesWeightColors();
             pathInfoContainer.clearPathsInfos();
+            initializeGraphPane();
         }
     }
 
