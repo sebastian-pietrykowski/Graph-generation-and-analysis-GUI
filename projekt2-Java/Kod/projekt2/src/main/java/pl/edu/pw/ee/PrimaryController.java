@@ -132,11 +132,11 @@ public class PrimaryController {
     @FXML
     private Button btnDeterminedPaths;
 
-    public void initializeGraphPane() {
+    public void initializeGraphPane(boolean didCreateNewGraph) {
         int parentWidth = (int) graphPaneParent.getPrefWidth();
         int parentHeight = (int) graphPaneParent.getPrefHeight();
 
-        if( graphPaneController == null )
+        if(didCreateNewGraph)
             graphPaneController = new GraphPaneController(parentWidth, parentHeight);
         graphPaneParent.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -152,7 +152,7 @@ public class PrimaryController {
         
         this.pathInfoContainer = new PathOnGraphInfoContainer();
         graphPaneController.setGraph(graph, maxWeightLabel, maxDistanceLabel, pathInfoContainer);
-        initializeGraphPane();
+        initializeGraphPane(false);
     }
 
     public void initializeLabelText() {
@@ -183,7 +183,7 @@ public class PrimaryController {
         if (file != null) {
             try {
                 this.graph = Graph.readGraph(file);
-                this.initializeGraphPane();
+                this.initializeGraphPane(false);
                 this.setGraph(graph);
             } catch (FileNotFoundException e) {
                 MessageLabel.setText("Błąd, nie można czytać grafu z pliku.");
@@ -224,7 +224,7 @@ public class PrimaryController {
         if (file != null) {
             try {
                 graph.writeGraph(file);
-                this.initializeGraphPane();
+                this.initializeGraphPane(false);
                 this.setGraph(graph);
             } catch (IOException e) {
                 MessageLabel.setText("Błąd, niepoprawny plik");
@@ -314,7 +314,7 @@ public class PrimaryController {
                     }
 
                 }
-                this.initializeGraphPane();
+                this.initializeGraphPane(false);
                 this.setGraph(graph);
             } catch (NumberFormatException e) {
                 MessageLabel.setText("Błąd, nie podano parametrów dotyczących grafu lub podana liczba jest zbyt duża!");
@@ -417,7 +417,7 @@ public class PrimaryController {
             graphPaneController.addVerticesCirclesWithoutDistances();
             graphPaneController.drawEdgesWeightColors();
             pathInfoContainer.clearPathsInfos();
-            initializeGraphPane();
+            //initializeGraphPane(true);
         }
     }
 
@@ -436,7 +436,7 @@ public class PrimaryController {
         mode1AllVertices.setSelected(false);
         mode2Connective.setSelected(false);
         mode3Random.setSelected(false);
-        this.initializeGraphPane();
+        this.initializeGraphPane(true);
         MessageLabel.setText("");
 
     }

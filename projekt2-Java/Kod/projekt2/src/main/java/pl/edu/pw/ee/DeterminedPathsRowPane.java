@@ -41,7 +41,7 @@ public class DeterminedPathsRowPane extends GridPane{
 
     private void setSizeOfColumnsAndRowsIdentical() {
         ColumnConstraints cc = new ColumnConstraints();
-        cc.setMinWidth(100);
+        cc.setMinWidth(585/5.);
         cc.setMaxWidth(rowHeight);
         cc.setHalignment(HPos.CENTER);
 

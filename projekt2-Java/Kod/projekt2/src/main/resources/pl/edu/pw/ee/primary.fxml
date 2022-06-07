@@ -83,7 +83,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btncleanGraphParameters" layoutX="116.0" layoutY="219.0" mnemonicParsing="false" onAction="#cleanGraphParameters" text="Wyczysc" />
+                  <Button fx:id="btncleanGraphParameters" layoutX="116.0" layoutY="219.0" mnemonicParsing="false" onAction="#cleanGraphParameters" text="Wyczyść" />
                </children>
             </AnchorPane>
          </content>

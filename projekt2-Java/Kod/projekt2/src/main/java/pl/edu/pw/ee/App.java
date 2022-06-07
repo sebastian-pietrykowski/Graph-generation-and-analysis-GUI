@@ -20,7 +20,7 @@ public class App extends Application {
         scene = new Scene(fxmlLoader.load(), 730, 750);
 
         PrimaryController controller = fxmlLoader.getController();
-        controller.initializeGraphPane();
+        controller.initializeGraphPane(true);
         controller.setWeightGradientPane();
         controller.initializeLabelText();
         controller.initializePathInfoContainer();
