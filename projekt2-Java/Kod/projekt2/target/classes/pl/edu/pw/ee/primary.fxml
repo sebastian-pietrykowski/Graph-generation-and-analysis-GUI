@@ -18,9 +18,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="755.0" style="-fx-background-color: gainsboro;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="677.0" style="-fx-background-color: gainsboro;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.PrimaryController">
    <children>
-      <MenuBar prefHeight="26.0" prefWidth="755.0">
+      <MenuBar prefHeight="26.0" prefWidth="677.0">
         <menus>
           <Menu mnemonicParsing="false" text="Graf">
             <items>
@@ -36,8 +36,8 @@
         </menus>
       </MenuBar>
 
-      <Pane fx:id="graphPaneParent" layoutX="5.0" layoutY="30.0" prefHeight="384.0" prefWidth="384.0" style="-fx-border-color: SILVER;" />
-      <Pane layoutX="483.0" layoutY="37.0" prefHeight="137.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
+      <Pane fx:id="graphPaneParent" layoutX="14.0" layoutY="30.0" prefHeight="384.0" prefWidth="384.0" style="-fx-border-color: SILVER;" />
+      <Pane layoutX="426.0" layoutY="30.0" prefHeight="137.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
          <children>
             <RadioButton fx:id="mode1AllVertices" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#operatingMode" prefHeight="20.0" prefWidth="211.0" text="Tryb 1 - graf pełny">
                <font>
@@ -64,7 +64,7 @@
             </Label>
          </children>
       </Pane>
-      <ScrollPane layoutX="483.0" layoutY="313.0" prefHeight="176.0" prefWidth="234.0">
+      <ScrollPane layoutX="426.0" layoutY="306.0" prefHeight="176.0" prefWidth="234.0">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="218.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
                <children>
@@ -88,21 +88,21 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Pane layoutX="483.0" layoutY="186.0" prefHeight="118.0" prefWidth="234.0" style="-fx-background-color: whitesmoke; -fx-border-color: lightsalmon;">
+      <Pane layoutX="426.0" layoutY="179.0" prefHeight="118.0" prefWidth="234.0" style="-fx-background-color: whitesmoke; -fx-border-color: lightsalmon;">
          <children>
             <Button fx:id="btnLoadGraph" alignment="CENTER" layoutX="46.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadGraph" prefHeight="25.0" prefWidth="142.0" text="Wczytaj graf" />
             <Button fx:id="btnCheckConnectivity" alignment="CENTER" layoutX="46.0" layoutY="47.0" mnemonicParsing="false" onAction="#checkGraphConnectivity" prefHeight="25.0" prefWidth="142.0" text="Sprawdź spójność grafu" />
             <Button fx:id="btnCleanEverything" alignment="CENTER" layoutX="45.0" layoutY="79.0" mnemonicParsing="false" onAction="#cleanEverything" prefHeight="25.0" prefWidth="142.0" text="Wyczyść wszystko" />
          </children>
       </Pane>
-      <Label fx:id="MessageLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="528.0" prefHeight="185.0" prefWidth="384.0" style="-fx-background-color: Whitesmoke; -fx-border-color: silver;" />
+      <Label fx:id="MessageLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="516.0" prefHeight="198.0" prefWidth="384.0" style="-fx-background-color: Whitesmoke; -fx-border-color: silver;" />
       <Pane layoutX="454.0" layoutY="489.0" style="-fx-background-color: white;" />
-      <Label layoutX="14.0" layoutY="500.0" prefHeight="25.0" prefWidth="384.0" style="-fx-background-color: palevioletred; -fx-border-color: silver;" text="                                  Komunikaty">
+      <Label layoutX="14.0" layoutY="489.0" prefHeight="25.0" prefWidth="384.0" style="-fx-background-color: palevioletred; -fx-border-color: silver;" text="                                  Komunikaty">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <GridPane layoutX="5.0" layoutY="415.0" prefHeight="51.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
+      <GridPane layoutX="14.0" layoutY="415.0" prefHeight="51.0" prefWidth="384.0" style="-fx-border-color: SILVER;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -165,7 +165,7 @@
             </GridPane>
          </children>
       </GridPane>
-      <ScrollPane layoutX="483.0" layoutY="495.0" prefHeight="176.0" prefWidth="234.0">
+      <ScrollPane layoutX="426.0" layoutY="488.0" prefHeight="176.0" prefWidth="234.0">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="221.0" style="-fx-background-color: whitesmoke; -fx-border-color: silver;">
                <children>
@@ -187,7 +187,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <AnchorPane layoutX="484.0" layoutY="681.0" prefHeight="42.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
+      <AnchorPane layoutX="427.0" layoutY="674.0" prefHeight="42.0" prefWidth="234.0" style="-fx-background-color: WHITESMOKE; -fx-border-color: SILVER;">
          <children>
             <GridPane layoutX="7.0" layoutY="6.0" prefHeight="30.0" prefWidth="222.0">
               <columnConstraints>

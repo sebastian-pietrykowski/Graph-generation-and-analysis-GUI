@@ -419,7 +419,8 @@ public class PrimaryController {
         mode3Random.setSelected(false);
         this.initializeGraphPane(true);
         MessageLabel.setText("");
-
+        maxWeightLabel.setText("1.0");
+        maxDistanceLabel.setText("1.0");
     }
 
     @FXML
