@@ -89,7 +89,7 @@ public class DeterminedPathsRowPane extends GridPane{
             }
         };
         deleteCheckBox.setOnAction(selectionEvent);
-        this.add(deleteCheckBox, 5, 0);
+        this.add(deleteCheckBox, 4, 0);
     }
 
     private void markToDelete() {
