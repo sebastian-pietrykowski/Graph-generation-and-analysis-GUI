@@ -118,8 +118,6 @@ public class PrimaryController {
     @FXML
     private CheckBox extendedResultCheckBox;
 
-    // @FXML
-    //private MenuItem HelpMenuItem;
     @FXML
     private Button btncleanPathParameters;
 
@@ -388,23 +386,6 @@ public class PrimaryController {
             alert.setHeaderText("Podano niewłasciwe numery wierzchołków!");
             alert.showAndWait();
         }
-    }
-
-    @FXML
-    private void HelpWindow(ActionEvent event) {
-        /*
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(HelpWindowController.class.getResource("HelpWindow.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Pomoc");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Can't load a new window");
-        }
-         */
     }
 
     @FXML
