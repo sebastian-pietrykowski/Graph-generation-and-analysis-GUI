@@ -452,7 +452,8 @@ public class PrimaryController {
             controller.initialize(pathInfoContainer, graphPaneController, graph );
 
             Stage stage = new Stage();
-            stage.setTitle("Pomoc");
+            stage.setTitle("Wyznaczone ścieżki");
+            stage.setResizable(false);
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception e) {
