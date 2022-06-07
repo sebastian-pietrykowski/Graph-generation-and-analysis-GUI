@@ -17,7 +17,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
-        scene = new Scene(fxmlLoader.load(), 730, 750);
+        scene = new Scene(fxmlLoader.load(),677 , 730);
 
         PrimaryController controller = fxmlLoader.getController();
         controller.initializeGraphPane(true);
