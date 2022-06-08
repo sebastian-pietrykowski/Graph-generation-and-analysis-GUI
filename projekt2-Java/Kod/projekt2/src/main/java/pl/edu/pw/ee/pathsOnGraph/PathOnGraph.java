@@ -12,7 +12,7 @@ public class PathOnGraph {
     private int[] path;
     private Graph graph;
 
-    public PathOnGraph( int fromVertex, int toVertex, int[] path, Graph graph ) {
+    public PathOnGraph(int fromVertex, int toVertex, int[] path, Graph graph) {
         this.fromVertex = fromVertex;
         this.toVertex = toVertex;
         this.path = path;
@@ -33,26 +33,29 @@ public class PathOnGraph {
 
     public String getPathToStringStandardVariant() {
         String pathToString = "";
-        for( int vertexNumber = 0; vertexNumber < path.length-1; vertexNumber++)
+        for (int vertexNumber = 0; vertexNumber < path.length - 1; vertexNumber++) {
             pathToString += path[vertexNumber] + " -> ";
-        pathToString += path[path.length-1];
+        }
+        pathToString += path[path.length - 1];
         return pathToString;
     }
 
     public String getPathToStringExtendedVariant() {
         String pahtToString = "";
-        for( int vertexNumber = 1; vertexNumber < path.length; vertexNumber++)
-            pahtToString += path[vertexNumber-1] + " ("
-                    + graph.getEdge(vertexNumber-1, vertexNumber).getWeight()
+        for (int vertexNumber = 1; vertexNumber < path.length; vertexNumber++) {
+            pahtToString += path[vertexNumber - 1] + " ("
+                    + graph.getEdge(path[vertexNumber - 1], path[vertexNumber]).getWeight()
                     + ") -> ";
-        pahtToString += path[path.length-1];
+        }
+        pahtToString += path[path.length - 1];
         return pahtToString;
     }
-    
+
     public ArrayList<EdgeWithoutWeight> getEdgesWithoutWeight() {
         ArrayList<EdgeWithoutWeight> list = new ArrayList<>();
-        for( int vertexIndex = 1; vertexIndex < path.length; vertexIndex++ )
-            list.add(new EdgeWithoutWeight(path[vertexIndex-1], path[vertexIndex]));
+        for (int vertexIndex = 1; vertexIndex < path.length; vertexIndex++) {
+            list.add(new EdgeWithoutWeight(path[vertexIndex - 1], path[vertexIndex]));
+        }
         return list;
     }
 }
