@@ -50,13 +50,13 @@ The program provides the following functionalities:
 
 
 ## Screenshots
-![Generowanie grafu losowego](img/Generowanie grafu losowego.png)
-![Generowanie grafu pelnego](img/Generowanie grafu pelnego.png)
-![Generowanie grafu spojnego](img/Generowanie grafu spojnego.png)
-![Sprawdzanie spojnosci grafu 2](img/Sprawdzanie spojnosci grafu 2.png)
-![Wyznaczanie sciezki 2](img/Wyznaczanie sciezki 2.png)
-![Wyznaczone sciezki](img/Wyznaczone sciezki.png)
-![Zaznaczone wezly](img/Zaznaczone wezly.png)
+![Generowanie grafu losowego](img/Generowanie-grafu-losowego.png)
+![Generowanie grafu pelnego](img/Generowanie-grafu-pelnego.png)
+![Generowanie grafu spojnego](img/Generowanie-grafu-spojnego.png)
+![Sprawdzanie spojnosci grafu 2](img/Sprawdzanie-spojnosci-grafu-2.png)
+![Wyznaczanie sciezki 2](img/Wyznaczanie-sciezki-2.png)
+![Wyznaczone sciezki](img/Wyznaczone-sciezki.png)
+![Zaznaczone wezly](img/Zaznaczone-wezly.png)
 
 ## File Format.
 An example graph representation is provided below:
